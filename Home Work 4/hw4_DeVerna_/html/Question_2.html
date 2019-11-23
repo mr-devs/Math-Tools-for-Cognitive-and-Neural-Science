@@ -1,0 +1,563 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Question_2</title><meta name="generator" content="MATLAB 9.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2019-11-12"><meta name="DC.source" content="Question_2.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">HW # 4 - Question 2 - Math Tools - Matthew DeVerna</a></li><li><a href="#2">Question 2: Poisson Neurons.</a></li><li><a href="#3">(A) What does the Poisson distribution look like?</a></li><li><a href="#4">(B) Samples from the Poisson distribution</a></li><li><a href="#5">(C) Recording Two Neurons Simultaneously</a></li><li><a href="#6">(D) Neuron w/ Mean Rate of 10 spikes/interval</a></li></ul></div><h2 id="1">HW # 4 - Question 2 - Math Tools - Matthew DeVerna</h2><pre class="codeinput">clear <span class="string">all</span>
+close <span class="string">all</span>
+</pre><h2 id="2">Question 2: Poisson Neurons.</h2><p>The Poisson distribution is commonly used to model neural spike counts:</p><pre class="codeinput"><span class="comment">%       p(k) = meu^k * e^(-meu) / k!</span>
+
+<span class="comment">% k = the spike count (over some specified time interval)</span>
+<span class="comment">% meu = expected # of spikes over that interval</span>
+</pre><h2 id="3">(A) What does the Poisson distribution look like?</h2><pre class="codeinput"><span class="comment">% Set meu = 6 spikes/interval</span>
+
+meu = 6;
+<span class="keyword">for</span> k = 0:20
+    p(k+1) = ((meu^k)*exp(-meu))/(factorial(k));
+<span class="keyword">end</span>
+
+p_norm = (p/sum(p))                                     ; <span class="comment">% Normalize</span>
+Dist_SumsToOne = isequal(round(sum(p_norm),6),1)        <span class="comment">% Check that this = 1</span>
+
+k = [0:20]' ; <span class="comment">% set an array for 0 to 20 spikes</span>
+
+<span class="comment">% Here we find the mean, as a check</span>
+exp_val = p_norm*k
+
+<span class="comment">% Plot the distribution and the mean</span>
+figure
+bar(p_norm)
+hold <span class="string">on</span>
+bar(exp_val, p_norm(int8(exp_val)))
+xlabel(<span class="string">'Spike Counts'</span>)
+ylabel(<span class="string">'Proportion'</span>)
+title(<span class="string">'Poisson Distribtion of Neural Spike Counts'</span>)
+legend(<span class="string">'Spike Counts'</span>,<span class="string">'Mean Spike Count'</span>)
+</pre><pre class="codeoutput">
+Dist_SumsToOne =
+
+  logical
+
+   1
+
+
+exp_val =
+
+    6.0000
+
+</pre><img vspace="5" hspace="5" src="Question_2_01.png" alt=""> <h2 id="4">(B) Samples from the Poisson distribution</h2><p>Generate samples from the Poisson distribution where each sample represents the number of spike count ranging from 0 to 20. To simplify the problem, use a clipped Poisson vector 'p' to write a function: samples = randp(p,num) that generates 'num'  samples from the probability distribution function (PDF) specified by 'p'.</p><pre class="codeinput"><span class="comment">% [Hint: use rand function, which generates real values over the interval</span>
+<span class="comment">% [0 ... 1], and partition this interval into portions proportional in size</span>
+<span class="comment">% to the probabilitiees in p]</span>
+
+<span class="comment">% Test your function by drawing 1,000 samples from the Poisson distribution</span>
+<span class="comment">% in (A), plotting a historgram of how many times each value is sampled,</span>
+<span class="comment">% and comparing this to the frequencies predicted by 'p'.</span>
+
+num = 1000                  ;
+samples = randp(p_norm,num) ;
+
+<span class="comment">% Plot these samples as a binned distribution vs. the actual pdf</span>
+
+figure; hold <span class="string">on</span>;
+subplot(1,2,1)
+histogram(samples);
+title(<span class="string">'Spike Count Samples - 1000 Samples of p-norm'</span>)
+xlabel(<span class="string">'Spike Count'</span>)
+ylabel(<span class="string">'Samples'</span>)
+
+subplot(1,2,2)
+bar(p_norm)
+title(<span class="string">'Spike Count PDF - p-norm'</span>)
+xlabel(<span class="string">'Spike Count'</span>)
+ylabel(<span class="string">'Proportion'</span>)
+
+<span class="comment">% Verify qualitatively that the answer gets closer (converges) as you</span>
+<span class="comment">% increase the number of samples (try 10 raised to powers [2,3,4,5]).</span>
+
+powers = [2,3,4,5];
+figure; hold <span class="string">on</span>;
+<span class="keyword">for</span> pp = 1:length(powers)
+    num = 10^powers(pp)                             ;
+    samples = randp(p_norm,num)                     ;
+    subplot(2,2,pp)
+    histogram(samples)                              ;
+    xlim([0,k(end)])                                ;
+    title([<span class="string">'Spike Count Samples - 10^'</span> + <span class="keyword">...</span>
+        string(powers(pp)) + <span class="string">' Samples of p-norm'</span>]) ;
+    xlabel(<span class="string">'Spike Count'</span>)
+    ylabel(<span class="string">'Samples'</span>)
+<span class="keyword">end</span>
+
+QualitativeCheck = {<span class="string">'If you look at the plots as the exponent increases, you can'</span>
+                        <span class="string">'see that the distribution better approximates that of the'</span>
+                        <span class="string">'original p_norm distribution.'</span>}
+</pre><pre class="codeoutput">
+QualitativeCheck =
+
+  3&times;1 cell array
+
+    {'If you look at the plots as the exponent increases, you can'}
+    {'see that the distribution better approximates that of the'  }
+    {'original p_norm distribution.'                              }
+
+</pre><img vspace="5" hspace="5" src="Question_2_02.png" alt=""> <img vspace="5" hspace="5" src="Question_2_03.png" alt=""> <h2 id="5">(C) Recording Two Neurons Simultaneously</h2><p>Imagine you're recording with an electrode from two neurons simultaneous, whose spikes have very similar waveforms (and thus can't be distinguished by the spike sorting software). Create a probability vector 'q' for the second neuron, assuming a mean rate of 4 spikes/interval.</p><pre class="codeinput">rate = 4;
+<span class="keyword">for</span> k = 0:20
+    q(k+1) = ((rate^k)*exp(-rate))/(factorial(k))   ;
+<span class="keyword">end</span>
+
+q_norm = (q/sum(q))                                 ;   <span class="comment">% Normalize</span>
+Dist_SumsToOne = isequal(round(sum(q_norm),6),1)        <span class="comment">% Check that this = 1</span>
+k = [0:20]' ; <span class="comment">% set an array for 0 to 20 spikes</span>
+
+<span class="comment">% Here we find the mean, as a check</span>
+exp_val = q_norm*k
+Mean_EqualsRate = isequal(round(exp_val,6),rate)        <span class="comment">% Check that this = 1</span>
+
+<span class="comment">% Now we create a new theoretical distribution which we can find by taking</span>
+<span class="comment">% the convolution of the two distributions.</span>
+
+theoretical_pdf_of_2_neurons = conv(p_norm, q_norm) ;
+
+<span class="comment">% [Hint: the output vector should have length m + n - 1 when m and n are</span>
+<span class="comment">% the lengths of the two input PDFs. This is because the maximum spike</span>
+<span class="comment">% count will be bigger than the maximum of each respective individual</span>
+<span class="comment">% neuron.]</span>
+
+<span class="comment">% Check Length based on hint</span>
+Length_Check = isequal(length(p_norm) + length(q_norm) - 1, length(theoretical_pdf_of_2_neurons))
+
+<span class="comment">% We verify the answer by comparing it to the histogram of 1,000 samples</span>
+<span class="comment">% generated by summing two calls to 'randp()'</span>
+
+num = 1000                                          ; <span class="comment">% Set # of samples to draw from each</span>
+samples_neuron1 = randp(p_norm,num)                 ; <span class="comment">% Take 1000 samples</span>
+samples_neuron2 = randp(q_norm,num)                 ; <span class="comment">% Take 1000 samples</span>
+combined_sample = samples_neuron1 + samples_neuron2 ; <span class="comment">% Take 1000 samples</span>
+
+<span class="comment">% Plot the theoretical distribution...</span>
+
+figure; hold <span class="string">on</span>;
+subplot(1,2,1)
+bar(theoretical_pdf_of_2_neurons)
+title(<span class="string">'Spike Count Samples - Theoretical From Convolution'</span>)
+xlabel(<span class="string">'Spike Count'</span>)
+ylabel(<span class="string">'Proportion'</span>)
+
+<span class="comment">% ... next to the combined sample</span>
+
+subplot(1,2,2)
+histogram(combined_sample)
+title(<span class="string">'Spike Counts - Combined from p and q Samples'</span>)
+xlabel(<span class="string">'Spike Count'</span>)
+ylabel(<span class="string">'Samples'</span>)
+xlim([1,length(theoretical_pdf_of_2_neurons)])
+
+QualitativeCheck = {<span class="string">'If you look at the two plots you can see that they are quite similar'</span>
+                        <span class="string">'to one another. They wont be exactly alike because one is a theoretical'</span>
+                        <span class="string">'distribution, while the other is an empircal sample.'</span>}
+</pre><pre class="codeoutput">
+Dist_SumsToOne =
+
+  logical
+
+   1
+
+
+exp_val =
+
+    4.0000
+
+
+Mean_EqualsRate =
+
+  logical
+
+   1
+
+
+Length_Check =
+
+  logical
+
+   1
+
+
+QualitativeCheck =
+
+  3&times;1 cell array
+
+    {'If you look at the two plots you can see that they are quite similar'   }
+    {'to one another. They wont be exactly alike because one is a theoretical'}
+    {'distribution, while the other is an empircal sample.'                   }
+
+</pre><img vspace="5" hspace="5" src="Question_2_04.png" alt=""> <img vspace="5" hspace="5" src="Question_2_05.png" alt=""> <h2 id="6">(D) Neuron w/ Mean Rate of 10 spikes/interval</h2><p>Now imagine you are recording from a neuron with mean rate of 10 spikes/interval (the sum of the rates from the neurons above).</p><pre class="codeinput">rate = 10;
+<span class="keyword">for</span> k = 0:20
+    ten_spikes(k+1) = ((rate^k)*exp(-rate))/(factorial(k))   ;
+<span class="keyword">end</span>
+
+ten_spikes_norm = (ten_spikes/sum(ten_spikes))                                 ;   <span class="comment">% Normalize</span>
+Dist_SumsToOne = isequal(round(sum(ten_spikes_norm),6),1)        <span class="comment">% Check that this = 1</span>
+k = [0:20]' ; <span class="comment">% set an array for 0 to 20 spikes</span>
+
+<span class="comment">% Here we find the mean, as a check</span>
+exp_val = ten_spikes_norm*k
+Mean_EqualsRate = isequal(round(exp_val,6),rate)        <span class="comment">% Check that this = 1</span>
+
+<span class="comment">% Plot the distribution of spike counts for this neuron, in comparison with</span>
+<span class="comment">% the distribution of the sum of the previous two neurons.</span>
+
+figure; hold <span class="string">on</span> ;
+subplot(1,2,1)
+bar(ten_spikes_norm)
+title(<span class="string">'Poisson with Mu = 10'</span>)
+xlabel(<span class="string">'Spike Count'</span>)
+ylabel(<span class="string">'Proportion'</span>)
+xlim([1,length(theoretical_pdf_of_2_neurons)])
+
+subplot(1,2,2)
+histogram(combined_sample)
+title(<span class="string">'Poisson - Combined from p and q Samples'</span>)
+xlabel(<span class="string">'Spike Count'</span>)
+ylabel(<span class="string">'Samples'</span>)
+xlim([1,length(theoretical_pdf_of_2_neurons)])
+
+<span class="comment">% Based on the results of these two experiments, if we record a new spike</span>
+<span class="comment">% train, can you tell whether the spikes you have recorded came from one or</span>
+<span class="comment">% two neurons just by looking at their distribution of spike counts?</span>
+
+TwoVsOneNeuron = {<span class="string">'Based on this exercise it doesn''t appear that we would be able to uncover'</span>
+                        <span class="string">'whether or not the spikes came from one or two neurons because of how they'</span>
+                        <span class="string">'linearly combine. I could be wrong about this but it seems like'</span>
+                        <span class="string">'conducting some sort of PCA analysis might be a good next step?'</span>}
+
+<span class="comment">% Comment about the reason why based on the intuition behind the Poisson</span>
+<span class="comment">% distribution.</span>
+
+IntuitionBehindNewPoisson = {<span class="string">'We can see that these two distributions look the same. This makes sense'</span>
+                        <span class="string">'because combining the two distributions (via a convolution) is linear, and the new mean spike'</span>
+                        <span class="string">'count rate should become ten. This new mean rate feeds into the only'</span>
+                        <span class="string">'part of the Poisson function which varies, so these distributions become'</span>
+                        <span class="string">'identical (although one is a proportion, and the other represents'</span>
+                        <span class="string">'distribution after 1000 empirical samples.'</span>}
+</pre><pre class="codeoutput">
+Dist_SumsToOne =
+
+  logical
+
+   1
+
+
+exp_val =
+
+    9.9813
+
+
+Mean_EqualsRate =
+
+  logical
+
+   0
+
+
+TwoVsOneNeuron =
+
+  4&times;1 cell array
+
+    {'Based on this exercise it doesn't appear that we would be able to uncover' }
+    {'whether or not the spikes came from one or two neurons because of how they'}
+    {'linearly combine. I could be wrong about this but it seems like'           }
+    {'conducting some sort of PCA analysis might be a good next step?'           }
+
+
+IntuitionBehindNewPoisson =
+
+  6&times;1 cell array
+
+    {'We can see that these two distributions look the same. This makes sense'                      }
+    {'because combining the two distributions (via a convolution) is linear, and the new mean spike'}
+    {'count rate should become ten. This new mean rate feeds into the only'                         }
+    {'part of the Poisson function which varies, so these distributions become'                     }
+    {'identical (although one is a proportion, and the other represents'                            }
+    {'distribution after 1000 empirical samples.'                                                   }
+
+</pre><img vspace="5" hspace="5" src="Question_2_06.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% HW # 4 - Question 2 - Math Tools - Matthew DeVerna
+
+clear all
+close all
+
+%% Question 2: Poisson Neurons.
+% The Poisson distribution is commonly used to model neural spike counts:
+
+%       p(k) = meu^k * e^(-meu) / k!
+
+% k = the spike count (over some specified time interval)
+% meu = expected # of spikes over that interval 
+
+%% (A) What does the Poisson distribution look like?
+
+% Set meu = 6 spikes/interval
+
+meu = 6;
+for k = 0:20
+    p(k+1) = ((meu^k)*exp(-meu))/(factorial(k));
+end
+
+p_norm = (p/sum(p))                                     ; % Normalize
+Dist_SumsToOne = isequal(round(sum(p_norm),6),1)        % Check that this = 1
+
+k = [0:20]' ; % set an array for 0 to 20 spikes
+
+% Here we find the mean, as a check
+exp_val = p_norm*k
+
+% Plot the distribution and the mean
+figure
+bar(p_norm)
+hold on
+bar(exp_val, p_norm(int8(exp_val)))
+xlabel('Spike Counts')
+ylabel('Proportion')
+title('Poisson Distribtion of Neural Spike Counts')
+legend('Spike Counts','Mean Spike Count')
+
+%% (B) Samples from the Poisson distribution
+% Generate samples from the Poisson distribution where each sample
+% represents the number of spike count ranging from 0 to 20. To simplify
+% the problem, use a clipped Poisson vector 'p' to write a function:
+% samples = randp(p,num) that generates 'num'  samples from the probability
+% distribution function (PDF) specified by 'p'. 
+
+% [Hint: use rand function, which generates real values over the interval
+% [0 ... 1], and partition this interval into portions proportional in size
+% to the probabilitiees in p]
+
+% Test your function by drawing 1,000 samples from the Poisson distribution
+% in (A), plotting a historgram of how many times each value is sampled,
+% and comparing this to the frequencies predicted by 'p'. 
+
+num = 1000                  ;
+samples = randp(p_norm,num) ;
+
+% Plot these samples as a binned distribution vs. the actual pdf
+
+figure; hold on;
+subplot(1,2,1)
+histogram(samples);
+title('Spike Count Samples - 1000 Samples of p-norm')
+xlabel('Spike Count')
+ylabel('Samples')
+
+subplot(1,2,2)
+bar(p_norm)
+title('Spike Count PDF - p-norm')
+xlabel('Spike Count')
+ylabel('Proportion')
+
+% Verify qualitatively that the answer gets closer (converges) as you
+% increase the number of samples (try 10 raised to powers [2,3,4,5]).
+
+powers = [2,3,4,5];
+figure; hold on;
+for pp = 1:length(powers)
+    num = 10^powers(pp)                             ;
+    samples = randp(p_norm,num)                     ; 
+    subplot(2,2,pp)
+    histogram(samples)                              ;
+    xlim([0,k(end)])                                ;
+    title(['Spike Count Samples - 10^' + ...
+        string(powers(pp)) + ' Samples of p-norm']) ;
+    xlabel('Spike Count')
+    ylabel('Samples')
+end
+
+QualitativeCheck = {'If you look at the plots as the exponent increases, you can'
+                        'see that the distribution better approximates that of the'
+                        'original p_norm distribution.'}
+
+%% (C) Recording Two Neurons Simultaneously
+% Imagine you're recording with an electrode from two neurons simultaneous,
+% whose spikes have very similar waveforms (and thus can't be distinguished
+% by the spike sorting software). Create a probability vector 'q' for the
+% second neuron, assuming a mean rate of 4 spikes/interval. 
+
+rate = 4; 
+for k = 0:20
+    q(k+1) = ((rate^k)*exp(-rate))/(factorial(k))   ;
+end
+
+q_norm = (q/sum(q))                                 ;   % Normalize
+Dist_SumsToOne = isequal(round(sum(q_norm),6),1)        % Check that this = 1
+k = [0:20]' ; % set an array for 0 to 20 spikes
+
+% Here we find the mean, as a check
+exp_val = q_norm*k
+Mean_EqualsRate = isequal(round(exp_val,6),rate)        % Check that this = 1
+
+% Now we create a new theoretical distribution which we can find by taking
+% the convolution of the two distributions.
+
+theoretical_pdf_of_2_neurons = conv(p_norm, q_norm) ;
+
+% [Hint: the output vector should have length m + n - 1 when m and n are
+% the lengths of the two input PDFs. This is because the maximum spike
+% count will be bigger than the maximum of each respective individual
+% neuron.]
+
+% Check Length based on hint
+Length_Check = isequal(length(p_norm) + length(q_norm) - 1, length(theoretical_pdf_of_2_neurons))
+
+% We verify the answer by comparing it to the histogram of 1,000 samples
+% generated by summing two calls to 'randp()'
+
+num = 1000                                          ; % Set # of samples to draw from each
+samples_neuron1 = randp(p_norm,num)                 ; % Take 1000 samples
+samples_neuron2 = randp(q_norm,num)                 ; % Take 1000 samples
+combined_sample = samples_neuron1 + samples_neuron2 ; % Take 1000 samples
+
+% Plot the theoretical distribution...
+
+figure; hold on;
+subplot(1,2,1)
+bar(theoretical_pdf_of_2_neurons)
+title('Spike Count Samples - Theoretical From Convolution')
+xlabel('Spike Count')
+ylabel('Proportion')
+
+% ... next to the combined sample
+
+subplot(1,2,2)
+histogram(combined_sample)
+title('Spike Counts - Combined from p and q Samples')
+xlabel('Spike Count')
+ylabel('Samples')
+xlim([1,length(theoretical_pdf_of_2_neurons)])
+
+QualitativeCheck = {'If you look at the two plots you can see that they are quite similar'
+                        'to one another. They wont be exactly alike because one is a theoretical'
+                        'distribution, while the other is an empircal sample.'}
+
+
+%% (D) Neuron w/ Mean Rate of 10 spikes/interval
+% Now imagine you are recording from a neuron with mean rate of 10
+% spikes/interval (the sum of the rates from the neurons above). 
+
+rate = 10; 
+for k = 0:20
+    ten_spikes(k+1) = ((rate^k)*exp(-rate))/(factorial(k))   ;
+end
+
+ten_spikes_norm = (ten_spikes/sum(ten_spikes))                                 ;   % Normalize
+Dist_SumsToOne = isequal(round(sum(ten_spikes_norm),6),1)        % Check that this = 1
+k = [0:20]' ; % set an array for 0 to 20 spikes
+
+% Here we find the mean, as a check
+exp_val = ten_spikes_norm*k
+Mean_EqualsRate = isequal(round(exp_val,6),rate)        % Check that this = 1
+
+% Plot the distribution of spike counts for this neuron, in comparison with
+% the distribution of the sum of the previous two neurons. 
+
+figure; hold on ;
+subplot(1,2,1)
+bar(ten_spikes_norm)
+title('Poisson with Mu = 10')
+xlabel('Spike Count')
+ylabel('Proportion')
+xlim([1,length(theoretical_pdf_of_2_neurons)])
+
+subplot(1,2,2)
+histogram(combined_sample)
+title('Poisson - Combined from p and q Samples')
+xlabel('Spike Count')
+ylabel('Samples')
+xlim([1,length(theoretical_pdf_of_2_neurons)])
+
+% Based on the results of these two experiments, if we record a new spike
+% train, can you tell whether the spikes you have recorded came from one or
+% two neurons just by looking at their distribution of spike counts? 
+
+TwoVsOneNeuron = {'Based on this exercise it doesn''t appear that we would be able to uncover'
+                        'whether or not the spikes came from one or two neurons because of how they'
+                        'linearly combine. I could be wrong about this but it seems like'
+                        'conducting some sort of PCA analysis might be a good next step?'}
+
+% Comment about the reason why based on the intuition behind the Poisson
+% distribution. 
+
+IntuitionBehindNewPoisson = {'We can see that these two distributions look the same. This makes sense'
+                        'because combining the two distributions (via a convolution) is linear, and the new mean spike'
+                        'count rate should become ten. This new mean rate feeds into the only'
+                        'part of the Poisson function which varies, so these distributions become'
+                        'identical (although one is a proportion, and the other represents'
+                        'distribution after 1000 empirical samples.'}
+
+
+
+
+##### SOURCE END #####
+--></body></html>

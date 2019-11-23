@@ -1,0 +1,673 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Question_4</title><meta name="generator" content="MATLAB 9.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2019-11-13"><meta name="DC.source" content="Question_4.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">HW # 4 - Question 4 - Math Tools - Matthew DeVerna</a></li><li><a href="#2">Question 4: Analyzing and Simulating Experimental Data</a></li><li><a href="#3">(A) Visualize the Data</a></li><li><a href="#4">(B) Quantify the response statistics of each individual trial condition</a></li><li><a href="#5">(C) Next, Compute the SVD of Each Covariance Matrix</a></li><li><a href="#6">(D) Validating the Model with Data Simulation</a></li></ul></div><h2 id="1">HW # 4 - Question 4 - Math Tools - Matthew DeVerna</h2><pre class="codeinput">clear <span class="string">all</span>
+close <span class="string">all</span>
+</pre><h2 id="2">Question 4: Analyzing and Simulating Experimental Data</h2><p>An international coffee conglomerate recruits you to characterize the neuropsychology underlying their customers' adoration of pumpkin spice. You devise a BOLD fMRI pilot experiment in which you present one of two classes of odorants to an individual while monitoring the activity of three key voxels located in the amygdala, an structure known to be associate with emotional responses.</p><pre class="codeinput"><span class="comment">% The file 'experimentData.mat' contains:</span>
+<span class="comment">% 'data' = (N x 3) matrix</span>
+<span class="comment">%   ROWS = BOLD response of the three voxels on a given trial (relative to baseline)</span>
+<span class="comment">%   'trialConds' = (N x 1) vector indicating the experimental condition of each trial.</span>
+
+<span class="comment">% Condition 1 =  random control odorants</span>
+<span class="comment">% Condition 2 = trade secret pumpkin spice odorant</span>
+
+load(<span class="string">'experimentData.mat'</span>)
+</pre><h2 id="3">(A) Visualize the Data</h2><p>Determine how many trials of each trial condition were completed - display this information in a 2-bin histogram. bins = condition height = trial counts</p><pre class="codeinput">figure; hold <span class="string">on</span>;
+control_responses = data(trialConds == 1, :) ;
+spice_responses = data(trialConds == 2, :) ;
+
+cats = categorical({<span class="string">'Conditon One'</span>, <span class="string">'Condition Two'</span>}) ;
+histogram(<span class="string">'Categories'</span>, cats, <span class="string">'BinCounts'</span>, [length(control_responses),length(spice_responses)]) ;
+
+<span class="comment">% Plot a 3-d scatter plot of the recorded responses, with each point</span>
+<span class="comment">% color-coded according to its associated trial condition (use scatter3())</span>
+<span class="comment">% [DONT FORGET TO LABEL AXES]</span>
+figure ;
+scatter3(data(trialConds == 1,1), <span class="keyword">...</span>
+    data(trialConds == 1,2), <span class="keyword">...</span>
+    data(trialConds == 1,3), <span class="keyword">...</span>
+    <span class="string">'r'</span>, <span class="string">'filled'</span>)
+hold <span class="string">on</span>
+scatter3(data(trialConds == 2,1), <span class="keyword">...</span>
+    data(trialConds == 2,2), <span class="keyword">...</span>
+    data(trialConds == 2,3), <span class="keyword">...</span>
+    <span class="string">'b'</span>, <span class="string">'filled'</span>)
+xlabel(<span class="string">'Voxel #1'</span>)
+ylabel(<span class="string">'Voxel #2'</span>)
+zlabel(<span class="string">'Voxel #3'</span>)
+legend(<span class="string">'Random Control Odorants'</span>, <span class="keyword">...</span>
+    <span class="string">'Trade Secret Pumpkin Spice Odorant'</span>, <span class="keyword">...</span>
+    <span class="string">"Location"</span>, <span class="keyword">...</span>
+    <span class="string">'northeastoutside'</span>)
+
+<span class="comment">% Describe your data QUALITATIVELY using this figure.</span>
+<span class="comment">% Is there a noticeable difference between the two trial conditions?</span>
+<span class="comment">% It looks like secret pumpking spice odorant really gets those neurons</span>
+<span class="comment">% going. Generally speaking, there seems to be higher voxel responses from</span>
+<span class="comment">% the pumpkin spice odorant - when compared to the control.</span>
+
+<span class="comment">% Yes, as I mentioned above, there certainly seems to be group clustering</span>
+<span class="comment">% between conditions, with the pumpking spice condition elliciting higher</span>
+<span class="comment">% repsonses.</span>
+
+<span class="comment">% What geometric shape are these "response clouds", and what distribution</span>
+<span class="comment">% would you use to model them?</span>
+</pre><img vspace="5" hspace="5" src="Question_4_01.png" alt=""> <img vspace="5" hspace="5" src="Question_4_02.png" alt=""> <h2 id="4">(B) Quantify the response statistics of each individual trial condition</h2><p>Calculate the means of each response cloud, as well as their respective covariance matrices of each response cloud using matrix multiplication [REMEMBER TO CENTER THE DATA FIRST].</p><pre class="codeinput"><span class="comment">% Find Mean</span>
+control_mean = mean(control_responses) ;
+spice_mean = mean(spice_responses) ;
+
+<span class="comment">% Subtract this away to center data so we can find the covariance matrix</span>
+<span class="comment">% using svd()</span>
+centered_control = control_responses - control_mean ;
+centered_spice = spice_responses - spice_mean ;
+
+<span class="comment">% Plot the data to get a visual double check it is centered</span>
+figure ;
+scatter3(centered_control(:,1), <span class="keyword">...</span>
+    centered_control(:,2), <span class="keyword">...</span>
+    centered_control(:,3), <span class="keyword">...</span>
+    <span class="string">'r'</span>, <span class="string">'filled'</span>)
+hold <span class="string">on</span>
+scatter3(centered_spice(:,1), <span class="keyword">...</span>
+    centered_spice(:,2), <span class="keyword">...</span>
+    centered_spice(:,3), <span class="keyword">...</span>
+    <span class="string">'b'</span>, <span class="string">'filled'</span>)
+xlabel(<span class="string">'Voxel #1'</span>)
+ylabel(<span class="string">'Voxel #2'</span>)
+zlabel(<span class="string">'Voxel #3'</span>)
+legend(<span class="string">'Random Control Odorants'</span>, <span class="keyword">...</span>
+    <span class="string">'Trade Secret Pumpkin Spice Odorant'</span>, <span class="keyword">...</span>
+    <span class="string">"Location"</span>, <span class="keyword">...</span>
+    <span class="string">'northeastoutside'</span>)
+
+<span class="comment">% Looks good, lets find the covariance matrix now...</span>
+
+control_cov = centered_control'*centered_control/ (length(centered_control)-1)  ;
+spice_cov = centered_spice'*centered_spice/ (length(centered_spice)-1)          ;
+mLabControl = cov(centered_control)                                             ;
+mLabSpice = cov(centered_spice)                                                 ;
+
+<span class="comment">% Verify your calculation is correct by comparing with the output given by</span>
+<span class="comment">% the cov() function.</span>
+
+CheckControlCov = isequal(round(control_cov,6),round(mLabControl,6))
+CheckSpiceCov = isequal(round(spice_cov,6),round(mLabSpice,6))
+
+<span class="comment">% How do the covariance matrices compare (are they similar at all or wildly</span>
+<span class="comment">% different?</span>
+
+<span class="comment">% These are damn close so we can say that our function is working. They</span>
+<span class="comment">% will never be exactly the same b/c it is based off of a sampled</span>
+<span class="comment">% distribution.</span>
+</pre><pre class="codeoutput">
+CheckControlCov =
+
+  logical
+
+   1
+
+
+CheckSpiceCov =
+
+  logical
+
+   1
+
+</pre><img vspace="5" hspace="5" src="Question_4_03.png" alt=""> <h2 id="5">(C) Next, Compute the SVD of Each Covariance Matrix</h2><p>Plot the three singular vectors originating from the center of each response cloud and scale their amplitude by the square root of the singular values.</p><pre class="codeinput"><span class="comment">% Decompose with SVD</span>
+[Uc, Sc, Vc] = svd(control_cov) ;
+[Us, Ss, Vs] = svd(spice_cov) ;
+
+<span class="comment">% Take sqrt of diagonal elements to scale the singular vectors</span>
+ScScale = sqrt(diag(Sc)) ;
+SsScale = sqrt(diag(Ss)) ;
+
+<span class="comment">% Scale by the right singular vectors</span>
+control_singVecScaled = Vc.* ScScale ;
+spice_singVecScaled = Vs.* SsScale ;
+
+<span class="comment">% B/c we are plotting on the actual data, and we took the svd of the</span>
+<span class="comment">% centered data, we now need to "shift" these scaled singular vectors so</span>
+<span class="comment">% that they are no longer centered, and will represent the actual data.</span>
+control_singVecScaled = control_singVecScaled + control_mean    ;
+spice_singVecScaled = spice_singVecScaled + spice_mean          ;
+
+<span class="comment">% Plot the data</span>
+
+figure ;
+scatter3(data(trialConds == 1,1), <span class="keyword">...</span>
+    data(trialConds == 1,2), <span class="keyword">...</span>
+    data(trialConds == 1,3), <span class="keyword">...</span>
+    <span class="string">'r'</span>, <span class="string">'filled'</span>)
+hold <span class="string">on</span>
+grid <span class="string">on</span>
+scatter3(data(trialConds == 2,1), <span class="keyword">...</span>
+    data(trialConds == 2,2), <span class="keyword">...</span>
+    data(trialConds == 2,3), <span class="keyword">...</span>
+    <span class="string">'b'</span>, <span class="string">'filled'</span>)
+xlabel(<span class="string">'Voxel #1'</span>)
+ylabel(<span class="string">'Voxel #2'</span>)
+zlabel(<span class="string">'Voxel #3'</span>)
+plot3([control_mean(1),control_singVecScaled(1,1)], <span class="keyword">...</span>
+    [control_mean(2),control_singVecScaled(1,2)], <span class="keyword">...</span>
+    [control_mean(3),control_singVecScaled(1,3)], <span class="keyword">...</span>
+    <span class="string">'LineWidth'</span>, 3, <span class="string">'Color'</span>, <span class="string">'k'</span>)
+hold <span class="string">on</span>
+plot3([spice_mean(1),spice_singVecScaled(1,1)], <span class="keyword">...</span>
+    [spice_mean(2),spice_singVecScaled(1,2)], <span class="keyword">...</span>
+    [spice_mean(3),spice_singVecScaled(1,3)], <span class="keyword">...</span>
+    <span class="string">'LineWidth'</span>, 3, <span class="string">'Color'</span>, <span class="string">'k'</span>)
+plot3([control_mean(1),control_singVecScaled(2,1)], <span class="keyword">...</span>
+    [control_mean(2),control_singVecScaled(2,2)], <span class="keyword">...</span>
+    [control_mean(3),control_singVecScaled(2,3)], <span class="keyword">...</span>
+    <span class="string">'LineWidth'</span>, 3, <span class="string">'Color'</span>, <span class="string">'k'</span>)
+plot3([spice_mean(1), spice_singVecScaled(2,1)], <span class="keyword">...</span>
+    [spice_mean(2),spice_singVecScaled(2,2)], <span class="keyword">...</span>
+    [spice_mean(3),spice_singVecScaled(2,3)], <span class="keyword">...</span>
+    <span class="string">'LineWidth'</span>, 3, <span class="string">'Color'</span>, <span class="string">'k'</span>)
+plot3([control_mean(1),control_singVecScaled(3,1)], <span class="keyword">...</span>
+    [control_mean(2),control_singVecScaled(3,2)], <span class="keyword">...</span>
+    [control_mean(3),control_singVecScaled(3,3)], <span class="keyword">...</span>
+    <span class="string">'LineWidth'</span>, 3, <span class="string">'Color'</span>, <span class="string">'k'</span>)
+plot3([spice_mean(1),spice_singVecScaled(3,1)], <span class="keyword">...</span>
+    [spice_mean(2),spice_singVecScaled(3,2)], <span class="keyword">...</span>
+    [spice_mean(3),spice_singVecScaled(3,3)], <span class="keyword">...</span>
+    <span class="string">'LineWidth'</span>, 3, <span class="string">'Color'</span>, <span class="string">'k'</span>)
+legend(<span class="string">'Random Control Odorants'</span>, <span class="keyword">...</span>
+    <span class="string">'Trade Secret Pumpkin Spice Odorant'</span>, <span class="keyword">...</span>
+    <span class="string">'Singular Vectors'</span>, <span class="keyword">...</span>
+    <span class="string">"Location"</span>, <span class="string">'northeastoutside'</span>)
+title(<span class="string">'Including the Eigenvectors of Each Data Cloud'</span>)
+
+<span class="comment">% Relative to how similar the covariance matrices were before computing</span>
+<span class="comment">% their SVD, how do each trial condition's respective set of singular</span>
+<span class="comment">% values compare?</span>
+
+<span class="comment">% Calculate the length of each and compare them.</span>
+
+singularValueDiff = diag(Sc) - diag(Ss)
+
+<span class="comment">% Comparing the singular values we can see that they are nearly identical.</span>
+
+<span class="comment">% Describe what this tells us about the relationship between the three</span>
+<span class="comment">% voxels across conditions. We can say that these two different ellipsoid</span>
+<span class="comment">% clouds of data have the same amount of variance on each of these basis</span>
+<span class="comment">% axes.</span>
+</pre><pre class="codeoutput">
+singularValueDiff =
+
+    0.8649
+    0.6408
+   -0.5199
+
+</pre><img vspace="5" hspace="5" src="Question_4_04.png" alt=""> <h2 id="6">(D) Validating the Model with Data Simulation</h2><p>A powerful method to validate a model is by <b>generating</b> (i.e. simulating) new data matching your quantitative description of the real data, and then comparing them with real data.</p><pre class="codeinput"><span class="comment">% Create a function 'simResponses = odorExperiment(numTrials, numTrials2)</span>
+<span class="comment">%   numTrials 1 and numTrials2 = # of trials in a simulated experiment for</span>
+<span class="comment">%   conditions 1 and 2, respectively.</span>
+<span class="comment">%   simResponses = a (N x 3) matrix containing simulated responses of each</span>
+<span class="comment">%   of your 3 voxels during N = numTrials 1 + numTrials2 trials.</span>
+<span class="comment">%   [HINT: USE 'ndRand()' FROM THE PREVIOUS PROBLEM]</span>
+
+<span class="comment">% mu and cov Data pasted below</span>
+
+control_mean = [2.9771,    4.2488,    4.9744] ;
+spice_mean = [9.9819,   12.0838,   11.0741] ;
+control_cov = [26.1315,    9.8203,    4.9087;<span class="keyword">...</span>
+                9.8203,   15.7457,    3.4075; <span class="keyword">...</span>
+                4.9087    3.4075    3.3829] ;
+spice_cov = [12.9038,    8.0973,    2.9106;<span class="keyword">...</span>
+                8.0973,   26.9454,    6.3192;<span class="keyword">...</span>
+                2.9106,    6.3192,    4.4251] ;
+
+numt1 = 300 ;
+numt2 = 312 ;
+
+simulated_data = odorExperiment(numt1,numt2) ;
+
+<span class="comment">% Plot the simiulated and real responses in the same figure (use subplots</span>
+<span class="comment">% if you wish) to compare the two.</span>
+
+subplot(1,2,1)
+scatter3(data(trialConds == 1,1), <span class="keyword">...</span>
+    data(trialConds == 1,2), <span class="keyword">...</span>
+    data(trialConds == 1,3), <span class="keyword">...</span>
+    <span class="string">'r'</span>, <span class="string">'filled'</span>)
+hold <span class="string">on</span>
+scatter3(data(trialConds == 2,1), <span class="keyword">...</span>
+    data(trialConds == 2,2), <span class="keyword">...</span>
+    data(trialConds == 2,3), <span class="keyword">...</span>
+    <span class="string">'b'</span>, <span class="string">'filled'</span>)
+xlabel(<span class="string">'Voxel #1'</span>)
+ylabel(<span class="string">'Voxel #2'</span>)
+zlabel(<span class="string">'Voxel #3'</span>)
+legend(<span class="string">'Random Control Odorants'</span>, <span class="keyword">...</span>
+    <span class="string">'Trade Secret Pumpkin Spice Odorant'</span>, <span class="keyword">...</span>
+    <span class="string">"Location"</span>, <span class="keyword">...</span>
+    <span class="string">'southoutside'</span>)
+title(<span class="string">'Original Data'</span>)
+
+subplot(1,2,2)
+scatter3(simulated_data((numt1+1:end),1), <span class="keyword">...</span>
+    simulated_data((numt1+1:end),2), <span class="keyword">...</span>
+    simulated_data((numt1+1:end),3), <span class="string">'b'</span>, <span class="string">'filled'</span>)
+hold <span class="string">on</span>
+scatter3(simulated_data((1:numt1),1), <span class="keyword">...</span>
+    simulated_data((1:numt1),2), <span class="keyword">...</span>
+    simulated_data((1:numt1),3), <span class="string">'r'</span>, <span class="string">'filled'</span>)
+xlabel(<span class="string">'Voxel #1'</span>)
+ylabel(<span class="string">'Voxel #2'</span>)
+zlabel(<span class="string">'Voxel #3'</span>)
+legend(<span class="string">'Random Control Odorants'</span>, <span class="keyword">...</span>
+    <span class="string">'Trade Secret Pumpkin Spice Odorant'</span>, <span class="keyword">...</span>
+    <span class="string">"Location"</span>, <span class="keyword">...</span>
+    <span class="string">'southoutside'</span>)
+title(<span class="string">'Simulated Data'</span>)
+
+<span class="comment">% Is your simulated response data a good characterization of the real</span>
+<span class="comment">% amygdala voxel responses?</span>
+
+<span class="comment">% We can see that visually these distributions look quite similar, but will</span>
+<span class="comment">% never look exactly the same. Thus, we would conclude that this is a good</span>
+<span class="comment">% characterization of the vozel responses that we measured. For good</span>
+<span class="comment">% measure, I have calculated the mean and cov of each to eye.</span>
+
+mean(simulated_data((numt1+1):end,:))
+mean(simulated_data((1:numt1):end,:))
+cov(simulated_data((numt1+1):end,:))
+cov(simulated_data((1:numt1):end,:))
+</pre><pre class="codeoutput">
+control_cov =
+
+   26.1315    9.8203    4.9087
+    9.8203   15.7457    3.4075
+    4.9087    3.4075    3.3829
+
+
+spice_cov =
+
+   12.9038    8.0973    2.9106
+    8.0973   26.9454    6.3192
+    2.9106    6.3192    4.4251
+
+
+ans =
+
+   10.2365   12.4675   11.0224
+
+
+ans =
+
+    6.6550    8.2977    8.0342
+
+
+ans =
+
+   11.8478    9.2371    2.5807
+    9.2371   27.5485    5.6737
+    2.5807    5.6737    3.8455
+
+
+ans =
+
+   31.9852   24.5278   15.2093
+   24.5278   39.7640   17.5194
+   15.2093   17.5194   13.1235
+
+</pre><img vspace="5" hspace="5" src="Question_4_05.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% HW # 4 - Question 4 - Math Tools - Matthew DeVerna
+
+clear all
+close all
+
+%% Question 4: Analyzing and Simulating Experimental Data
+% An international coffee conglomerate recruits you to characterize the
+% neuropsychology underlying their customers' adoration of pumpkin spice.
+% You devise a BOLD fMRI pilot experiment in which you present one of two
+% classes of odorants to an individual while monitoring the activity of
+% three key voxels located in the amygdala, an structure known to be
+% associate with emotional responses. 
+
+% The file 'experimentData.mat' contains:
+% 'data' = (N x 3) matrix 
+%   ROWS = BOLD response of the three voxels on a given trial (relative to baseline)
+%   'trialConds' = (N x 1) vector indicating the experimental condition of each trial.
+
+% Condition 1 =  random control odorants 
+% Condition 2 = trade secret pumpkin spice odorant 
+
+load('experimentData.mat')
+
+%% (A) Visualize the Data
+% Determine how many trials of each trial condition were completed - display
+% this information in a 2-bin histogram.
+% bins = condition
+% height = trial counts
+
+figure; hold on;
+control_responses = data(trialConds == 1, :) ;
+spice_responses = data(trialConds == 2, :) ;
+
+cats = categorical({'Conditon One', 'Condition Two'}) ;
+histogram('Categories', cats, 'BinCounts', [length(control_responses),length(spice_responses)]) ;
+
+% Plot a 3-d scatter plot of the recorded responses, with each point
+% color-coded according to its associated trial condition (use scatter3())
+% [DONT FORGET TO LABEL AXES]
+figure ;
+scatter3(data(trialConds == 1,1), ... 
+    data(trialConds == 1,2), ...
+    data(trialConds == 1,3), ...
+    'r', 'filled')
+hold on
+scatter3(data(trialConds == 2,1), ...
+    data(trialConds == 2,2), ...
+    data(trialConds == 2,3), ...
+    'b', 'filled')
+xlabel('Voxel #1')
+ylabel('Voxel #2')
+zlabel('Voxel #3')
+legend('Random Control Odorants', ...
+    'Trade Secret Pumpkin Spice Odorant', ...
+    "Location", ...
+    'northeastoutside')
+
+% Describe your data QUALITATIVELY using this figure.
+% Is there a noticeable difference between the two trial conditions?
+% It looks like secret pumpking spice odorant really gets those neurons
+% going. Generally speaking, there seems to be higher voxel responses from
+% the pumpkin spice odorant - when compared to the control. 
+
+% Yes, as I mentioned above, there certainly seems to be group clustering
+% between conditions, with the pumpking spice condition elliciting higher
+% repsonses.
+
+% What geometric shape are these "response clouds", and what distribution
+% would you use to model them?
+
+%% (B) Quantify the response statistics of each individual trial condition
+% Calculate the means of each response cloud, as well as their respective
+% covariance matrices of each response cloud using matrix multiplication
+% [REMEMBER TO CENTER THE DATA FIRST].
+
+% Find Mean
+control_mean = mean(control_responses) ;
+spice_mean = mean(spice_responses) ;
+
+% Subtract this away to center data so we can find the covariance matrix
+% using svd()
+centered_control = control_responses - control_mean ;
+centered_spice = spice_responses - spice_mean ;
+
+% Plot the data to get a visual double check it is centered
+figure ;
+scatter3(centered_control(:,1), ... 
+    centered_control(:,2), ...
+    centered_control(:,3), ...
+    'r', 'filled')
+hold on
+scatter3(centered_spice(:,1), ...
+    centered_spice(:,2), ...
+    centered_spice(:,3), ...
+    'b', 'filled')
+xlabel('Voxel #1')
+ylabel('Voxel #2')
+zlabel('Voxel #3')
+legend('Random Control Odorants', ...
+    'Trade Secret Pumpkin Spice Odorant', ...
+    "Location", ...
+    'northeastoutside')
+
+% Looks good, lets find the covariance matrix now...
+
+control_cov = centered_control'*centered_control/ (length(centered_control)-1)  ;
+spice_cov = centered_spice'*centered_spice/ (length(centered_spice)-1)          ;
+mLabControl = cov(centered_control)                                             ;
+mLabSpice = cov(centered_spice)                                                 ;
+
+% Verify your calculation is correct by comparing with the output given by
+% the cov() function.
+
+CheckControlCov = isequal(round(control_cov,6),round(mLabControl,6))
+CheckSpiceCov = isequal(round(spice_cov,6),round(mLabSpice,6))
+
+% How do the covariance matrices compare (are they similar at all or wildly
+% different?
+
+% These are damn close so we can say that our function is working. They
+% will never be exactly the same b/c it is based off of a sampled
+% distribution.
+
+%% (C) Next, Compute the SVD of Each Covariance Matrix
+% Plot the three singular vectors originating from the center of each
+% response cloud and scale their amplitude by the square root of the
+% singular values.
+
+% Decompose with SVD
+[Uc, Sc, Vc] = svd(control_cov) ;
+[Us, Ss, Vs] = svd(spice_cov) ;
+
+% Take sqrt of diagonal elements to scale the singular vectors
+ScScale = sqrt(diag(Sc)) ;
+SsScale = sqrt(diag(Ss)) ;
+
+% Scale by the right singular vectors
+control_singVecScaled = Vc.* ScScale ;
+spice_singVecScaled = Vs.* SsScale ;
+
+% B/c we are plotting on the actual data, and we took the svd of the
+% centered data, we now need to "shift" these scaled singular vectors so
+% that they are no longer centered, and will represent the actual data.
+control_singVecScaled = control_singVecScaled + control_mean    ;
+spice_singVecScaled = spice_singVecScaled + spice_mean          ;
+
+% Plot the data
+
+figure ;
+scatter3(data(trialConds == 1,1), ... 
+    data(trialConds == 1,2), ...
+    data(trialConds == 1,3), ...
+    'r', 'filled')
+hold on
+grid on
+scatter3(data(trialConds == 2,1), ...
+    data(trialConds == 2,2), ...
+    data(trialConds == 2,3), ...
+    'b', 'filled')
+xlabel('Voxel #1')
+ylabel('Voxel #2')
+zlabel('Voxel #3')
+plot3([control_mean(1),control_singVecScaled(1,1)], ...
+    [control_mean(2),control_singVecScaled(1,2)], ...
+    [control_mean(3),control_singVecScaled(1,3)], ...
+    'LineWidth', 3, 'Color', 'k')
+hold on
+plot3([spice_mean(1),spice_singVecScaled(1,1)], ...
+    [spice_mean(2),spice_singVecScaled(1,2)], ...
+    [spice_mean(3),spice_singVecScaled(1,3)], ...
+    'LineWidth', 3, 'Color', 'k')
+plot3([control_mean(1),control_singVecScaled(2,1)], ...
+    [control_mean(2),control_singVecScaled(2,2)], ...
+    [control_mean(3),control_singVecScaled(2,3)], ...
+    'LineWidth', 3, 'Color', 'k')
+plot3([spice_mean(1), spice_singVecScaled(2,1)], ...
+    [spice_mean(2),spice_singVecScaled(2,2)], ...
+    [spice_mean(3),spice_singVecScaled(2,3)], ...
+    'LineWidth', 3, 'Color', 'k')
+plot3([control_mean(1),control_singVecScaled(3,1)], ...
+    [control_mean(2),control_singVecScaled(3,2)], ...
+    [control_mean(3),control_singVecScaled(3,3)], ...
+    'LineWidth', 3, 'Color', 'k')
+plot3([spice_mean(1),spice_singVecScaled(3,1)], ...
+    [spice_mean(2),spice_singVecScaled(3,2)], ...
+    [spice_mean(3),spice_singVecScaled(3,3)], ...
+    'LineWidth', 3, 'Color', 'k')
+legend('Random Control Odorants', ...
+    'Trade Secret Pumpkin Spice Odorant', ...
+    'Singular Vectors', ...
+    "Location", 'northeastoutside')
+title('Including the Eigenvectors of Each Data Cloud')
+
+% Relative to how similar the covariance matrices were before computing
+% their SVD, how do each trial condition's respective set of singular
+% values compare?
+
+% Calculate the length of each and compare them.
+
+singularValueDiff = diag(Sc) - diag(Ss)
+
+% Comparing the singular values we can see that they are nearly identical.
+
+% Describe what this tells us about the relationship between the three
+% voxels across conditions. We can say that these two different ellipsoid
+% clouds of data have the same amount of variance on each of these basis
+% axes.
+
+%% (D) Validating the Model with Data Simulation
+% A powerful method to validate a model is by *generating* (i.e.
+% simulating) new data matching your quantitative description of the real
+% data, and then comparing them with real data.
+
+% Create a function 'simResponses = odorExperiment(numTrials, numTrials2)
+%   numTrials 1 and numTrials2 = # of trials in a simulated experiment for
+%   conditions 1 and 2, respectively.
+%   simResponses = a (N x 3) matrix containing simulated responses of each
+%   of your 3 voxels during N = numTrials 1 + numTrials2 trials. 
+%   [HINT: USE 'ndRand()' FROM THE PREVIOUS PROBLEM]
+
+% mu and cov Data pasted below
+
+control_mean = [2.9771,    4.2488,    4.9744] ;
+spice_mean = [9.9819,   12.0838,   11.0741] ;
+control_cov = [26.1315,    9.8203,    4.9087;...
+                9.8203,   15.7457,    3.4075; ...
+                4.9087    3.4075    3.3829] ;
+spice_cov = [12.9038,    8.0973,    2.9106;...
+                8.0973,   26.9454,    6.3192;...
+                2.9106,    6.3192,    4.4251] ;
+
+numt1 = 300 ; 
+numt2 = 312 ;
+
+simulated_data = odorExperiment(numt1,numt2) ; 
+
+% Plot the simiulated and real responses in the same figure (use subplots
+% if you wish) to compare the two. 
+
+subplot(1,2,1)
+scatter3(data(trialConds == 1,1), ... 
+    data(trialConds == 1,2), ...
+    data(trialConds == 1,3), ...
+    'r', 'filled')
+hold on
+scatter3(data(trialConds == 2,1), ...
+    data(trialConds == 2,2), ...
+    data(trialConds == 2,3), ...
+    'b', 'filled')
+xlabel('Voxel #1')
+ylabel('Voxel #2')
+zlabel('Voxel #3')
+legend('Random Control Odorants', ...
+    'Trade Secret Pumpkin Spice Odorant', ...
+    "Location", ...
+    'southoutside')
+title('Original Data')
+
+subplot(1,2,2)
+scatter3(simulated_data((numt1+1:end),1), ... 
+    simulated_data((numt1+1:end),2), ...
+    simulated_data((numt1+1:end),3), 'b', 'filled')
+hold on
+scatter3(simulated_data((1:numt1),1), ...
+    simulated_data((1:numt1),2), ...
+    simulated_data((1:numt1),3), 'r', 'filled')
+xlabel('Voxel #1')
+ylabel('Voxel #2')
+zlabel('Voxel #3')
+legend('Random Control Odorants', ...
+    'Trade Secret Pumpkin Spice Odorant', ...
+    "Location", ...
+    'southoutside')
+title('Simulated Data')
+
+% Is your simulated response data a good characterization of the real
+% amygdala voxel responses?
+
+% We can see that visually these distributions look quite similar, but will
+% never look exactly the same. Thus, we would conclude that this is a good
+% characterization of the vozel responses that we measured. For good
+% measure, I have calculated the mean and cov of each to eye.
+
+mean(simulated_data((numt1+1):end,:))
+mean(simulated_data((1:numt1):end,:))
+cov(simulated_data((numt1+1):end,:))
+cov(simulated_data((1:numt1):end,:))
+
+
+
+
+##### SOURCE END #####
+--></body></html>

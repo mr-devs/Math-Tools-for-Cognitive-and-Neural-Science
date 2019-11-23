@@ -1,0 +1,607 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Question_3</title><meta name="generator" content="MATLAB 9.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2019-11-12"><meta name="DC.source" content="Question_3.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">HW # 4 - Question 3 - Math Tools - Matthew DeVerna</a></li><li><a href="#2">Question 3: Multi-Dimensional Gaussians</a></li><li><a href="#3">(B) Projecting a 2-D Gaussian Onto a Unit Vector</a></li><li><a href="#4">(C) Plotting an Ellipse</a></li><li><a href="#5">(D) Maximizing the variance of the marginal distribution</a></li></ul></div><h2 id="1">HW # 4 - Question 3 - Math Tools - Matthew DeVerna</h2><pre class="codeinput">clear <span class="string">all</span>
+close <span class="string">all</span>
+</pre><h2 id="2">Question 3: Multi-Dimensional Gaussians</h2><p>Write a function samples = ndRand(mean, cov, num) that generates a set of samples drawn from an N-dimensional Gaussian distribution with the specified parameters:   'mean' = N-vector   'cov'ariance = NxN matrix   'num' = [optional -&gt; default = 1] specifies # of samples to return</p><pre class="codeinput"><span class="comment">% The returned value should be a matrix with 'num' rows each containing a</span>
+<span class="comment">% sample of N elements.</span>
+
+<span class="comment">% Use the below parameters to sample and scatter plot 1,000 points to</span>
+<span class="comment">% verify your function works as intended.</span>
+mu = [4,5]          ;
+C_x = [9,-5; -5,6]  ;
+num = 1000          ;
+
+<span class="comment">% Run function</span>
+samples = ndRand(mu, C_x, num) ;
+
+<span class="comment">% Here is a visual check that the data has been trasnformed</span>
+figure ;
+scatter(samples(:,1),samples(:,2))
+xlabel(<span class="string">'x-axis'</span>)
+ylabel(<span class="string">'y-axis'</span>)
+title(<span class="string">'Transformed by M, around the Provided Mean'</span>)
+axis([-5, 10, -10, 20])
+
+<span class="comment">% Here is a quantitative check...</span>
+
+CovarianceMat = cov(samples)
+
+CovarianceMat = round(CovarianceMat);
+
+CovarianceMatCheck = isequal(CovarianceMat,C_x)
+
+<span class="comment">% As we can see here the the CovarianceMat is approximately equal to the</span>
+<span class="comment">% C_x covariance matrix that we provided it before so we can conclude that</span>
+<span class="comment">% our function is working.</span>
+</pre><pre class="codeoutput">
+CovarianceMat =
+
+    9.5552   -5.5146
+   -5.5146    6.5372
+
+
+CovarianceMatCheck =
+
+  logical
+
+   0
+
+</pre><img vspace="5" hspace="5" src="Question_3_01.png" alt=""> <h2 id="3">(B) Projecting a 2-D Gaussian Onto a Unit Vector</h2><p>Consider the marginal distribution of a generalized 2-D Gaussian with mean 'mu' and covariance 'sigma' in which samples are projected onto a unit vector 'u_hat' to obtain a 1-D distribution.</p><pre class="codeinput"><span class="comment">% Write a mathematical expression for the mean, 'mu_hat', and variance,</span>
+<span class="comment">% 'var_sqrd', of this marginal distribution as a function of 'mu_hat'.</span>
+
+<span class="comment">% Set these again just in case</span>
+mu = [4,5]          ;
+C_x = [9,-5; -5,6]  ;
+num = 1000          ;
+
+<span class="comment">% Take new Samples</span>
+new_samples = ndRand(mu, C_x, num) ;
+
+u = [1;1]                       ; <span class="comment">% Create a vector</span>
+u_hat = u/sqrt(u'*u)            ; <span class="comment">% Make it a unit vector by dividing by it's length</span>
+
+ideal_mu_hat = u_hat' * mu'     ; <span class="comment">% mathematical mean</span>
+var_sqd = u_hat' * C_x * u_hat  ; <span class="comment">% mathetmatical variance</span>
+
+<span class="comment">% Create a set of 48 unit vectors spaced evenly around the unit circle. For</span>
+<span class="comment">% each of these, compare the mean and variance estimated by projecting your</span>
+<span class="comment">% 1,000 samples from part (a) onto 'u-hat'.</span>
+
+<span class="comment">% create unit vectors in a circle</span>
+n = 0:47;
+thetas_ = (2*pi) * n ;
+thetas = thetas_ / 47 ;
+unit_vecs = [cos(thetas) ; sin(thetas)] ;
+
+<span class="comment">% preallocate vectors to fill w. data in below loop</span>
+ideal_mus = nan(1, length(n)) ;
+ideal_vars = nan(1, length(n)) ;
+emp_mean = nan(1, length(n)) ;
+emp_var = nan(1, length(n)) ;
+idealVsEmpDiff_MU = nan(1, length(n)) ;
+idealVsEmpDiff_VAR = nan(1, length(n)) ;
+
+<span class="keyword">for</span> ii = 1: length(n)
+
+    <span class="comment">% Find the ideal/theoretical for all, appending to the new spot each</span>
+    <span class="comment">% time. Do this by dotting with ideal mu and C_x</span>
+    ideal_mus(ii) = unit_vecs(:,ii)' * mu'          ;
+    ideal_vars(ii) = unit_vecs(:,ii)' * C_x * u_hat ;
+
+    <span class="comment">% Do the same thing for the data that we "smash" onto each new unit</span>
+    <span class="comment">% vector as we iterate through</span>
+    smashedData = new_samples*unit_vecs(:,ii)       ;
+    emp_mean(ii) = mean(smashedData)                ;
+    emp_var(ii) = cov(smashedData)                  ;
+
+    <span class="comment">% Find their difference</span>
+    idealVsEmpDiff_MU(ii) = ideal_mus(ii) - emp_mean(ii)    ;
+    idealVsEmpDiff_VAR(ii) = ideal_vars(ii) - emp_var(ii)   ;
+<span class="keyword">end</span>
+
+<span class="comment">% Stem plot the mathematically computed mean and the sample mean (on the</span>
+<span class="comment">% same plot) and also plot the mathematical variance and the sample</span>
+<span class="comment">% variance.</span>
+
+subplot(2,1,1)
+stem(ideal_mus, <span class="string">'filled'</span>, <span class="string">'r'</span>)
+hold <span class="string">on</span>
+stem(ideal_vars, <span class="string">'filled'</span>, <span class="string">'b'</span>)
+title(<span class="string">'Ideal (Theoretical) Mean and Variance'</span>)
+legend(<span class="string">'mu'</span>,<span class="string">'variance'</span>)
+xlabel(<span class="string">'x-axis'</span>)
+ylabel(<span class="string">'y-axis'</span>)
+
+subplot(2,1,2)
+stem(emp_mean, <span class="string">'-r'</span>)
+hold <span class="string">on</span>
+stem(emp_var, <span class="string">'-b'</span>)
+title(<span class="string">'Empirical Mean and Variance (From Sampled Data)'</span>)
+legend(<span class="string">'mu'</span>,<span class="string">'variance'</span>)
+xlabel(<span class="string">'x-axis'</span>)
+ylabel(<span class="string">'y-axis'</span>)
+
+<span class="comment">% Here we see that the mean and variance fluctuates in a cyclical manner as</span>
+<span class="comment">% we move around the circle. Should vary similarly to one another, however,</span>
+<span class="comment">% they will never be identical (unless you take 'tons and tons' of samples).</span>
+</pre><img vspace="5" hspace="5" src="Question_3_02.png" alt=""> <h2 id="4">(C) Plotting an Ellipse</h2><p>Scatterplot 1,000 new samples of a 2-dimensional Gaussian using 'mu' and C_x from part (A). Measure the sample mean and covariance of your data points, comparing to the values that you requested when calling the function.</p><pre class="codeinput"><span class="comment">% Set these again just in case</span>
+mu = [4,5]          ;
+C_x = [9,-5; -5,6]  ;
+num = 1000          ;
+
+<span class="comment">% ReRun function to create new samples</span>
+samples2 = ndRand(mu, C_x, num) ;
+
+<span class="comment">% Plot an ellipse on top of the scatterplot by generating unit vectors</span>
+<span class="comment">% equi-spaced around the circle, and transforming them with a matrix as in</span>
+<span class="comment">% part (A) to have the same mean and covariance as the data. Try this on</span>
+<span class="comment">% three additional random data sets with different means and covariance</span>
+<span class="comment">% matrices. Does this ellipse capture the shape of the data?</span>
+
+<span class="comment">% Create the set of unit vectors</span>
+n = 0:199;
+thetas_ = (2*pi) * n ;
+thetas = thetas_ / 199 ;
+unit_vecs = [cos(thetas) ; sin(thetas)] ;
+
+figure; hold <span class="string">on</span>;
+<span class="keyword">for</span> ii = 1:3
+    <span class="keyword">if</span> ii == 1
+        <span class="comment">% Re-run the function to get another transformed 1,000 samples</span>
+        samples2 = ndRand(mu, C_x, num) ;
+        <span class="comment">% Transform the unit vectors</span>
+        trans_unit_vecs = ndRandwData(unit_vecs, mu, C_x) ;
+        <span class="comment">% Plot the transformed samples and the unit vectors</span>
+        subplot(1,3,ii)
+        scatter(samples2(:,1),samples2(:,2))
+        hold <span class="string">on</span>
+        plot(trans_unit_vecs(:,1), trans_unit_vecs(:,2), <span class="string">'r-*'</span>)
+        maxmax = max(max(samples2));
+        minmin = min(min(samples2));
+        axis([minmin-2 maxmax+2, minmin-2 maxmax+2])
+        grid <span class="string">on</span>
+        title(<span class="string">'Transform with Provided Mu/C_x'</span>)
+        legend(<span class="string">'transformed data'</span>,<span class="string">'transformed unit vector coordinates'</span>, <span class="string">'Location'</span>, <span class="string">'southoutside'</span>)
+        xlabel(<span class="string">'x-axis'</span>)
+        ylabel(<span class="string">'y-axis'</span>)
+
+    <span class="keyword">else</span>
+        random_mu = mu * randi([-50,50]);
+        rand_mat = randi([-50,50],25,2);
+        random_cov = cov(rand_mat) ;
+
+        random_cov(2,1) = random_cov(1,2);
+        <span class="comment">% Re-run the function to get another transformed 1,000 samples</span>
+        samples2 = ndRand(random_mu, random_cov, num) ;
+        <span class="comment">% Transform the unit vectors</span>
+        trans_unit_vecs = ndRandwData(unit_vecs, random_mu, random_cov) ;
+        <span class="comment">% Plot the transformed samples and the unit vectors</span>
+        subplot(1,3,ii)
+        scatter(samples2(:,1),samples2(:,2))
+        hold <span class="string">on</span>
+        plot(trans_unit_vecs(:,1), trans_unit_vecs(:,2), <span class="string">'r-*'</span>)
+        maxmax = max(max(samples2));
+        minmin = min(min(samples2));
+        axis([minmin-5 maxmax+5, minmin-5 maxmax+5])
+        grid <span class="string">on</span>
+        title(<span class="string">'Transform with Random Mu/C_x'</span>)
+        legend(<span class="string">'transformed data'</span>,<span class="string">'transformed unit vector coordinates'</span>, <span class="string">'Location'</span>, <span class="string">'southoutside'</span>)
+        xlabel(<span class="string">'x-axis'</span>)
+        ylabel(<span class="string">'y-axis'</span>)
+
+    <span class="keyword">end</span>
+
+<span class="keyword">end</span>
+sgtitle(<span class="string">'Transformed Data and Unit Vectors based on Original and Random Mean and Covariance Matrices'</span>)
+
+
+<span class="comment">% Yes the ellipse does capture the shape of these matrices, because</span>
+<span class="comment">% we implementing the same transformation to every unit vector. These</span>
+<span class="comment">% transformations are linear, so because we are essentially "giving" the</span>
+<span class="comment">% set of unit vectors the same covariance and mean, then it should surround</span>
+<span class="comment">% the data that was transformed by the same parameters (mean and</span>
+<span class="comment">% covariance).</span>
+</pre><img vspace="5" hspace="5" src="Question_3_03.png" alt=""> <h2 id="5">(D) Maximizing the variance of the marginal distribution</h2><p>How would you, mathematically, compute the direction (i.e. find a unit vector) that maximizes the variance of the marginal distribution? Compute this direction and verify that it is consistent with your plot (i.e. plot this unit vector ontop of your previous plot.</p><pre class="codeinput"><span class="comment">% *** Project onto a unit vector that is parallel to the best fitting line</span>
+<span class="comment">% of regression.</span>
+
+<span class="comment">% Reset the original dataset</span>
+mu = [4,5]          ;
+C_x = [9,-5; -5,6]  ;
+num = 1000          ;
+
+<span class="comment">% ReRun function to create new samples</span>
+samples2 = ndRand(mu, C_x, num) ;
+
+<span class="comment">% To maximize the variance we need to find the largest eigenvector, so we</span>
+<span class="comment">% take the svd()</span>
+[U, S, V] = svd(samples2);
+
+<span class="comment">% By default, matlab sorts these from largest to smallest, so we take the</span>
+<span class="comment">% first column</span>
+max_variance_unit = V(:,1) ;
+
+<span class="comment">% Transform the unit vectors</span>
+trans_unit_vecs = ndRandwData(unit_vecs, mu, C_x) ;
+
+<span class="comment">% Take all the means of the transformed data, this is where we'll be</span>
+<span class="comment">% plotting our eigenvector from.</span>
+data_means = mean(trans_unit_vecs) ;
+
+<span class="comment">% Plot the transformed samples and the unit vectors</span>
+figure
+scatter(samples2(:,1),samples2(:,2))
+hold <span class="string">on</span>
+plot(trans_unit_vecs(:,1), trans_unit_vecs(:,2), <span class="string">'r-*'</span>)
+plot([data_means(1),max_variance_unit(1)], [data_means(2),max_variance_unit(2)], <span class="string">'LineWidth'</span>, 3, <span class="string">'Color'</span>, <span class="string">'k'</span>)
+maxmax = max(max(samples2));
+minmin = min(min(samples2));
+axis <span class="string">equal</span>
+grid <span class="string">on</span>
+title(<span class="string">'Transformed Data with Largest Eigenvector'</span>)
+legend(<span class="string">'Transformed Data'</span>,<span class="string">'Transformed Unit Vectors'</span>,<span class="string">'Max Variance Unit Vector'</span>)
+xlabel(<span class="string">'x-axis'</span>)
+ylabel(<span class="string">'y-axis'</span>)
+
+<span class="comment">% The unit vector should run perpendicular to the line of best fit, which</span>
+<span class="comment">% we can sort of visually see from the plot. However, what we do know is</span>
+<span class="comment">% that the first column of V (from the svd) is the basis for the largest</span>
+<span class="comment">% variance of this data set. Therefore, we can be confident that this line</span>
+<span class="comment">% would maximize the variance of this data.</span>
+</pre><img vspace="5" hspace="5" src="Question_3_04.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% HW # 4 - Question 3 - Math Tools - Matthew DeVerna
+
+clear all
+close all
+
+%% Question 3: Multi-Dimensional Gaussians
+    % Write a function samples = ndRand(mean, cov, num) that generates a set of
+    % samples drawn from an N-dimensional Gaussian distribution with the
+    % specified parameters:
+    %   'mean' = N-vector
+    %   'cov'ariance = NxN matrix
+    %   'num' = [optional -> default = 1] specifies # of samples to return
+
+% The returned value should be a matrix with 'num' rows each containing a
+% sample of N elements. 
+
+% Use the below parameters to sample and scatter plot 1,000 points to
+% verify your function works as intended.
+mu = [4,5]          ;
+C_x = [9,-5; -5,6]  ;
+num = 1000          ;
+
+% Run function
+samples = ndRand(mu, C_x, num) ;
+
+% Here is a visual check that the data has been trasnformed
+figure ; 
+scatter(samples(:,1),samples(:,2))
+xlabel('x-axis')
+ylabel('y-axis')
+title('Transformed by M, around the Provided Mean')
+axis([-5, 10, -10, 20])
+
+% Here is a quantitative check... 
+
+CovarianceMat = cov(samples) 
+
+CovarianceMat = round(CovarianceMat);
+
+CovarianceMatCheck = isequal(CovarianceMat,C_x)
+
+% As we can see here the the CovarianceMat is approximately equal to the
+% C_x covariance matrix that we provided it before so we can conclude that
+% our function is working. 
+
+%% (B) Projecting a 2-D Gaussian Onto a Unit Vector
+% Consider the marginal distribution of a generalized 2-D Gaussian with
+% mean 'mu' and covariance 'sigma' in which samples are projected onto a
+% unit vector 'u_hat' to obtain a 1-D distribution. 
+
+% Write a mathematical expression for the mean, 'mu_hat', and variance,
+% 'var_sqrd', of this marginal distribution as a function of 'mu_hat'. 
+
+% Set these again just in case
+mu = [4,5]          ;
+C_x = [9,-5; -5,6]  ;
+num = 1000          ;
+
+% Take new Samples
+new_samples = ndRand(mu, C_x, num) ;
+
+u = [1;1]                       ; % Create a vector
+u_hat = u/sqrt(u'*u)            ; % Make it a unit vector by dividing by it's length
+
+ideal_mu_hat = u_hat' * mu'     ; % mathematical mean
+var_sqd = u_hat' * C_x * u_hat  ; % mathetmatical variance
+
+% Create a set of 48 unit vectors spaced evenly around the unit circle. For
+% each of these, compare the mean and variance estimated by projecting your
+% 1,000 samples from part (a) onto 'u-hat'.
+
+% create unit vectors in a circle
+n = 0:47;
+thetas_ = (2*pi) * n ;
+thetas = thetas_ / 47 ;
+unit_vecs = [cos(thetas) ; sin(thetas)] ;
+
+% preallocate vectors to fill w. data in below loop
+ideal_mus = nan(1, length(n)) ;
+ideal_vars = nan(1, length(n)) ;
+emp_mean = nan(1, length(n)) ;
+emp_var = nan(1, length(n)) ;
+idealVsEmpDiff_MU = nan(1, length(n)) ;
+idealVsEmpDiff_VAR = nan(1, length(n)) ;
+
+for ii = 1: length(n)
+    
+    % Find the ideal/theoretical for all, appending to the new spot each
+    % time. Do this by dotting with ideal mu and C_x
+    ideal_mus(ii) = unit_vecs(:,ii)' * mu'          ; 
+    ideal_vars(ii) = unit_vecs(:,ii)' * C_x * u_hat ; 
+    
+    % Do the same thing for the data that we "smash" onto each new unit
+    % vector as we iterate through
+    smashedData = new_samples*unit_vecs(:,ii)       ;
+    emp_mean(ii) = mean(smashedData)                ;
+    emp_var(ii) = cov(smashedData)                  ;
+    
+    % Find their difference
+    idealVsEmpDiff_MU(ii) = ideal_mus(ii) - emp_mean(ii)    ;
+    idealVsEmpDiff_VAR(ii) = ideal_vars(ii) - emp_var(ii)   ;
+end
+
+% Stem plot the mathematically computed mean and the sample mean (on the
+% same plot) and also plot the mathematical variance and the sample
+% variance.
+
+subplot(2,1,1)
+stem(ideal_mus, 'filled', 'r')
+hold on
+stem(ideal_vars, 'filled', 'b')
+title('Ideal (Theoretical) Mean and Variance')
+legend('mu','variance')
+xlabel('x-axis')
+ylabel('y-axis')
+
+subplot(2,1,2)
+stem(emp_mean, '-r')
+hold on
+stem(emp_var, '-b')
+title('Empirical Mean and Variance (From Sampled Data)')
+legend('mu','variance')
+xlabel('x-axis')
+ylabel('y-axis')
+
+% Here we see that the mean and variance fluctuates in a cyclical manner as
+% we move around the circle. Should vary similarly to one another, however,
+% they will never be identical (unless you take 'tons and tons' of samples).
+
+
+%% (C) Plotting an Ellipse
+% Scatterplot 1,000 new samples of a 2-dimensional Gaussian using 'mu' and
+% C_x from part (A). Measure the sample mean and covariance of your data
+% points, comparing to the values that you requested when calling the
+% function. 
+
+% Set these again just in case
+mu = [4,5]          ;
+C_x = [9,-5; -5,6]  ;
+num = 1000          ;
+
+% ReRun function to create new samples
+samples2 = ndRand(mu, C_x, num) ;
+
+% Plot an ellipse on top of the scatterplot by generating unit vectors
+% equi-spaced around the circle, and transforming them with a matrix as in
+% part (A) to have the same mean and covariance as the data. Try this on
+% three additional random data sets with different means and covariance
+% matrices. Does this ellipse capture the shape of the data?
+
+% Create the set of unit vectors
+n = 0:199;
+thetas_ = (2*pi) * n ;
+thetas = thetas_ / 199 ;
+unit_vecs = [cos(thetas) ; sin(thetas)] ;
+
+figure; hold on;
+for ii = 1:3
+    if ii == 1
+        % Re-run the function to get another transformed 1,000 samples
+        samples2 = ndRand(mu, C_x, num) ;
+        % Transform the unit vectors
+        trans_unit_vecs = ndRandwData(unit_vecs, mu, C_x) ;
+        % Plot the transformed samples and the unit vectors
+        subplot(1,3,ii)
+        scatter(samples2(:,1),samples2(:,2))
+        hold on
+        plot(trans_unit_vecs(:,1), trans_unit_vecs(:,2), 'r-*')
+        maxmax = max(max(samples2));
+        minmin = min(min(samples2));
+        axis([minmin-2 maxmax+2, minmin-2 maxmax+2])
+        grid on
+        title('Transform with Provided Mu/C_x')
+        legend('transformed data','transformed unit vector coordinates', 'Location', 'southoutside')
+        xlabel('x-axis')
+        ylabel('y-axis')
+        
+    else
+        random_mu = mu * randi([-50,50]);
+        rand_mat = randi([-50,50],25,2);
+        random_cov = cov(rand_mat) ;
+        
+        random_cov(2,1) = random_cov(1,2);
+        % Re-run the function to get another transformed 1,000 samples
+        samples2 = ndRand(random_mu, random_cov, num) ;
+        % Transform the unit vectors
+        trans_unit_vecs = ndRandwData(unit_vecs, random_mu, random_cov) ;
+        % Plot the transformed samples and the unit vectors
+        subplot(1,3,ii)
+        scatter(samples2(:,1),samples2(:,2))
+        hold on
+        plot(trans_unit_vecs(:,1), trans_unit_vecs(:,2), 'r-*')
+        maxmax = max(max(samples2));
+        minmin = min(min(samples2));
+        axis([minmin-5 maxmax+5, minmin-5 maxmax+5])
+        grid on
+        title('Transform with Random Mu/C_x')
+        legend('transformed data','transformed unit vector coordinates', 'Location', 'southoutside')
+        xlabel('x-axis')
+        ylabel('y-axis')
+
+    end
+    
+end
+sgtitle('Transformed Data and Unit Vectors based on Original and Random Mean and Covariance Matrices')
+
+
+% Yes the ellipse does capture the shape of these matrices, because
+% we implementing the same transformation to every unit vector. These
+% transformations are linear, so because we are essentially "giving" the
+% set of unit vectors the same covariance and mean, then it should surround
+% the data that was transformed by the same parameters (mean and
+% covariance).
+
+
+%% (D) Maximizing the variance of the marginal distribution
+% How would you, mathematically, compute the direction (i.e. find a unit
+% vector) that maximizes the variance of the marginal distribution? Compute
+% this direction and verify that it is consistent with your plot (i.e. plot
+% this unit vector ontop of your previous plot. 
+
+% *** Project onto a unit vector that is parallel to the best fitting line
+% of regression. 
+
+% Reset the original dataset
+mu = [4,5]          ;
+C_x = [9,-5; -5,6]  ;
+num = 1000          ;
+
+% ReRun function to create new samples
+samples2 = ndRand(mu, C_x, num) ;
+
+% To maximize the variance we need to find the largest eigenvector, so we
+% take the svd()
+[U, S, V] = svd(samples2);
+
+% By default, matlab sorts these from largest to smallest, so we take the
+% first column
+max_variance_unit = V(:,1) ;
+
+% Transform the unit vectors
+trans_unit_vecs = ndRandwData(unit_vecs, mu, C_x) ;
+
+% Take all the means of the transformed data, this is where we'll be
+% plotting our eigenvector from.
+data_means = mean(trans_unit_vecs) ;
+
+% Plot the transformed samples and the unit vectors
+figure
+scatter(samples2(:,1),samples2(:,2))
+hold on
+plot(trans_unit_vecs(:,1), trans_unit_vecs(:,2), 'r-*')
+plot([data_means(1),max_variance_unit(1)], [data_means(2),max_variance_unit(2)], 'LineWidth', 3, 'Color', 'k')
+maxmax = max(max(samples2));
+minmin = min(min(samples2));
+axis equal
+grid on
+title('Transformed Data with Largest Eigenvector')
+legend('Transformed Data','Transformed Unit Vectors','Max Variance Unit Vector')
+xlabel('x-axis')
+ylabel('y-axis')
+
+% The unit vector should run perpendicular to the line of best fit, which
+% we can sort of visually see from the plot. However, what we do know is
+% that the first column of V (from the svd) is the basis for the largest
+% variance of this data set. Therefore, we can be confident that this line
+% would maximize the variance of this data. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+##### SOURCE END #####
+--></body></html>
