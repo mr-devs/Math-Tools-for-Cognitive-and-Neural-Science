@@ -1,0 +1,520 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Question_1</title><meta name="generator" content="MATLAB 9.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2019-09-24"><meta name="DC.source" content="Question_1.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Math Tools I - HW #1 - Question 1</a></li><li><a href="#2">Question 1: Determine if a system is linear.</a></li><li><a href="#3">Question 1: System 1:</a></li><li><a href="#4">Question 1: System 2:</a></li><li><a href="#5">Question 1: System 3</a></li><li><a href="#6">Question 1: System 4</a></li><li><a href="#7">Question 1: System 5</a></li></ul></div><h2 id="1">Math Tools I - HW #1 - Question 1</h2><pre class="codeinput"><span class="comment">% Purpose: This code has been written to wrestle with question 1 of the</span>
+<span class="comment">% first homework of math tools I.</span>
+
+<span class="comment">% Author: Matthew DeVerna</span>
+
+<span class="comment">% Date: 09/24/19</span>
+</pre><h2 id="2">Question 1: Determine if a system is linear.</h2><p>If it is, create a matrix which satsifiys the input/output pairs.</p><pre class="codeinput"><span class="comment">% In order for a system to be linear it must meet the requirements of</span>
+<span class="comment">% superposition: homogeneity and additivity. More simply, any type of linear</span>
+<span class="comment">% combination to the inputs should have the same effect on the</span>
+<span class="comment">% outputs.</span>
+</pre><h2 id="3">Question 1: System 1:</h2><pre class="codeinput">input1 = 1          ;
+input2 = 2.5        ;
+output1 = [4;6]     ;
+output2 = [10;14]   ;
+
+<span class="comment">% Because scaling input1 by 2.5 gives input2 exactly, the same affect</span>
+<span class="comment">% should be seen for the outputs - if the system is linear.</span>
+
+<span class="keyword">if</span> input1 * 2.5 == input2                           <span class="comment">% Set conditional if-statement</span>
+    disp(<span class="string">'Input 1 * 2.5 equals Input 2'</span>)            <span class="comment">% If the condition is accurate, print this.</span>
+
+<span class="keyword">else</span>
+    disp(<span class="string">'Input 1 * 2.5 DOES NOT equal Input 2'</span>)    <span class="comment">% If the condition is NOT accurate, print this.</span>
+<span class="keyword">end</span>
+
+<span class="comment">% Lets try the same for the outputs...</span>
+
+
+<span class="keyword">if</span> output1 * 2.5 == output2                         <span class="comment">% Set conditional if-statement</span>
+    disp(<span class="string">'Output 1 * 2.5 equals Output 2'</span>)          <span class="comment">% If the condition is accurate, print this.</span>
+<span class="keyword">else</span>
+    disp(<span class="string">'Output 1 * 2.5 DOES NOT equal Output 2'</span>)  <span class="comment">% If the condition is NOT accurate, print this.</span>
+<span class="keyword">end</span>
+
+answer = [(<span class="string">'As we can see, this system does not follow the laws of superposition'</span>),<span class="keyword">...</span>
+    (<span class="string">' (specifically homogeneity). Thus, we conclude that this system is not linear.'</span>)]
+</pre><pre class="codeoutput">Input 1 * 2.5 equals Input 2
+Output 1 * 2.5 DOES NOT equal Output 2
+
+answer =
+
+    'As we can see, this system does not follow the laws of superposition (specifically homogeneity). Thus, we conclude that this system is not linear.'
+
+</pre><h2 id="4">Question 1: System 2:</h2><pre class="codeinput"><span class="comment">%{
+</span><span class="comment">Since the scope of this question's programming complexity is quite simple,
+</span><span class="comment">I will use the same variables as we move through the rest of this problem.
+</span><span class="comment">The linear nature of this script allows me to do so without worrying about
+</span><span class="comment">workspace/variable issues - and offers the benefit of simple, clear and
+</span><span class="comment">understandable variables.
+</span><span class="comment">%}
+</span>
+input1 = [6;3]      ;
+input2 = [-2;-1]    ;
+output1 = [12;12]   ;
+output2 = [-6;-6]   ;
+
+<span class="comment">% Because scaling input1 by -1/3 gives input2 exactly, the same affect</span>
+<span class="comment">% should be seen for the outputs - if the system is linear.</span>
+
+<span class="keyword">if</span> input1 * (-1/3) == input2                        <span class="comment">% Set conditional if-statement</span>
+    disp(<span class="string">'Input 1 * -1/3 equals Input 2'</span>)           <span class="comment">% If the condition is accurate, print this.</span>
+
+<span class="keyword">else</span>
+    disp(<span class="string">'Input 1 * -1/3 DOES NOT equal Input 2'</span>)   <span class="comment">% If the condition is NOT accurate, print this.</span>
+<span class="keyword">end</span>
+
+<span class="comment">% Lets try the same for the outputs...</span>
+
+<span class="keyword">if</span> output1 * (-1/3) == output2         <span class="comment">% Set conditional if-statement</span>
+    disp(<span class="string">'Output 1 * -1/3 equals Output 2'</span>)          <span class="comment">% If the condition is accurate, print this.</span>
+<span class="keyword">else</span>
+    disp(<span class="string">'Output 1 * -1/3 DOES NOT equal Output 2'</span>)  <span class="comment">% If the condition is NOT accurate, print this.</span>
+<span class="keyword">end</span>
+
+answer = [(<span class="string">'Once again, we can see that this system does not follow the laws of superposition'</span>),<span class="keyword">...</span>
+    (<span class="string">' (specifically homogeneity). Thus, we conclude that this system is not linear'</span>)]
+</pre><pre class="codeoutput">Input 1 * -1/3 equals Input 2
+Output 1 * -1/3 DOES NOT equal Output 2
+
+answer =
+
+    'Once again, we can see that this system does not follow the laws of superposition (specifically homogeneity). Thus, we conclude that this system is not linear'
+
+</pre><h2 id="5">Question 1: System 3</h2><pre class="codeinput">input1 = [1;2]  ;
+input2 = [1;-2] ;
+input3 = [3;0]  ;
+output1 = [5;-1];
+output2 = [1;4] ;
+output3 = [7;8] ;
+
+<span class="comment">%{
+</span><span class="comment">Because scaling input3 by 2/3, and then subtracting input 1 from that
+</span><span class="comment">product results in input2 exactly, the same affect should be seen for
+</span><span class="comment">the outputs - if the system is linear.
+</span><span class="comment">%}
+</span>
+<span class="keyword">if</span> (input3 * 2/3) - input1 == input2                        <span class="comment">% Set conditional if-statement</span>
+    disp(<span class="string">'Input3 * 2/3 - Input1 equals Input 2'</span>)            <span class="comment">% If the condition is accurate, print this.</span>
+
+<span class="keyword">else</span>
+    disp(<span class="string">'Input3 * 2/3 - Input1 DOES NOT equals Input 2'</span>)   <span class="comment">% If the condition is NOT accurate, print this.</span>
+<span class="keyword">end</span>
+
+<span class="comment">% Lets try the same for the outputs...</span>
+
+<span class="keyword">if</span> (output3 * 2/3) - output1 == output2                         <span class="comment">% Set conditional if-statement</span>
+    disp(<span class="string">'Output 3 * 2/3 - Output1 equals Output 2'</span>)            <span class="comment">% If the condition is accurate, print this.</span>
+<span class="keyword">else</span>
+    disp(<span class="string">'Output 3 * 2/3 - Output1 DOES NOT equals Output 2'</span>)   <span class="comment">% If the condition is NOT accurate, print this.</span>
+<span class="keyword">end</span>
+
+answer = [(<span class="string">'Daaamn, my (wo)man, these systems just DO NOT want to follow the laws of superposition'</span>),<span class="keyword">...</span>
+    (<span class="string">' (specifically homogeneity). Thus, we conclude that this system is not linear.'</span>)]
+</pre><pre class="codeoutput">Input3 * 2/3 - Input1 equals Input 2
+Output 3 * 2/3 - Output1 DOES NOT equals Output 2
+
+answer =
+
+    'Daaamn, my (wo)man, these systems just DO NOT want to follow the laws of superposition (specifically homogeneity). Thus, we conclude that this system is not linear.'
+
+</pre><h2 id="6">Question 1: System 4</h2><pre class="codeinput">input1 = [2 ; 4];
+input2 = [-2; 1];
+output1 = 0 ;
+output2 = 3 ;
+
+<span class="comment">%{
+</span><span class="comment">We can determine the values of the 2-by-1 vector that is the linear system.
+</span><span class="comment">The shape of the system is determined by the shape of the input and output.
+</span><span class="comment">
+</span><span class="comment">Input   --&gt;  System --&gt;  Output
+</span><span class="comment">(1 x 2) --&gt; (2 x 1) -- (1 x 1)
+</span><span class="comment">--&gt; Take the "outer elements" of the matrix shapes to form the end result.
+</span><span class="comment">
+</span><span class="comment">We can determine this vector's values through the elimination method of
+</span><span class="comment">solving linear equations:
+</span><span class="comment">
+</span><span class="comment">[2 ; 4] --&gt;  0
+</span><span class="comment">[-2; 1] --&gt;  3    can be written as:
+</span><span class="comment">
+</span><span class="comment">2x + 4y = 0    and
+</span><span class="comment">-2x + y = 3
+</span><span class="comment">|--&gt; Because the linear system's effect is equivalent to the dot product.
+</span><span class="comment">
+</span><span class="comment">Then, combining these equations into one gives you:
+</span><span class="comment">
+</span><span class="comment">5y = 3
+</span><span class="comment">
+</span><span class="comment">Solving for y gives you --&gt; y = .6 or (3/5)
+</span><span class="comment">
+</span><span class="comment">Plug in .6 to one of the equations and solve for x...
+</span><span class="comment">
+</span><span class="comment">2x + 4(3/5) = 0
+</span><span class="comment">2x + 2.4    = 0
+</span><span class="comment">2x          = -2.4
+</span><span class="comment">x           = -1.2
+</span><span class="comment">
+</span><span class="comment">Based on this solution, it looks as though these input/output pairs create
+</span><span class="comment">a linear system which should successfully operate on our pairs in a
+</span><span class="comment">predictable manner - such that we get the predicted output pairs.
+</span><span class="comment">
+</span><span class="comment">Lets see if we can test this below in the same manner as earlier problems...
+</span><span class="comment">%}
+</span>
+<span class="comment">% Create our test vector...</span>
+testVec = [-1.2,.6] ;
+
+
+<span class="keyword">if</span> (testVec * input1) == output1                                            <span class="comment">% Set conditional if-statement</span>
+    disp(<span class="string">'The dot product of testVec and Input1 equals Output1'</span>)            <span class="comment">% If the condition is accurate, print this.</span>
+
+<span class="keyword">else</span>
+    disp(<span class="string">'The dot product of testVec and Input1 DOES NOT equals Output1'</span>)   <span class="comment">% If the condition is NOT accurate, print this.</span>
+<span class="keyword">end</span>
+
+<span class="comment">% Lets try the same for the input2 and output2...</span>
+
+<span class="keyword">if</span> (testVec * input2) == output2                                            <span class="comment">% Set conditional if-statement</span>
+    disp(<span class="string">'The dot product of testVec and Input2 equals Output2'</span>)            <span class="comment">% If the condition is accurate, print this.</span>
+
+<span class="keyword">else</span>
+    disp(<span class="string">'The dot product of testVec and Input2 DOES NOT equals Output2'</span>)   <span class="comment">% If the condition is NOT accurate, print this.</span>
+<span class="keyword">end</span>
+
+answer = [(<span class="string">'By testing the matrix that we found, we can see this system is linear'</span>)]
+
+<span class="comment">% Furthermore, we can scale these inputs and feed them into the system to</span>
+<span class="comment">% further verify them.</span>
+
+<span class="keyword">if</span> (testVec * (3*input1)) == 3*output1                                            <span class="comment">% Set conditional if-statement</span>
+    disp(<span class="string">'The dot product of testVec and Input1 (scaled by 3) equals Output1'</span>)            <span class="comment">% If the condition is accurate, print this.</span>
+
+<span class="keyword">else</span>
+    disp(<span class="string">'The dot product of testVec and Input1 (scaled by 3) DOES NOT equals Output1'</span>)   <span class="comment">% If the condition is NOT accurate, print this.</span>
+<span class="keyword">end</span>
+
+<span class="comment">% Lets try the same for the input2 and output2...</span>
+
+<span class="keyword">if</span> (testVec * (3*input2)) == 3*output2                                            <span class="comment">% Set conditional if-statement</span>
+    disp(<span class="string">'The dot product of testVec and Input2 (scaled by 3) equals Output2'</span>)            <span class="comment">% If the condition is accurate, print this.</span>
+
+<span class="keyword">else</span>
+    disp(<span class="string">'The dot product of testVec and Input2 (scaled by 3) DOES NOT equals Output2'</span>)   <span class="comment">% If the condition is NOT accurate, print this.</span>
+<span class="keyword">end</span>
+
+answer_check = [(<span class="string">'Even after scaling the inputs and outputs, and putting them through'</span>),<span class="keyword">...</span>
+    (<span class="string">' the linear system that we found - this system still holds up to the laws of superposition.'</span>)]
+</pre><pre class="codeoutput">The dot product of testVec and Input1 equals Output1
+The dot product of testVec and Input2 equals Output2
+
+answer =
+
+    'By testing the matrix that we found, we can see this system is linear'
+
+The dot product of testVec and Input1 (scaled by 3) equals Output1
+The dot product of testVec and Input2 (scaled by 3) equals Output2
+
+answer_check =
+
+    'Even after scaling the inputs and outputs, and putting them through the linear system that we found - this system still holds up to the laws of superposition.'
+
+</pre><h2 id="7">Question 1: System 5</h2><pre class="codeinput">input1 = 0;
+ouput1 = [1;2];
+
+answer = sprintf([(<span class="string">'We can tell right away that this system is not linear because we are starting at'</span>),<span class="keyword">...</span>
+    (<span class="string">' the origin. By definition,\n there is no linear combination that can take us away'</span>), <span class="keyword">...</span>
+    (<span class="string">' from the origin and/or add a new dimension'</span>)])
+</pre><pre class="codeoutput">
+answer =
+
+    'We can tell right away that this system is not linear because we are starting at the origin. By definition,
+      there is no linear combination that can take us away from the origin and/or add a new dimension'
+
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Math Tools I - HW #1 - Question 1
+
+% Purpose: This code has been written to wrestle with question 1 of the
+% first homework of math tools I.
+
+% Author: Matthew DeVerna
+
+% Date: 09/24/19
+
+%% Question 1: Determine if a system is linear. 
+% If it is, create a matrix which satsifiys the input/output pairs.
+
+% In order for a system to be linear it must meet the requirements of
+% superposition: homogeneity and additivity. More simply, any type of linear
+% combination to the inputs should have the same effect on the
+% outputs.
+    
+%% Question 1: System 1:
+
+input1 = 1          ;
+input2 = 2.5        ;
+output1 = [4;6]     ;
+output2 = [10;14]   ;
+
+% Because scaling input1 by 2.5 gives input2 exactly, the same affect
+% should be seen for the outputs - if the system is linear.
+
+if input1 * 2.5 == input2                           % Set conditional if-statement
+    disp('Input 1 * 2.5 equals Input 2')            % If the condition is accurate, print this.
+
+else
+    disp('Input 1 * 2.5 DOES NOT equal Input 2')    % If the condition is NOT accurate, print this.
+end
+
+% Lets try the same for the outputs...
+
+
+if output1 * 2.5 == output2                         % Set conditional if-statement
+    disp('Output 1 * 2.5 equals Output 2')          % If the condition is accurate, print this.
+else
+    disp('Output 1 * 2.5 DOES NOT equal Output 2')  % If the condition is NOT accurate, print this.
+end
+
+answer = [('As we can see, this system does not follow the laws of superposition'),...
+    (' (specifically homogeneity). Thus, we conclude that this system is not linear.')]
+
+%% Question 1: System 2:
+
+%{
+Since the scope of this question's programming complexity is quite simple,
+I will use the same variables as we move through the rest of this problem. 
+The linear nature of this script allows me to do so without worrying about 
+workspace/variable issues - and offers the benefit of simple, clear and
+understandable variables.
+%}
+
+input1 = [6;3]      ;
+input2 = [-2;-1]    ;
+output1 = [12;12]   ;
+output2 = [-6;-6]   ;
+
+% Because scaling input1 by -1/3 gives input2 exactly, the same affect
+% should be seen for the outputs - if the system is linear.
+
+if input1 * (-1/3) == input2                        % Set conditional if-statement
+    disp('Input 1 * -1/3 equals Input 2')           % If the condition is accurate, print this.
+
+else
+    disp('Input 1 * -1/3 DOES NOT equal Input 2')   % If the condition is NOT accurate, print this.
+end
+
+% Lets try the same for the outputs...
+
+if output1 * (-1/3) == output2         % Set conditional if-statement
+    disp('Output 1 * -1/3 equals Output 2')          % If the condition is accurate, print this.
+else
+    disp('Output 1 * -1/3 DOES NOT equal Output 2')  % If the condition is NOT accurate, print this.
+end
+
+answer = [('Once again, we can see that this system does not follow the laws of superposition'),...
+    (' (specifically homogeneity). Thus, we conclude that this system is not linear')]
+
+%% Question 1: System 3
+
+input1 = [1;2]  ;
+input2 = [1;-2] ;
+input3 = [3;0]  ;
+output1 = [5;-1];
+output2 = [1;4] ;
+output3 = [7;8] ;
+
+%{ 
+Because scaling input3 by 2/3, and then subtracting input 1 from that
+product results in input2 exactly, the same affect should be seen for 
+the outputs - if the system is linear.
+%}
+
+if (input3 * 2/3) - input1 == input2                        % Set conditional if-statement
+    disp('Input3 * 2/3 - Input1 equals Input 2')            % If the condition is accurate, print this.
+
+else
+    disp('Input3 * 2/3 - Input1 DOES NOT equals Input 2')   % If the condition is NOT accurate, print this.
+end
+
+% Lets try the same for the outputs...
+
+if (output3 * 2/3) - output1 == output2                         % Set conditional if-statement
+    disp('Output 3 * 2/3 - Output1 equals Output 2')            % If the condition is accurate, print this.
+else
+    disp('Output 3 * 2/3 - Output1 DOES NOT equals Output 2')   % If the condition is NOT accurate, print this.
+end
+
+answer = [('Daaamn, my (wo)man, these systems just DO NOT want to follow the laws of superposition'),...
+    (' (specifically homogeneity). Thus, we conclude that this system is not linear.')]
+
+%% Question 1: System 4
+
+input1 = [2 ; 4];
+input2 = [-2; 1];
+output1 = 0 ;
+output2 = 3 ;
+
+%{ 
+We can determine the values of the 2-by-1 vector that is the linear system.
+The shape of the system is determined by the shape of the input and output.
+
+Input   REPLACE_WITH_DASH_DASH>  System REPLACE_WITH_DASH_DASH>  Output
+(1 x 2) REPLACE_WITH_DASH_DASH> (2 x 1) REPLACE_WITH_DASH_DASH (1 x 1)
+REPLACE_WITH_DASH_DASH> Take the "outer elements" of the matrix shapes to form the end result.
+
+We can determine this vector's values through the elimination method of
+solving linear equations:
+
+[2 ; 4] REPLACE_WITH_DASH_DASH>  0 
+[-2; 1] REPLACE_WITH_DASH_DASH>  3    can be written as:
+
+2x + 4y = 0    and
+-2x + y = 3
+|REPLACE_WITH_DASH_DASH> Because the linear system's effect is equivalent to the dot product.
+
+Then, combining these equations into one gives you:
+
+5y = 3
+
+Solving for y gives you REPLACE_WITH_DASH_DASH> y = .6 or (3/5)
+
+Plug in .6 to one of the equations and solve for x...
+
+2x + 4(3/5) = 0
+2x + 2.4    = 0
+2x          = -2.4
+x           = -1.2
+
+Based on this solution, it looks as though these input/output pairs create
+a linear system which should successfully operate on our pairs in a
+predictable manner - such that we get the predicted output pairs.
+
+Lets see if we can test this below in the same manner as earlier problems...
+%}
+
+% Create our test vector...
+testVec = [-1.2,.6] ;
+
+
+if (testVec * input1) == output1                                            % Set conditional if-statement
+    disp('The dot product of testVec and Input1 equals Output1')            % If the condition is accurate, print this.
+
+else
+    disp('The dot product of testVec and Input1 DOES NOT equals Output1')   % If the condition is NOT accurate, print this.
+end
+
+% Lets try the same for the input2 and output2...
+
+if (testVec * input2) == output2                                            % Set conditional if-statement
+    disp('The dot product of testVec and Input2 equals Output2')            % If the condition is accurate, print this.
+
+else
+    disp('The dot product of testVec and Input2 DOES NOT equals Output2')   % If the condition is NOT accurate, print this.
+end
+
+answer = [('By testing the matrix that we found, we can see this system is linear')]
+
+% Furthermore, we can scale these inputs and feed them into the system to
+% further verify them.
+
+if (testVec * (3*input1)) == 3*output1                                            % Set conditional if-statement
+    disp('The dot product of testVec and Input1 (scaled by 3) equals Output1')            % If the condition is accurate, print this.
+
+else
+    disp('The dot product of testVec and Input1 (scaled by 3) DOES NOT equals Output1')   % If the condition is NOT accurate, print this.
+end
+
+% Lets try the same for the input2 and output2...
+
+if (testVec * (3*input2)) == 3*output2                                            % Set conditional if-statement
+    disp('The dot product of testVec and Input2 (scaled by 3) equals Output2')            % If the condition is accurate, print this.
+
+else
+    disp('The dot product of testVec and Input2 (scaled by 3) DOES NOT equals Output2')   % If the condition is NOT accurate, print this.
+end
+
+answer_check = [('Even after scaling the inputs and outputs, and putting them through'),...
+    (' the linear system that we found - this system still holds up to the laws of superposition.')]
+
+
+%% Question 1: System 5
+
+input1 = 0;
+ouput1 = [1;2];
+
+answer = sprintf([('We can tell right away that this system is not linear because we are starting at'),...
+    (' the origin. By definition,\n there is no linear combination that can take us away'), ...
+    (' from the origin and/or add a new dimension')])
+
+
+
+##### SOURCE END #####
+--></body></html>

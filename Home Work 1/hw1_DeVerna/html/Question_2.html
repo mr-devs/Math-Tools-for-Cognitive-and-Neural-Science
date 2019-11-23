@@ -1,0 +1,601 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Question_2</title><meta name="generator" content="MATLAB 9.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2019-09-24"><meta name="DC.source" content="Question_2.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Math Tools I - HW #1 - Question 2: Inner Product with a Unit Vector</a></li><li><a href="#2">PART 1</a></li><li><a href="#3">a) The Component of v Lying Along the Direction of u</a></li><li><a href="#4">(b) Component of vector v that is orthogonal to vector u</a></li><li><a href="#5">(c) Distance from vector v to the projection vector</a></li><li><a href="#6">Show all of this in 2D...</a></li><li><a href="#7">PART 2--&gt; Proving this works for higher dimensions</a></li><li><a href="#8">First I will calculate all of the necessary "pieces" to this puzzle</a></li><li><a href="#9">1) The vector in (a) falls along the same line as the vector u, or the unit vector.</a></li><li><a href="#10">2) The vector in (a) is orthogonal to the vector in (b)</a></li><li><a href="#11">3) The sum of vectors in (a) [projection] and (b)[orthogonal] is equal to vector vHD</a></li></ul></div><h2 id="1">Math Tools I - HW #1 - Question 2: Inner Product with a Unit Vector</h2><pre class="codeinput"><span class="comment">% Purpose: This code has been written to wrestle with question 2 of the</span>
+<span class="comment">% first homework of math tools I.</span>
+
+<span class="comment">% Author: Matthew DeVerna</span>
+
+<span class="comment">% Date: 09/24/19</span>
+</pre><h2 id="2">PART 1</h2><pre class="codeinput"><span class="comment">%{
+</span><span class="comment">Given unit vector u and arbitrary vector v - write expressions for
+</span><span class="comment">computing:
+</span><span class="comment">
+</span><span class="comment">--&gt; PART 1
+</span><span class="comment">a) the component of v lying along the direction of u,
+</span><span class="comment">(b) the component of v that is orthogonal (perpendicular) to u, and
+</span><span class="comment">(c) the distance from v to the component that lies along direction u.
+</span><span class="comment">
+</span><span class="comment">%}</span>
+</pre><h2 id="3">a) The Component of v Lying Along the Direction of u</h2><pre class="codeinput"><span class="comment">%{
+</span><span class="comment">This question is asking us to project vector v onto the line that vector u
+</span><span class="comment">falls on.
+</span><span class="comment">%}
+</span>
+<span class="comment">% Create random vectors</span>
+v = randn(1,2)
+u = randn(1,2)
+
+<span class="comment">% We find the length of vector u and then create it's unit vector</span>
+lenth_u2 = sqrt(u*u');
+unitVec = u/lenth_u2 ;
+
+<span class="comment">% This allows us to determine the magnitude/length of the projection vector</span>
+newLineMagnitude = v*unitVec' ;
+
+<span class="comment">% We utilize this magnitude to scale the unit vector, giving us the</span>
+<span class="comment">% projection unit</span>
+projectionUnit = newLineMagnitude * unitVec
+</pre><pre class="codeoutput">
+v =
+
+   -0.9677    0.2021
+
+
+u =
+
+   -0.3479    1.2901
+
+
+projectionUnit =
+
+   -0.1164    0.4316
+
+</pre><h2 id="4">(b) Component of vector v that is orthogonal to vector u</h2><pre class="codeinput"><span class="comment">% We now subtract the projection from the original vector v to get the</span>
+<span class="comment">% orthogonal component</span>
+
+orthogonalUnit = v - projectionUnit
+</pre><pre class="codeoutput">
+orthogonalUnit =
+
+   -0.8513   -0.2296
+
+</pre><h2 id="5">(c) Distance from vector v to the projection vector</h2><pre class="codeinput"><span class="comment">% This can be found by taking the length of the orthogonal vector just</span>
+<span class="comment">% found...</span>
+
+lengthOrthogonalUnit = sqrt(orthogonalUnit*orthogonalUnit')
+</pre><pre class="codeoutput">
+lengthOrthogonalUnit =
+
+    0.8817
+
+</pre><h2 id="6">Show all of this in 2D...</h2><pre class="codeinput"><span class="comment">% Create names for each line to plot (for the legend call below)</span>
+name1 = <span class="string">'Original Vector'</span>   ;
+name2 = <span class="string">'Projection'</span>        ;
+name3 = <span class="string">'Unit Vector'</span>       ;
+name4 = <span class="string">'Orthogonal Unit'</span>   ;
+
+<span class="comment">% Plot the original vector</span>
+vPlot           = plot([0,v(1)],[0,v(2)],<span class="keyword">...</span>
+                   <span class="string">'b'</span>, <span class="string">'LineWidth'</span>,2) ;
+
+<span class="comment">% Set hold to "on" so that subsequent plots do not replace the last one</span>
+hold <span class="string">on</span>
+
+<span class="comment">% Plot the projection vector</span>
+projectionPlot  = plot([0,projectionUnit(1)],[0,projectionUnit(2)],<span class="keyword">...</span>
+                  <span class="string">'r'</span>, <span class="string">'LineWidth'</span>,2);
+
+<span class="comment">% Plot the unit vector</span>
+unitPlot        = plot([0,unitVec(1)],[0,unitVec(2)],<span class="keyword">...</span>
+                    <span class="string">'k--*'</span>, <span class="string">'LineWidth'</span>,2);
+
+<span class="comment">% Plot the unit vector</span>
+residualPlot    = plot([0, orthogonalUnit(1)], [0, orthogonalUnit(2)],<span class="keyword">...</span>
+                    <span class="string">'g'</span>, <span class="string">'LineWidth'</span>,2);
+
+<span class="comment">% Set axis to equal proportions</span>
+axis <span class="string">equal</span>
+
+legend(name1, name2, name3, name4, <span class="string">'location'</span>, <span class="string">'northeastoutside'</span>)
+title(<span class="string">'Projection/Orthogonal Component Plot'</span>)
+xlabel(<span class="string">'x-axis'</span>)
+ylabel(<span class="string">'y-axis'</span>)
+</pre><img vspace="5" hspace="5" src="Question_2_01.png" alt=""> <h2 id="7">PART 2--&gt; Proving this works for higher dimensions</h2><pre class="codeinput"><span class="comment">%{
+</span><span class="comment">This section seeks to prove the above section in higher dimensions by
+</span><span class="comment">writing code to verify...
+</span><span class="comment">1) The vector in (a)- the projection line - falls along the same line as the
+</span><span class="comment">vector u, or the unit vector.
+</span><span class="comment">2) The vector in (a) is orthogonal to the vector in (b)
+</span><span class="comment">3) The sum of vectors in (a) and (b) is equal to vector v
+</span><span class="comment">4) The sum of squared lengths in vectors (a) and (b) = ||v||^2
+</span><span class="comment">
+</span><span class="comment">The procedure will be the same as above, however, we first create random
+</span><span class="comment">vectors with 10 dimensions...
+</span><span class="comment">%}</span>
+</pre><h2 id="8">First I will calculate all of the necessary "pieces" to this puzzle</h2><pre class="codeinput"><span class="comment">% Create two random vectors</span>
+vHD = randn(1,10)                                   ;
+uHD = randn(1,10)                                   ;
+
+<span class="comment">% Find the length of both vectors</span>
+
+len_vHD = sqrt(vHD*vHD')                            ;
+len_uHD = sqrt(uHD*uHD')                            ;
+
+<span class="comment">% Create a unit vector from vector u</span>
+unitVecHD = uHD/len_uHD                             ;
+
+<span class="comment">% Find the projection line</span>
+newLineMagnitudeHD = sum(vHD*unitVecHD')            ; <span class="comment">% Find projection magnitude</span>
+projectionUnitHD = newLineMagnitudeHD * unitVecHD   ;
+
+<span class="comment">% Find the orthogonal unit...</span>
+orthogonalHD = vHD - projectionUnitHD               ;
+</pre><h2 id="9">1) The vector in (a) falls along the same line as the vector u, or the unit vector.</h2><pre class="codeinput"><span class="comment">%{
+</span><span class="comment">Because the dot product = ||x|| * ||y|| * cos(theta_xy) where:
+</span><span class="comment">
+</span><span class="comment">    x = vector v (in this case)
+</span><span class="comment">    y = vector u (in this case)
+</span><span class="comment">    theta_xy = the angle between them
+</span><span class="comment">
+</span><span class="comment">We can find cos(theta) by dividing the dot product by the
+</span><span class="comment">vector lengths - this will be sufficient to solve the problem
+</span><span class="comment">%}
+</span>
+<span class="comment">% Find the dot product of the projection onto the unit</span>
+dotUnitANDprojection = uHD*projectionUnitHD'                            ;
+
+<span class="comment">% Find these vectors lengths</span>
+length_unitVecHD = sqrt(uHD*uHD')                                       ;
+length_projectionHD = sqrt(projectionUnitHD*projectionUnitHD')          ;
+
+<span class="comment">% Divide out the lengths</span>
+cos_theta = dotUnitANDprojection/(length_unitVecHD*length_projectionHD) ;
+
+<span class="comment">%{
+</span><span class="comment">Basically, I got through the below rigmarole in order to be able to do a
+</span><span class="comment">proper conditional statement check.
+</span><span class="comment">
+</span><span class="comment">Since cos_theta should equal either 1 or -1 in this case (if they fall on the same line),
+</span><span class="comment">we create an if statement to either add one or remove 1 which brings the cos(theta) value to
+</span><span class="comment">zero.
+</span><span class="comment">
+</span><span class="comment">Once it is there, we then test if it is within reasonable rounding error by
+</span><span class="comment">comparing to 10e^-6
+</span><span class="comment">
+</span><span class="comment">%}
+</span><span class="keyword">if</span> cos_theta &lt; 0                        <span class="comment">% Check if it's negative</span>
+    cos_theta = cos_theta + 1 ;         <span class="comment">% Remove one to bring this down to zero</span>
+
+    <span class="keyword">if</span> cos_theta &lt; 10e-6                <span class="comment">% Check if it is equal to zero</span>
+        disp(<span class="string">'The unit vector and the projection line are on the same line'</span>)
+        disp(<span class="string">'and they point in the opposite direction.'</span>)
+        answer = sprintf(<span class="string">'If cos(theta) equals -1, the lines point in the opposite direction.'</span>)
+
+    <span class="keyword">elseif</span> cos_theta &gt; 10e-6
+        disp(<span class="string">'Houston, we''ve got a problem.'</span>)
+
+    <span class="keyword">end</span>
+
+<span class="keyword">elseif</span> cos_theta &gt; 0                    <span class="comment">% Check if it's positive</span>
+    cos_theta = cos_theta - 1 ;         <span class="comment">% Bring it up to zero</span>
+
+    <span class="keyword">if</span> cos_theta &lt; 10e-6                <span class="comment">% Check if it is equal to zero</span>
+        disp(<span class="string">'The unit vector and the projection line are on the same line'</span>)
+        disp(<span class="string">'and they point in the same direction.'</span>)
+        answer = sprintf(<span class="string">'If cos(theta) equals 1, the lines point in the same direction.'</span>)
+
+    <span class="keyword">elseif</span> cos_theta &gt; 10e-6
+        disp(<span class="string">'Houston, we''ve got a problem...'</span>)
+
+    <span class="keyword">end</span>
+
+
+<span class="keyword">end</span>
+
+<span class="comment">%Display results based on the random vectors created...</span>
+</pre><pre class="codeoutput">The unit vector and the projection line are on the same line
+and they point in the same direction.
+
+answer =
+
+    'If cos(theta) equals 1, the lines point in the same direction.'
+
+</pre><h2 id="10">2) The vector in (a) is orthogonal to the vector in (b)</h2><pre class="codeinput"><span class="comment">%{
+</span><span class="comment">We can utilize the same method as above to get the angle between these
+</span><span class="comment">vectors. If they are othogonal, cos(theta) should = 0.
+</span><span class="comment">%}
+</span>
+<span class="comment">% Find the dot product of the projection onto the orthogonal unit</span>
+dotOrthogANDprojection = orthogonalHD*projectionUnitHD' ;
+
+<span class="comment">% Find these vectors lengths</span>
+length_orthogonal_VecHD = sqrt(orthogonalHD*orthogonalHD') ;
+length_projectionHD = sqrt(projectionUnitHD*projectionUnitHD') ;
+
+<span class="comment">% Divide out the lengths and find cos(theta) the result</span>
+cos_theta = dotOrthogANDprojection/(length_orthogonal_VecHD*length_projectionHD)
+
+<span class="keyword">if</span> cos_theta &lt; 10e-6
+   disp(<span class="string">'cos(theta) of the projection and the orthogonal unit == 0.'</span>)
+
+<span class="keyword">else</span>
+   disp(<span class="string">'cos(theta) of the projection and the orthogonal unit DOES NOT == 0.'</span>)
+<span class="keyword">end</span>
+
+answer = sprintf(<span class="string">'If cos(theta) equals 0, you know that your angles are orthogonal.'</span>)
+</pre><pre class="codeoutput">
+cos_theta =
+
+  -5.2672e-17
+
+cos(theta) of the projection and the orthogonal unit == 0.
+
+answer =
+
+    'If cos(theta) equals 0, you know that your angles are orthogonal.'
+
+</pre><h2 id="11">3) The sum of vectors in (a) [projection] and (b)[orthogonal] is equal to vector vHD</h2><pre class="codeinput"><span class="comment">% Make sure that the orthogonal vector plus the projection equals the original vector</span>
+
+<span class="comment">%{
+</span><span class="comment">To show that the sum of the projection line and the orthogonal line are equal
+</span><span class="comment">to the original vector (vHD), we subtract vHD from these two vectors sum.
+</span><span class="comment">Assuming that these vectors are equal, all values should be zero.
+</span><span class="comment">
+</span><span class="comment">Then we utilize the function find() to determine where there
+</span><span class="comment">are zeros (because the conditional "==" will not work due to rounding
+</span><span class="comment">errors - we utilize the logical condition "&lt; 10e-6").
+</span><span class="comment">
+</span><span class="comment">This returns a list of the indices where the conditional requirement is
+</span><span class="comment">met.
+</span><span class="comment">
+</span><span class="comment">%}
+</span>
+<span class="comment">% Find the difference</span>
+difference_btw_vectors = (projectionUnitHD + orthogonalHD) - vHD;
+
+<span class="comment">% Find where there are zeros...</span>
+columnIndices = find(difference_btw_vectors &lt; 10e-6) ;
+
+<span class="comment">% Make sure that the length of the 'columnIndices' vector and the 'difference_btw_vectors' vector is equal</span>
+
+<span class="comment">% If any of the elements do not equal zero, then it would not be captured</span>
+<span class="comment">% in the 'columnIndices' object and these lengths would not match.</span>
+
+equality_check = length(difference_btw_vectors) == length(columnIndices) ;
+
+<span class="comment">% Display results based on the random vectors created...</span>
+<span class="keyword">if</span> equality_check == 1
+    disp(<span class="string">'The sum of the projection vector and the orthogonal vector equals the original vector'</span>)
+<span class="keyword">else</span>
+    sprintf(<span class="string">'The sum of the projection vector and the orthogonal vector DOES NOT equal the original vector\n it appears you have a problem with your calculations'</span>)
+<span class="keyword">end</span>
+</pre><pre class="codeoutput">The sum of the projection vector and the orthogonal vector equals the original vector
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Math Tools I - HW #1 - Question 2: Inner Product with a Unit Vector
+
+% Purpose: This code has been written to wrestle with question 2 of the
+% first homework of math tools I.
+
+% Author: Matthew DeVerna
+
+% Date: 09/24/19
+%% PART 1
+%{
+Given unit vector u and arbitrary vector v - write expressions for
+computing:
+
+REPLACE_WITH_DASH_DASH> PART 1
+a) the component of v lying along the direction of u,
+(b) the component of v that is orthogonal (perpendicular) to u, and
+(c) the distance from v to the component that lies along direction u.
+
+%}
+
+%% a) The Component of v Lying Along the Direction of u
+
+%{
+This question is asking us to project vector v onto the line that vector u
+falls on.
+%}
+
+% Create random vectors
+v = randn(1,2) 
+u = randn(1,2) 
+
+% We find the length of vector u and then create it's unit vector
+lenth_u2 = sqrt(u*u');
+unitVec = u/lenth_u2 ;
+
+% This allows us to determine the magnitude/length of the projection vector
+newLineMagnitude = v*unitVec' ;
+
+% We utilize this magnitude to scale the unit vector, giving us the
+% projection unit
+projectionUnit = newLineMagnitude * unitVec 
+
+
+%% (b) Component of vector v that is orthogonal to vector u
+
+% We now subtract the projection from the original vector v to get the
+% orthogonal component
+
+orthogonalUnit = v - projectionUnit 
+
+%% (c) Distance from vector v to the projection vector
+
+% This can be found by taking the length of the orthogonal vector just
+% found...
+
+lengthOrthogonalUnit = sqrt(orthogonalUnit*orthogonalUnit')
+
+%% Show all of this in 2D...
+
+% Create names for each line to plot (for the legend call below)
+name1 = 'Original Vector'   ;  
+name2 = 'Projection'        ;
+name3 = 'Unit Vector'       ;
+name4 = 'Orthogonal Unit'   ;
+
+% Plot the original vector 
+vPlot           = plot([0,v(1)],[0,v(2)],...
+                   'b', 'LineWidth',2) ; 
+
+% Set hold to "on" so that subsequent plots do not replace the last one
+hold on 
+               
+% Plot the projection vector
+projectionPlot  = plot([0,projectionUnit(1)],[0,projectionUnit(2)],...
+                  'r', 'LineWidth',2);
+
+% Plot the unit vector
+unitPlot        = plot([0,unitVec(1)],[0,unitVec(2)],...
+                    'kREPLACE_WITH_DASH_DASH*', 'LineWidth',2);
+
+% Plot the unit vector
+residualPlot    = plot([0, orthogonalUnit(1)], [0, orthogonalUnit(2)],...
+                    'g', 'LineWidth',2);
+
+% Set axis to equal proportions
+axis equal
+
+legend(name1, name2, name3, name4, 'location', 'northeastoutside')
+title('Projection/Orthogonal Component Plot')
+xlabel('x-axis')
+ylabel('y-axis')
+
+%% PART 2REPLACE_WITH_DASH_DASH> Proving this works for higher dimensions
+
+%{
+This section seeks to prove the above section in higher dimensions by
+writing code to verify...
+1) The vector in (a)- the projection line - falls along the same line as the
+vector u, or the unit vector.
+2) The vector in (a) is orthogonal to the vector in (b)
+3) The sum of vectors in (a) and (b) is equal to vector v
+4) The sum of squared lengths in vectors (a) and (b) = ||v||^2 
+
+The procedure will be the same as above, however, we first create random
+vectors with 10 dimensions...
+%}
+%% First I will calculate all of the necessary "pieces" to this puzzle
+
+% Create two random vectors
+vHD = randn(1,10)                                   ;
+uHD = randn(1,10)                                   ;
+
+% Find the length of both vectors
+
+len_vHD = sqrt(vHD*vHD')                            ;
+len_uHD = sqrt(uHD*uHD')                            ;
+
+% Create a unit vector from vector u
+unitVecHD = uHD/len_uHD                             ;
+
+% Find the projection line
+newLineMagnitudeHD = sum(vHD*unitVecHD')            ; % Find projection magnitude
+projectionUnitHD = newLineMagnitudeHD * unitVecHD   ;
+
+% Find the orthogonal unit...
+orthogonalHD = vHD - projectionUnitHD               ; 
+
+%% 1) The vector in (a) falls along the same line as the vector u, or the unit vector.
+%{
+Because the dot product = ||x|| * ||y|| * cos(theta_xy) where:
+    
+    x = vector v (in this case)
+    y = vector u (in this case)
+    theta_xy = the angle between them
+
+We can find cos(theta) by dividing the dot product by the
+vector lengths - this will be sufficient to solve the problem
+%}
+
+% Find the dot product of the projection onto the unit
+dotUnitANDprojection = uHD*projectionUnitHD'                            ;
+
+% Find these vectors lengths
+length_unitVecHD = sqrt(uHD*uHD')                                       ;
+length_projectionHD = sqrt(projectionUnitHD*projectionUnitHD')          ;
+
+% Divide out the lengths 
+cos_theta = dotUnitANDprojection/(length_unitVecHD*length_projectionHD) ;
+
+%{ 
+Basically, I got through the below rigmarole in order to be able to do a
+proper conditional statement check. 
+
+Since cos_theta should equal either 1 or -1 in this case (if they fall on the same line),
+we create an if statement to either add one or remove 1 which brings the cos(theta) value to
+zero. 
+
+Once it is there, we then test if it is within reasonable rounding error by
+comparing to 10e^-6
+
+%}
+if cos_theta < 0                        % Check if it's negative
+    cos_theta = cos_theta + 1 ;         % Remove one to bring this down to zero
+    
+    if cos_theta < 10e-6                % Check if it is equal to zero
+        disp('The unit vector and the projection line are on the same line')
+        disp('and they point in the opposite direction.')
+        answer = sprintf('If cos(theta) equals -1, the lines point in the opposite direction.')
+        
+    elseif cos_theta > 10e-6
+        disp('Houston, we''ve got a problem.')
+        
+    end
+
+elseif cos_theta > 0                    % Check if it's positive 
+    cos_theta = cos_theta - 1 ;         % Bring it up to zero
+    
+    if cos_theta < 10e-6                % Check if it is equal to zero
+        disp('The unit vector and the projection line are on the same line')
+        disp('and they point in the same direction.')
+        answer = sprintf('If cos(theta) equals 1, the lines point in the same direction.')
+        
+    elseif cos_theta > 10e-6
+        disp('Houston, we''ve got a problem...')
+        
+    end
+    
+    
+end
+
+%Display results based on the random vectors created...
+
+
+%% 2) The vector in (a) is orthogonal to the vector in (b)
+
+%{
+We can utilize the same method as above to get the angle between these
+vectors. If they are othogonal, cos(theta) should = 0.
+%} 
+
+% Find the dot product of the projection onto the orthogonal unit
+dotOrthogANDprojection = orthogonalHD*projectionUnitHD' ; 
+
+% Find these vectors lengths
+length_orthogonal_VecHD = sqrt(orthogonalHD*orthogonalHD') ;
+length_projectionHD = sqrt(projectionUnitHD*projectionUnitHD') ;
+
+% Divide out the lengths and find cos(theta) the result
+cos_theta = dotOrthogANDprojection/(length_orthogonal_VecHD*length_projectionHD)
+
+if cos_theta < 10e-6
+   disp('cos(theta) of the projection and the orthogonal unit == 0.')
+   
+else
+   disp('cos(theta) of the projection and the orthogonal unit DOES NOT == 0.')
+end
+
+answer = sprintf('If cos(theta) equals 0, you know that your angles are orthogonal.')
+
+
+%% 3) The sum of vectors in (a) [projection] and (b)[orthogonal] is equal to vector vHD
+
+% Make sure that the orthogonal vector plus the projection equals the original vector
+
+%{ 
+To show that the sum of the projection line and the orthogonal line are equal 
+to the original vector (vHD), we subtract vHD from these two vectors sum.
+Assuming that these vectors are equal, all values should be zero.
+
+Then we utilize the function find() to determine where there
+are zeros (because the conditional "==" will not work due to rounding
+errors - we utilize the logical condition "< 10e-6").
+
+This returns a list of the indices where the conditional requirement is
+met.
+
+%}
+
+% Find the difference
+difference_btw_vectors = (projectionUnitHD + orthogonalHD) - vHD;
+
+% Find where there are zeros...
+columnIndices = find(difference_btw_vectors < 10e-6) ;
+
+% Make sure that the length of the 'columnIndices' vector and the 'difference_btw_vectors' vector is equal
+
+% If any of the elements do not equal zero, then it would not be captured
+% in the 'columnIndices' object and these lengths would not match.
+
+equality_check = length(difference_btw_vectors) == length(columnIndices) ;
+
+% Display results based on the random vectors created...
+if equality_check == 1
+    disp('The sum of the projection vector and the orthogonal vector equals the original vector')
+else
+    sprintf('The sum of the projection vector and the orthogonal vector DOES NOT equal the original vector\n it appears you have a problem with your calculations')
+end
+
+
+##### SOURCE END #####
+--></body></html>

@@ -1,0 +1,305 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Question_6</title><meta name="generator" content="MATLAB 9.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2019-09-24"><meta name="DC.source" content="Question_6.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Questions 6 - Null Space and Range Space</a></li><li><a href="#2">Mapping to the range space</a></li></ul></div><h2 id="1">Questions 6 - Null Space and Range Space</h2><pre class="codeinput"><span class="comment">% Load Data</span>
+
+load(<span class="string">'mtxExamples.mat'</span>)
+
+<span class="comment">% Lets decompose them and then map to the null space...</span>
+
+[u1,s1,v1] = svd(mtx1) ;
+[u2,s2,v2] = svd(mtx2) ;
+[u3,s3,v3] = svd(mtx3) ;
+[u4,s4,v4] = svd(mtx4) ;
+
+s1_diag = diag(s1) ;
+s2_diag = diag(s2) ;
+s3_diag = diag(s3) ;
+s4_diag = diag(s4) ;
+
+mat1_null_index = (s1_diag &lt; 10e-6) ;
+mat2_null_index = (s2_diag &lt; 10e-6) ;
+mat3_null_index = (s3_diag &lt; 10e-6) ;
+mat4_null_index = (s4_diag &lt; 10e-6) ;
+
+mat1_range_index = (s1_diag &gt; 10e-6) ;
+mat2_range_index = (s2_diag &gt; 10e-6) ;
+mat3_range_index = (s3_diag &gt; 10e-6) ;
+mat4_range_index = (s4_diag &gt; 10e-6) ;
+
+<span class="comment">% Matrix 2 and matrix 4 have null spaces.. lets transpose the input matrix</span>
+<span class="comment">% and take a look at them.</span>
+
+MAT2_V_transposed = v2' ;
+MAT4_V_transposed = v4' ;
+
+mat_2_null = MAT2_V_transposed(mat2_null_index, :) ;
+mat_4_null = MAT4_V_transposed(mat4_null_index, :) ;
+
+<span class="comment">% Now we can create random vectors which map to a zeros matrix</span>
+
+<span class="comment">% For the second matrix - there are two vectors in the null space of the</span>
+<span class="comment">% input matrix. Either of these vectors will work to give us a matrix that</span>
+<span class="comment">% maps to the null space. We utilize this matrix, multiplied by  random</span>
+<span class="comment">% scalar, to give us a random vector that maps to this zeros matrix.</span>
+
+mat2_null_rows  = mat_2_null((1:2),:) ;
+random_mat2_vec_null = sum(mat2_null_rows * randn) ;
+
+<span class="comment">% Lets do this again for the fourth matrix...</span>
+<span class="comment">% This time there is no need to utilize two vectors b/c there is only one</span>
+<span class="comment">% in the nullspace</span>
+
+mat4_null_row  = mat_4_null(1,:) ;
+random_mat4_vec_null = mat4_null_row * randn ;
+
+<span class="comment">% Now we can transform them with U,S,V^transposed</span>
+
+mat2_zeros_mat = u2*(s2*(v2'*random_mat2_vec_null'))
+mat4_zeros_mat = u4*(s4*(v4'*random_mat4_vec_null'))
+
+sprintf(<span class="string">'All values are zero'</span>)
+
+find(mat2_zeros_mat &lt; 10e-6)
+find(mat4_zeros_mat &lt; 10e-6)
+</pre><pre class="codeoutput">
+mat2_zeros_mat =
+
+   1.0e-15 *
+
+    0.7611
+    0.0309
+    0.0609
+
+
+mat4_zeros_mat =
+
+   1.0e-16 *
+
+   -0.3047
+   -0.5631
+
+
+ans =
+
+    'All values are zero'
+
+
+ans =
+
+     1
+     2
+     3
+
+
+ans =
+
+     1
+     2
+
+</pre><h2 id="2">Mapping to the range space</h2><pre class="codeinput"><span class="comment">% Take our Range Space vectors</span>
+mat_2_range = u2(:, mat2_range_index) ;
+mat_4_range = u4(:, mat4_range_index) ;
+
+<span class="comment">% First we need to find the psuedo-inverse of S for each matrix.</span>
+<span class="comment">% Take the transpose and then s diagonal values over themselves..</span>
+S_2_inv = s2' ;
+S_2_inv(1,1) = 1/s2(1,1) ;    <span class="comment">% There is only 1</span>
+
+<span class="comment">% Then we need to isolate the input vector with this equation...</span>
+<span class="comment">% ---&gt; VS(pseudo)U'y(vec) = x(vec)</span>
+
+x_input_vec = v2*(S_2_inv*(u2'*(randn*mat_2_range))) ;
+mtx2*x_input_vec
+
+<span class="comment">% We can do the same for the second matrix, but it doesn't seem to work and</span>
+<span class="comment">% it's 11:30..</span>
+
+S_4_inv = s4' ;
+
+<span class="comment">% First we need to find the psuedo-inverse of S for each matrix.</span>
+<span class="comment">% Take the transpose and then s diagonal values over themselves..</span>
+
+S_4_inv(1,1) = 1/s4(1,1)  ; <span class="comment">% There is only 1</span>
+
+x_input_vec2 = v4*(S_4_inv*(u4'*(randn*mat_4_range))) ;
+
+mtx4*x_input_vec2
+</pre><pre class="codeoutput">
+ans =
+
+   -0.0714
+   -0.0029
+   -0.0058
+
+
+ans =
+
+    0.1771
+    0.0723
+
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Questions 6 - Null Space and Range Space
+
+% Load Data
+
+load('mtxExamples.mat')
+
+% Lets decompose them and then map to the null space...
+
+[u1,s1,v1] = svd(mtx1) ;
+[u2,s2,v2] = svd(mtx2) ;
+[u3,s3,v3] = svd(mtx3) ;
+[u4,s4,v4] = svd(mtx4) ;
+
+s1_diag = diag(s1) ;
+s2_diag = diag(s2) ;
+s3_diag = diag(s3) ;
+s4_diag = diag(s4) ;
+
+mat1_null_index = (s1_diag < 10e-6) ;
+mat2_null_index = (s2_diag < 10e-6) ;
+mat3_null_index = (s3_diag < 10e-6) ;
+mat4_null_index = (s4_diag < 10e-6) ;
+
+mat1_range_index = (s1_diag > 10e-6) ;
+mat2_range_index = (s2_diag > 10e-6) ;
+mat3_range_index = (s3_diag > 10e-6) ;
+mat4_range_index = (s4_diag > 10e-6) ;
+
+% Matrix 2 and matrix 4 have null spaces.. lets transpose the input matrix
+% and take a look at them.
+
+MAT2_V_transposed = v2' ;
+MAT4_V_transposed = v4' ;
+
+mat_2_null = MAT2_V_transposed(mat2_null_index, :) ;
+mat_4_null = MAT4_V_transposed(mat4_null_index, :) ;
+
+% Now we can create random vectors which map to a zeros matrix
+
+% For the second matrix - there are two vectors in the null space of the
+% input matrix. Either of these vectors will work to give us a matrix that
+% maps to the null space. We utilize this matrix, multiplied by  random
+% scalar, to give us a random vector that maps to this zeros matrix.
+
+mat2_null_rows  = mat_2_null((1:2),:) ;
+random_mat2_vec_null = sum(mat2_null_rows * randn) ;
+
+% Lets do this again for the fourth matrix...
+% This time there is no need to utilize two vectors b/c there is only one
+% in the nullspace
+
+mat4_null_row  = mat_4_null(1,:) ;
+random_mat4_vec_null = mat4_null_row * randn ;
+
+% Now we can transform them with U,S,V^transposed
+
+mat2_zeros_mat = u2*(s2*(v2'*random_mat2_vec_null'))
+mat4_zeros_mat = u4*(s4*(v4'*random_mat4_vec_null'))
+
+sprintf('All values are zero')
+
+find(mat2_zeros_mat < 10e-6) 
+find(mat4_zeros_mat < 10e-6) 
+
+%% Mapping to the range space
+
+% Take our Range Space vectors
+mat_2_range = u2(:, mat2_range_index) ;
+mat_4_range = u4(:, mat4_range_index) ;
+
+% First we need to find the psuedo-inverse of S for each matrix.
+% Take the transpose and then s diagonal values over themselves..
+S_2_inv = s2' ;
+S_2_inv(1,1) = 1/s2(1,1) ;    % There is only 1
+
+% Then we need to isolate the input vector with this equation...
+% REPLACE_WITH_DASH_DASH-> VS(pseudo)U'y(vec) = x(vec)
+
+x_input_vec = v2*(S_2_inv*(u2'*(randn*mat_2_range))) ;
+mtx2*x_input_vec 
+
+% We can do the same for the second matrix, but it doesn't seem to work and
+% it's 11:30..
+
+S_4_inv = s4' ;
+
+% First we need to find the psuedo-inverse of S for each matrix.
+% Take the transpose and then s diagonal values over themselves..
+
+S_4_inv(1,1) = 1/s4(1,1)  ; % There is only 1
+
+x_input_vec2 = v4*(S_4_inv*(u4'*(randn*mat_4_range))) ;
+
+mtx4*x_input_vec2
+
+
+##### SOURCE END #####
+--></body></html>
