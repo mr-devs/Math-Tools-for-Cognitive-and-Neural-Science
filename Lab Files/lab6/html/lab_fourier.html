@@ -1,0 +1,427 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>lab_fourier</title><meta name="generator" content="MATLAB 9.6"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2019-10-22"><meta name="DC.source" content="lab_fourier.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Exercise 1.1 -- Checking for linearity</a></li><li><a href="#2">Exercise 1.2 Find the impulse response of system 1 (assuming it is LSI)..</a></li><li><a href="#3">Exercise 1.2 cont'd Testing a system for shift invariance</a></li><li><a href="#4">Exercise: Sinusoids are sinusoids</a></li><li><a href="#5">Exercise: Sinusoids as building blocks</a></li><li><a href="#6">The Fourier transform</a></li><li><a href="#7">Plotting the Power spectrum</a></li></ul></div><h2 id="1">Exercise 1.1 -- Checking for linearity</h2><pre class="codeinput">close <span class="string">all</span>
+clear
+
+n = 64;
+x = 0:n-1;
+in1 = randn(n,1);
+in2 = randn(n,1);
+
+out1 = labsystem(in1);
+out2 = labsystem(in2);
+
+out_sum = labsystem(in1+in2);
+
+disp((out_sum - (out1+out2)&lt;1e-8)')
+</pre><pre class="codeoutput">  Columns 1 through 19
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 20 through 38
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 39 through 57
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 58 through 64
+
+   1   1   1   1   1   1   1
+
+</pre><h2 id="2">Exercise 1.2 Find the impulse response of system 1 (assuming it is LSI)..</h2><p>we will check more in depth whether it is or not later</p><pre class="codeinput">close <span class="string">all</span>
+clear
+n=64;
+x=0:n-1;
+impulse = zeros(n,1);
+impulse(1) = 1;
+output = labsystem(impulse);
+
+subplot(211)
+stem(x, impulse,<span class="string">'filled'</span>)
+axis([-1,65,0,3])
+box <span class="string">off</span>
+title(<span class="string">'input'</span>)
+
+subplot(212)
+stem(x, output,<span class="string">'filled'</span>)
+axis([-1,65,0,3])
+box <span class="string">off</span>
+title(<span class="string">'output'</span>)
+</pre><img vspace="5" hspace="5" src="lab_fourier_01.png" alt=""> <h2 id="3">Exercise 1.2 cont'd Testing a system for shift invariance</h2><pre class="codeinput">close <span class="string">all</span>
+clear
+n=64;
+x=0:n-1;
+impulse = zeros(n,1);
+impulse(1) = 1;
+output = labsystem(impulse);
+
+subplot(211)
+hold <span class="string">on</span>
+stem(x, impulse,<span class="string">'filled'</span>)
+stem(x, circshift(impulse,10),<span class="string">'k'</span>,<span class="string">'filled'</span>)
+axis([-1,65,0,3])
+box <span class="string">off</span>
+title(<span class="string">'input'</span>)
+legend(<span class="string">'impulse1'</span>,<span class="string">'impulse1 shifted by 10'</span>)
+
+subplot(212)
+hold <span class="string">on</span>
+stem(x, output,<span class="string">'filled'</span>)
+stem(x, circshift(output,10),<span class="string">'r'</span>,<span class="string">'filled'</span>,<span class="string">'markersize'</span>,8)
+stem(x, labsystem(circshift(impulse,10)),<span class="string">'ko'</span>)
+legend(<span class="string">'output of impulse1'</span>,<span class="string">'output of impulse1 shifted by 10'</span>,<span class="string">'output of shifted-by-10 impulse1'</span>)
+
+
+axis([-1,65,0,3])
+box <span class="string">off</span>
+title(<span class="string">'output'</span>)
+</pre><img vspace="5" hspace="5" src="lab_fourier_02.png" alt=""> <h2 id="4">Exercise: Sinusoids are sinusoids</h2><p>How do sig1, sig2, and sig3 relate to each other?</p><pre class="codeinput">close <span class="string">all</span>
+clear
+k = 5;
+n = 64; <span class="comment">% total number of points</span>
+x = 0:(n-1); <span class="comment">% domain on which to plot</span>
+
+sig1 = 3*cos(2*pi*k/n * x);
+sig2 = 4*sin(2*pi*k/n * x);
+
+sig3 = 5*cos(2*pi*k/n * x - atan(4/3));
+
+hold <span class="string">on</span>
+plot(x, sig3,<span class="string">'r'</span>,<span class="string">'linewidth'</span>,2)
+plot(x, sig1+sig2 ,<span class="string">'--k'</span>,<span class="string">'linewidth'</span>,2)
+legend(<span class="string">'sig3'</span>,<span class="string">'sig1+sig2'</span>)
+
+<span class="comment">% sig3 is a cosine phase-shifted by a given angle, sig1 and sig2 are</span>
+<span class="comment">% cosines and sines of the same frequency of sig3, but WITHOUT phase</span>
+<span class="comment">% shifts. sig3 = sig1+sig2. This can be done for every single phase-shifted</span>
+<span class="comment">% sinusoid, and is a fundamental foundation of the Fourier transform.</span>
+</pre><img vspace="5" hspace="5" src="lab_fourier_03.png" alt=""> <h2 id="5">Exercise: Sinusoids as building blocks</h2><pre class="codeinput">close <span class="string">all</span>
+clear
+n=1000;
+x = (0:n-1)';
+
+hold <span class="string">on</span>
+y = sin(2*pi*1/n * x);
+plot(y)
+
+y = y+ 1/3*sin(2*pi*3/n * x);
+plot(y)
+
+y= y+ 1/5*sin(2*pi*5/n * x);
+plot(y)
+
+y= y+ 1/7*sin(2*pi*7/n * x);
+plot(y)
+
+legend(<span class="string">'1st'</span>,<span class="string">'2nd'</span>,<span class="string">'3rd'</span>,<span class="string">'4th'</span>)
+
+figure
+
+y = zeros(n,1);
+
+<span class="keyword">for</span> k = 1:2:250
+   y = y + 1/k * sin(2*pi*k/n * x);
+<span class="keyword">end</span>
+
+plot(y)
+</pre><img vspace="5" hspace="5" src="lab_fourier_04.png" alt=""> <img vspace="5" hspace="5" src="lab_fourier_05.png" alt=""> <h2 id="6">The Fourier transform</h2><p>Remember, the Fourier transform is a matrix multiplication! i.e. a linear transformation. Let's compute the DFT amplitude spectrum of the square wave signal we created above.</p><pre class="codeinput">close <span class="string">all</span>
+clear
+n = 100;
+x = (0:n-1)';
+
+y = zeros(n,1);
+<span class="keyword">for</span> k = 1:2:7
+   y = y + 1/k * sin(2*pi*k/n * x);
+<span class="keyword">end</span>
+
+fft_mat = dftmtx(n)/sqrt(n);  <span class="comment">%create the DFT matrix. Remember to divide by sqrt(n)</span>
+
+fft_y = fft_mat*y;
+fft_y = fftshift(fft_y);
+ampl_spec = abs(fft_y);
+
+figure
+<span class="comment">%note there is power/amplitude at k=1, 3, 5, and 7; as one might expect</span>
+stem((-n/2:(n/2-1)), ampl_spec);
+xlabel(<span class="string">'Frequency'</span>)
+ylabel(<span class="string">'Amplitude'</span>)
+</pre><img vspace="5" hspace="5" src="lab_fourier_06.png" alt=""> <h2 id="7">Plotting the Power spectrum</h2><pre class="codeinput">close <span class="string">all</span>
+clear
+n = 64;
+x=(0:n-1)';
+
+yy = 5+ 20*randn(n,1) + 5*cos(2*pi*25/n * x) + 10 *cos(2*pi*15/n * x) + 25* cos(2*pi*10/n * x);
+
+<span class="comment">% Where do you expect to see power in the signal yy? Take a look at their</span>
+<span class="comment">% k's (25, 15, and 10) Also the initial +5 at the beginning of the signal</span>
+<span class="comment">% means there will be a 0 frequency component with power. And the randn()</span>
+<span class="comment">% (i.e. random noise) adds random power at every frequency</span>
+
+figure
+plot(yy)
+xlabel(<span class="string">'x'</span>)
+ylabel(<span class="string">'amplitude'</span>)
+
+figure
+fft_y = fftshift(fft(yy,n)/sqrt(n)); <span class="comment">%fftshift shifts the spectrum so 0 lies at the middle</span>
+amplitude_spec = abs(fft_y);
+power_spec = amplitude_spec.^2;
+
+stem((-n/2:((n/2)-1)), power_spec)
+ylabel(<span class="string">'Power'</span>)
+xlabel(<span class="string">'Frequency'</span>)
+</pre><img vspace="5" hspace="5" src="lab_fourier_07.png" alt=""> <img vspace="5" hspace="5" src="lab_fourier_08.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2019a</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Exercise 1.1 REPLACE_WITH_DASH_DASH Checking for linearity
+
+close all
+clear
+
+n = 64;
+x = 0:n-1;
+in1 = randn(n,1);
+in2 = randn(n,1);
+
+out1 = labsystem(in1);
+out2 = labsystem(in2);
+
+out_sum = labsystem(in1+in2);
+
+disp((out_sum - (out1+out2)<1e-8)')
+
+
+%% Exercise 1.2 Find the impulse response of system 1 (assuming it is LSI)..
+% we will check more in depth whether it is or not later
+
+close all
+clear
+n=64;
+x=0:n-1;
+impulse = zeros(n,1);
+impulse(1) = 1;
+output = labsystem(impulse);
+
+subplot(211)
+stem(x, impulse,'filled')
+axis([-1,65,0,3])
+box off
+title('input')
+
+subplot(212)
+stem(x, output,'filled')
+axis([-1,65,0,3])
+box off
+title('output')
+
+%% Exercise 1.2 cont'd Testing a system for shift invariance
+
+close all
+clear
+n=64;
+x=0:n-1;
+impulse = zeros(n,1);
+impulse(1) = 1;
+output = labsystem(impulse);
+
+subplot(211)
+hold on
+stem(x, impulse,'filled')
+stem(x, circshift(impulse,10),'k','filled')
+axis([-1,65,0,3])
+box off
+title('input')
+legend('impulse1','impulse1 shifted by 10')
+
+subplot(212)
+hold on
+stem(x, output,'filled')
+stem(x, circshift(output,10),'r','filled','markersize',8)
+stem(x, labsystem(circshift(impulse,10)),'ko')
+legend('output of impulse1','output of impulse1 shifted by 10','output of shifted-by-10 impulse1')
+
+
+axis([-1,65,0,3])
+box off
+title('output')
+
+%% Exercise: Sinusoids are sinusoids
+% How do sig1, sig2, and sig3 relate to each other?
+close all
+clear
+k = 5;
+n = 64; % total number of points 
+x = 0:(n-1); % domain on which to plot
+
+sig1 = 3*cos(2*pi*k/n * x);
+sig2 = 4*sin(2*pi*k/n * x);
+
+sig3 = 5*cos(2*pi*k/n * x - atan(4/3));
+
+hold on
+plot(x, sig3,'r','linewidth',2)
+plot(x, sig1+sig2 ,'REPLACE_WITH_DASH_DASHk','linewidth',2)
+legend('sig3','sig1+sig2')
+
+% sig3 is a cosine phase-shifted by a given angle, sig1 and sig2 are
+% cosines and sines of the same frequency of sig3, but WITHOUT phase
+% shifts. sig3 = sig1+sig2. This can be done for every single phase-shifted
+% sinusoid, and is a fundamental foundation of the Fourier transform.
+
+%% Exercise: Sinusoids as building blocks
+
+close all
+clear
+n=1000;
+x = (0:n-1)';
+
+hold on
+y = sin(2*pi*1/n * x);
+plot(y)
+
+y = y+ 1/3*sin(2*pi*3/n * x);
+plot(y)
+
+y= y+ 1/5*sin(2*pi*5/n * x);
+plot(y)
+
+y= y+ 1/7*sin(2*pi*7/n * x);
+plot(y)
+
+legend('1st','2nd','3rd','4th')
+
+figure
+
+y = zeros(n,1);
+
+for k = 1:2:250
+   y = y + 1/k * sin(2*pi*k/n * x);
+end
+
+plot(y)
+
+%% The Fourier transform
+% Remember, the Fourier transform is a matrix multiplication! i.e. a linear
+% transformation. Let's compute the DFT amplitude spectrum of the square
+% wave signal we created above.
+
+close all
+clear 
+n = 100;
+x = (0:n-1)';
+
+y = zeros(n,1);
+for k = 1:2:7
+   y = y + 1/k * sin(2*pi*k/n * x);
+end
+
+fft_mat = dftmtx(n)/sqrt(n);  %create the DFT matrix. Remember to divide by sqrt(n)
+
+fft_y = fft_mat*y;
+fft_y = fftshift(fft_y);
+ampl_spec = abs(fft_y);
+
+figure
+%note there is power/amplitude at k=1, 3, 5, and 7; as one might expect
+stem((-n/2:(n/2-1)), ampl_spec); 
+xlabel('Frequency')
+ylabel('Amplitude')
+
+
+%% Plotting the Power spectrum 
+
+close all
+clear 
+n = 64;
+x=(0:n-1)';
+
+yy = 5+ 20*randn(n,1) + 5*cos(2*pi*25/n * x) + 10 *cos(2*pi*15/n * x) + 25* cos(2*pi*10/n * x);
+
+% Where do you expect to see power in the signal yy? Take a look at their
+% k's (25, 15, and 10) Also the initial +5 at the beginning of the signal
+% means there will be a 0 frequency component with power. And the randn()
+% (i.e. random noise) adds random power at every frequency
+
+figure
+plot(yy)
+xlabel('x')
+ylabel('amplitude')
+
+figure
+fft_y = fftshift(fft(yy,n)/sqrt(n)); %fftshift shifts the spectrum so 0 lies at the middle
+amplitude_spec = abs(fft_y);
+power_spec = amplitude_spec.^2;
+
+stem((-n/2:((n/2)-1)), power_spec)
+ylabel('Power')
+xlabel('Frequency')
+
+##### SOURCE END #####
+--></body></html>
