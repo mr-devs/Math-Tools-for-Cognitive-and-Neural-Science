@@ -1,0 +1,580 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>HW # 3 - Question 3 - Math Tools - Matthew DeVerna</title><meta name="generator" content="MATLAB 9.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2019-10-29"><meta name="DC.source" content="Question_3.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h1>HW # 3 - Question 3 - Math Tools - Matthew DeVerna</h1><!--introduction--><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Question 3: Gabor Filter.</a></li><li><a href="#2">(A) Create and Describe a One-Dimensional Gabor Filter</a></li><li><a href="#3">Plot the Fourier Transformation of this Filter</a></li><li><a href="#4">Why does it have this shape? How is the shape related to the chosen parameters?</a></li><li><a href="#5">Plotting With Different Parameters</a></li><li><a href="#6">(B/C) Find the Frequency that Produces the Largest Amplitudes</a></li></ul></div><h2 id="1">Question 3: Gabor Filter.</h2><pre class="codeinput"><span class="comment">% The response properties of neurons in the primary visual cortex (V1) are</span>
+<span class="comment">% often described using linear filters. We'll examine a one-dimensional</span>
+<span class="comment">% cross-section of the most common choice, known as a "Gabor filter".</span>
+</pre><h2 id="2">(A) Create and Describe a One-Dimensional Gabor Filter</h2><pre class="codeinput"><span class="comment">% Create a one-dimensional linear filter that is a product of a Gaussian</span>
+<span class="comment">% and a sinusoid, exp((-n^2)/(2*sigma^2))cos(omega*n).</span>
+
+n = 25                          ; <span class="comment">% Set samples</span>
+x = linspace(-12,12,25)         ; <span class="comment">% Create the x-axis domain</span>
+sigma = 3.5                     ;
+omega = 2*pi*(10/64)            ;
+
+<span class="comment">% Create the sinusoid</span>
+gauss = exp(-((x.^2)/(2*sigma^2)))  ;
+sinusoid = cos(omega * x)           ;
+
+<span class="comment">% Create the gabor filter</span>
+gaborFilter = gauss.* sinusoid ;
+
+figure ;
+<span class="comment">% Plot the sinusoid</span>
+subplot(3,1,1)
+plot(x, sinusoid)
+title(<span class="string">'Sinusoid'</span>)
+xlabel(<span class="string">'x-axis'</span>)
+ylabel(<span class="string">'y-axis'</span>)
+
+<span class="comment">% Plot the Gaussian distribution</span>
+subplot(3,1,2)
+plot(x, gauss)
+title(<span class="string">'Gaussian'</span>)
+xlabel(<span class="string">'x-axis'</span>)
+ylabel(<span class="string">'y-axis'</span>)
+
+<span class="comment">% Plot the Gabor Filter</span>
+subplot(3,1,3)
+plot(x, gaborFilter)
+title(<span class="string">'Gabor Filter'</span>)
+xlabel(<span class="string">'x-axis'</span>)
+ylabel(<span class="string">'y-axis'</span>)
+sgtitle(<span class="string">'Building a One-D Gabor Filter: The Product of a Gaussian and a Sinusoid'</span>)
+
+GaborFilterVisualCheck = {<span class="string">'Looking Good!'</span>}
+</pre><pre class="codeoutput">
+GaborFilterVisualCheck =
+
+  1&times;1 cell array
+
+    {'Looking Good!'}
+
+</pre><img vspace="5" hspace="5" src="Question_3_01.png" alt=""> <h2 id="3">Plot the Fourier Transformation of this Filter</h2><pre class="codeinput"><span class="comment">% What kind of filter is this?</span>
+
+Filter_Type = {<span class="string">'This is a bandpass filter which is most responsive to sinusoids at a'</span>
+                <span class="string">'frequency of ten cycles per sample. This can be seen in the max amplitude'</span>
+                <span class="string">'of the fourier transformed gabor filter. This comes from the sinusoid'</span>
+                <span class="string">'which has a k value that equals 10 (from 10/64 when creating omega).'</span>}
+
+
+N = 64                                          ;
+gaborFourier = abs(fft(gaborFilter,N))          ;
+centered_gaborFourier = fftshift(gaborFourier)  ;
+fourier_x = -N/2 : N/2-1                        ;
+
+figure ;
+stem(fourier_x, centered_gaborFourier, <span class="string">'filled'</span>, <span class="string">'-.'</span>)  ; <span class="comment">% fftshift to center around zero</span>
+title(<span class="string">'Gabor Fourier Amplitudes'</span>)                       ;
+xlabel(<span class="string">'Frequency'</span>)                                     ;
+ylabel(<span class="string">'Amplitude'</span>)                                     ;
+</pre><pre class="codeoutput">
+Filter_Type =
+
+  4&times;1 cell array
+
+    {'This is a bandpass filter which is most responsive to sinusoids at a'     }
+    {'frequency of ten cycles per sample. This can be seen in the max amplitude'}
+    {'of the fourier transformed gabor filter. This comes from the sinusoid'    }
+    {'which has a k value that equals 10 (from 10/64 when creating omega).'     }
+
+</pre><img vspace="5" hspace="5" src="Question_3_02.png" alt=""> <h2 id="4">Why does it have this shape? How is the shape related to the chosen parameters?</h2><pre class="codeinput">GaborShape = {<span class="string">'The gabor filter is the product of the sinusoid and the gaussian'</span>
+                <span class="string">'distribution. Having said that, the amplitudes found in the Fourier'</span>
+                <span class="string">'transformed Gabor plot are defined by the omega and sigma parameters'</span>
+                <span class="string">'above.'</span>
+                <span class="string">'Omega/Frequency:'</span>
+                <span class="string">'If you change the frequency of omega by changing: '</span>
+                <span class="string">'10 --to--&gt; 15 (increasing) or 10 --to--&gt; 5 (decreasing) you will be'</span>
+                <span class="string">'moving the "passing" frequencies closer together or further apart,'</span>
+                <span class="string">'respectively.'</span>
+                <span class="string">'Sigma/Gaussian Width:'</span>
+                <span class="string">'If you change the width of the gaussian by changing:'</span>
+                <span class="string">'3.5 --to--&gt; 1 (reducing) or 3.5 --to--&gt; 5 (increasing) you will be'</span>
+                <span class="string">'allowing more or less frequencies to "pass through", respectively.'</span>
+                <span class="string">'Specifically, reducing the gaussian width, will increase the range of'</span>
+                <span class="string">'frequencies allowed through; both below and above zero, moving away from'</span>
+                <span class="string">'the center of each passing frequency distribution. I.e. the width of '</span>
+                <span class="string">'"passing" distributions is increased or decreased, respectively.'</span>
+                <span class="string">'Additionally, a skinner gaussian will produce lower amplitudes while a'</span>
+                <span class="string">'fat one will produce higher amplitudues.'</span>
+                <span class="string">' '</span>
+                <span class="string">'See the below plots for a visualization of these effects.'</span>}
+</pre><pre class="codeoutput">
+GaborShape =
+
+  21&times;1 cell array
+
+    {'The gabor filter is the product of the sinusoid and the gaussian'        }
+    {'distribution. Having said that, the amplitudes found in the Fourier'     }
+    {'transformed Gabor plot are defined by the omega and sigma parameters'    }
+    {'above.'                                                                  }
+    {'Omega/Frequency:'                                                        }
+    {'If you change the frequency of omega by changing: '                      }
+    {'10 --to--&gt; 15 (increasing) or 10 --to--&gt; 5 (decreasing) you will be'     }
+    {'moving the "passing" frequencies closer together or further apart,'      }
+    {'respectively.'                                                           }
+    {'Sigma/Gaussian Width:'                                                   }
+    {'If you change the width of the gaussian by changing:'                    }
+    {'3.5 --to--&gt; 1 (reducing) or 3.5 --to--&gt; 5 (increasing) you will be'      }
+    {'allowing more or less frequencies to "pass through", respectively.'      }
+    {'Specifically, reducing the gaussian width, will increase the range of'   }
+    {'frequencies allowed through; both below and above zero, moving away from'}
+    {'the center of each passing frequency distribution. I.e. the width of '   }
+    {'"passing" distributions is increased or decreased, respectively.'        }
+    {'Additionally, a skinner gaussian will produce lower amplitudes while a'  }
+    {'fat one will produce higher amplitudues.'                                }
+    {' '                                                                       }
+    {'See the below plots for a visualization of these effects.'               }
+
+</pre><h2 id="5">Plotting With Different Parameters</h2><pre class="codeinput"><span class="comment">% Create New Parameters</span>
+skinny_gauss_sigma = 1          ;
+fat_gauss_sigma = 5             ;
+low_freq_omega = 2*pi*(5/64)    ;
+high_freq_omega = 2*pi*(20/64)  ;
+
+<span class="comment">% ~~~~~~~~~~Low Frequency~~~~~~~~~~~%</span>
+low_freq_gauss = exp(-((x.^2)/(2*sigma^2)))                 ;
+low_freq_sinusoid = cos(low_freq_omega * x)                 ;
+low_freq_gaborFilter = low_freq_gauss.* low_freq_sinusoid   ;
+low_freq_gaborFourier = abs(fft(low_freq_gaborFilter,64))   ;
+<span class="comment">% ~~~~~~~~~~High Frequency~~~~~~~~~%</span>
+<span class="comment">% Create the high freq sinusoid</span>
+high_freq_gauss = exp(-((x.^2)/(2*sigma^2)))                    ;
+high_freq_sinusoid = cos(high_freq_omega * x)                   ;
+high_freq_gaborFilter = high_freq_gauss.* high_freq_sinusoid    ;
+high_freq_gaborFourier = abs(fft(high_freq_gaborFilter,64))     ;
+<span class="comment">% ~~~~~~~~~Fat Gaussian~~~~~~~~~~~%</span>
+fat_gauss = exp(-((x.^2)/(2*fat_gauss_sigma^2)))            ;
+fat_gauss_sinusoid = cos(omega * x)                         ;
+fat_gauss_gaborFilter = fat_gauss.* fat_gauss_sinusoid      ;
+fat_gauss_gaborFourier = abs(fft(fat_gauss_gaborFilter,64)) ;
+<span class="comment">% ~~~~~~~~~Skinny Gaussian~~~~~~~~~~~%</span>
+skinny_gauss = exp(-((x.^2)/(2*skinny_gauss_sigma^2)))              ;
+skinny_gauss_sinusoid = cos(omega * x)                              ;
+skinny_gauss_gaborFilter = skinny_gauss.* skinny_gauss_sinusoid     ;
+skinny_gauss_gaborFourier = abs(fft(skinny_gauss_gaborFilter,64))   ;
+
+figure ;
+subplot(2,2,1)
+stem(fourier_x, low_freq_gaborFourier, <span class="string">'r'</span>, <span class="string">'filled'</span>)         ;
+title(<span class="string">'Low Frequency Gabor Fourier Amplitudes'</span>)     ;
+xlabel(<span class="string">'Frequency'</span>)                                 ;
+ylabel(<span class="string">'Amplitude'</span>)                                 ;
+
+subplot(2,2,3)
+stem(fourier_x, high_freq_gaborFourier, <span class="string">'r'</span>, <span class="string">'filled'</span>)        ;
+title(<span class="string">'High Frequency Gabor Fourier Amplitudes'</span>)    ;
+xlabel(<span class="string">'Frequency'</span>)                                 ;
+ylabel(<span class="string">'Amplitude'</span>)                                 ;
+
+subplot(2,2,2)
+stem(fourier_x, fat_gauss_gaborFourier, <span class="string">'b'</span>, <span class="string">'filled'</span>)        ;
+title(<span class="string">'Fat Gaussian Gabor Fourier Amplitudes'</span>)      ;
+xlabel(<span class="string">'Frequency'</span>)                                 ;
+ylabel(<span class="string">'Amplitude'</span>)                                 ;
+
+subplot(2,2,4)
+stem(fourier_x, skinny_gauss_gaborFourier, <span class="string">'b'</span>, <span class="string">'filled'</span>)                         ;
+title(<span class="string">'Skinny Gaussian Gabor Fourier Amplitudes'</span>)                       ;
+xlabel(<span class="string">'Frequency'</span>)                                                     ;
+ylabel(<span class="string">'Amplitude'</span>)                                                     ;
+sgtitle(<span class="string">'Effect of Altering the Parameters of Sinusoid and Gaussian'</span>)   ;
+</pre><img vspace="5" hspace="5" src="Question_3_03.png" alt=""> <h2 id="6">(B/C) Find the Frequency that Produces the Largest Amplitudes</h2><pre class="codeinput"><span class="comment">% To do this we will find the max value of the Fourier transformed Gabor</span>
+<span class="comment">% filter and utilize that band frequency to create a new sinusoid by</span>
+<span class="comment">% altering omega.</span>
+
+maxAmplitude = max(centered_gaborFourier) ;
+high_resp_freq = fourier_x(centered_gaborFourier == maxAmplitude) ;
+high_resp_freq(1) = [] ;
+
+quarter_percent = maxAmplitude*.25
+
+<span class="comment">% This gives you a value of 1.0961 - within the fourier domain, we can see</span>
+<span class="comment">% that the closest frequency value we can get to this is at 15 and 5,</span>
+<span class="comment">% giving us values of 1.001. We also find a period of 6.4 cycles per sample</span>
+<span class="comment">% for frequency where k = 10.</span>
+
+maxAmplitudePeriod = 1/(high_resp_freq/64)
+
+<span class="comment">% These are the "k" values for our new omegas created below</span>
+lowFreq = 5     ;
+highFreq = 15   ;
+
+<span class="comment">% Create new omegas</span>
+lowFreq_omega = 2*pi*(lowFreq/64)               ;
+midFreq_omega = 2*pi*(high_resp_freq/64)        ;
+highFreq_omega = 2*pi*(highFreq/64)             ;
+
+<span class="comment">% Pop 'em into the cosine with x</span>
+lowFreq_sinusoid = cos(lowFreq_omega * x)       ;
+midFreq_sinusoid = cos(midFreq_omega * x)       ;
+highFreq_sinusoid = cos(highFreq_omega * x)     ;
+
+<span class="comment">% Take our amplitudes</span>
+low_fourier_amps = abs(fft(conv(gaborFilter, lowFreq_sinusoid , <span class="string">'same'</span>), 64))   ;
+mid_fourier_amps = abs(fft(conv(gaborFilter, midFreq_sinusoid , <span class="string">'same'</span>), 64))   ;
+high_fourier_amps = abs(fft(conv(gaborFilter, highFreq_sinusoid , <span class="string">'same'</span>), 64)) ;
+
+<span class="comment">% Center these around the DC</span>
+centered_low = fftshift(low_fourier_amps)   ;
+centered_mid = fftshift(mid_fourier_amps)   ;
+centered_high = fftshift(high_fourier_amps) ;
+
+<span class="comment">% Plot</span>
+figure
+subplot(1,3,1)
+stem(fourier_x, centered_low, <span class="string">'b'</span>, <span class="string">'filled'</span>)    ; <span class="comment">% Low frequency</span>
+title(<span class="string">'25% Amplitude Response #1'</span>)              ;
+xlabel(<span class="string">'Frequency'</span>)                             ;
+ylabel(<span class="string">'Amplitude'</span>)                             ;
+
+subplot(1,3,2)
+stem(fourier_x, centered_mid, <span class="string">'b'</span>, <span class="string">'filled'</span>)    ; <span class="comment">% Mid frequency</span>
+title(<span class="string">'Largest Amplitude Response'</span>)             ;
+xlabel(<span class="string">'Frequency'</span>)                             ;
+ylabel(<span class="string">'Amplitude'</span>)                             ;
+
+subplot(1,3,3)
+stem(fourier_x, centered_high, <span class="string">'b'</span>, <span class="string">'filled'</span>)   ; <span class="comment">% High frequency</span>
+title(<span class="string">'25% Amplitude Response #2'</span>)              ;
+xlabel(<span class="string">'Frequency'</span>)                             ;
+ylabel(<span class="string">'Amplitude'</span>)                             ;
+
+<span class="comment">% Ratios of the low/mid/high Frequencies Passed Through the Gabor Filter</span>
+
+low_max_amp = max(centered_low)     ;
+mid_max_amp = max(centered_mid)     ;
+high_max_amp = max(centered_high)   ;
+
+lowFreqRatio = low_max_amp/mid_max_amp
+lowFreqRatio = high_max_amp/mid_max_amp
+
+lowMidHigh_Answer = {<span class="string">'We can see that these are approximately close, but not perfect, because'</span>
+                    <span class="string">'we are utilizing a discrete function, not a continuous one.'</span>}
+</pre><pre class="codeoutput">
+quarter_percent =
+
+    1.0961
+
+
+maxAmplitudePeriod =
+
+    6.4000
+
+
+lowFreqRatio =
+
+    0.3350
+
+
+lowFreqRatio =
+
+    0.2850
+
+
+lowMidHigh_Answer =
+
+  2&times;1 cell array
+
+    {'We can see that these are approximately close, but not perfect, because'}
+    {'we are utilizing a discrete function, not a continuous one.'            }
+
+</pre><img vspace="5" hspace="5" src="Question_3_04.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% HW # 3 - Question 3 - Math Tools - Matthew DeVerna
+
+%% Question 3: Gabor Filter.
+
+% The response properties of neurons in the primary visual cortex (V1) are
+% often described using linear filters. We'll examine a one-dimensional
+% cross-section of the most common choice, known as a "Gabor filter".
+
+%% (A) Create and Describe a One-Dimensional Gabor Filter
+
+% Create a one-dimensional linear filter that is a product of a Gaussian
+% and a sinusoid, exp((-n^2)/(2*sigma^2))cos(omega*n).
+
+n = 25                          ; % Set samples
+x = linspace(-12,12,25)         ; % Create the x-axis domain
+sigma = 3.5                     ; 
+omega = 2*pi*(10/64)            ;  
+
+% Create the sinusoid
+gauss = exp(-((x.^2)/(2*sigma^2)))  ;
+sinusoid = cos(omega * x)           ;
+
+% Create the gabor filter
+gaborFilter = gauss.* sinusoid ;
+
+figure ;
+% Plot the sinusoid
+subplot(3,1,1)
+plot(x, sinusoid)
+title('Sinusoid')
+xlabel('x-axis')
+ylabel('y-axis')
+
+% Plot the Gaussian distribution
+subplot(3,1,2)
+plot(x, gauss)
+title('Gaussian')
+xlabel('x-axis')
+ylabel('y-axis')
+
+% Plot the Gabor Filter
+subplot(3,1,3)
+plot(x, gaborFilter)
+title('Gabor Filter')
+xlabel('x-axis')
+ylabel('y-axis')
+sgtitle('Building a One-D Gabor Filter: The Product of a Gaussian and a Sinusoid')
+
+GaborFilterVisualCheck = {'Looking Good!'}
+
+%% Plot the Fourier Transformation of this Filter
+
+% What kind of filter is this?
+
+Filter_Type = {'This is a bandpass filter which is most responsive to sinusoids at a'
+                'frequency of ten cycles per sample. This can be seen in the max amplitude'
+                'of the fourier transformed gabor filter. This comes from the sinusoid'
+                'which has a k value that equals 10 (from 10/64 when creating omega).'}
+
+            
+N = 64                                          ;       
+gaborFourier = abs(fft(gaborFilter,N))          ;
+centered_gaborFourier = fftshift(gaborFourier)  ;
+fourier_x = -N/2 : N/2-1                        ;     
+
+figure ;
+stem(fourier_x, centered_gaborFourier, 'filled', '-.')  ; % fftshift to center around zero
+title('Gabor Fourier Amplitudes')                       ;
+xlabel('Frequency')                                     ;
+ylabel('Amplitude')                                     ;
+
+
+%% Why does it have this shape? How is the shape related to the chosen parameters?
+
+GaborShape = {'The gabor filter is the product of the sinusoid and the gaussian'
+                'distribution. Having said that, the amplitudes found in the Fourier'
+                'transformed Gabor plot are defined by the omega and sigma parameters'
+                'above.'
+                'Omega/Frequency:'
+                'If you change the frequency of omega by changing: '
+                '10 REPLACE_WITH_DASH_DASHtoREPLACE_WITH_DASH_DASH> 15 (increasing) or 10 REPLACE_WITH_DASH_DASHtoREPLACE_WITH_DASH_DASH> 5 (decreasing) you will be'
+                'moving the "passing" frequencies closer together or further apart,'
+                'respectively.'
+                'Sigma/Gaussian Width:'
+                'If you change the width of the gaussian by changing:'
+                '3.5 REPLACE_WITH_DASH_DASHtoREPLACE_WITH_DASH_DASH> 1 (reducing) or 3.5 REPLACE_WITH_DASH_DASHtoREPLACE_WITH_DASH_DASH> 5 (increasing) you will be'
+                'allowing more or less frequencies to "pass through", respectively.'
+                'Specifically, reducing the gaussian width, will increase the range of'
+                'frequencies allowed through; both below and above zero, moving away from'
+                'the center of each passing frequency distribution. I.e. the width of '
+                '"passing" distributions is increased or decreased, respectively.'
+                'Additionally, a skinner gaussian will produce lower amplitudes while a'
+                'fat one will produce higher amplitudues.'
+                ' '
+                'See the below plots for a visualization of these effects.'}
+
+%% Plotting With Different Parameters
+
+% Create New Parameters
+skinny_gauss_sigma = 1          ;
+fat_gauss_sigma = 5             ;
+low_freq_omega = 2*pi*(5/64)    ;  
+high_freq_omega = 2*pi*(20/64)  ; 
+
+% ~~~~~~~~~~Low Frequency~~~~~~~~~~~%
+low_freq_gauss = exp(-((x.^2)/(2*sigma^2)))                 ;
+low_freq_sinusoid = cos(low_freq_omega * x)                 ;
+low_freq_gaborFilter = low_freq_gauss.* low_freq_sinusoid   ;
+low_freq_gaborFourier = abs(fft(low_freq_gaborFilter,64))   ;
+% ~~~~~~~~~~High Frequency~~~~~~~~~%
+% Create the high freq sinusoid
+high_freq_gauss = exp(-((x.^2)/(2*sigma^2)))                    ;
+high_freq_sinusoid = cos(high_freq_omega * x)                   ;
+high_freq_gaborFilter = high_freq_gauss.* high_freq_sinusoid    ;
+high_freq_gaborFourier = abs(fft(high_freq_gaborFilter,64))     ;
+% ~~~~~~~~~Fat Gaussian~~~~~~~~~~~%
+fat_gauss = exp(-((x.^2)/(2*fat_gauss_sigma^2)))            ;
+fat_gauss_sinusoid = cos(omega * x)                         ;
+fat_gauss_gaborFilter = fat_gauss.* fat_gauss_sinusoid      ;
+fat_gauss_gaborFourier = abs(fft(fat_gauss_gaborFilter,64)) ;
+% ~~~~~~~~~Skinny Gaussian~~~~~~~~~~~%
+skinny_gauss = exp(-((x.^2)/(2*skinny_gauss_sigma^2)))              ;
+skinny_gauss_sinusoid = cos(omega * x)                              ;
+skinny_gauss_gaborFilter = skinny_gauss.* skinny_gauss_sinusoid     ;
+skinny_gauss_gaborFourier = abs(fft(skinny_gauss_gaborFilter,64))   ;
+
+figure ;
+subplot(2,2,1) 
+stem(fourier_x, low_freq_gaborFourier, 'r', 'filled')         ;
+title('Low Frequency Gabor Fourier Amplitudes')     ;   
+xlabel('Frequency')                                 ;
+ylabel('Amplitude')                                 ;
+
+subplot(2,2,3)
+stem(fourier_x, high_freq_gaborFourier, 'r', 'filled')        ;
+title('High Frequency Gabor Fourier Amplitudes')    ;
+xlabel('Frequency')                                 ;
+ylabel('Amplitude')                                 ;
+
+subplot(2,2,2)
+stem(fourier_x, fat_gauss_gaborFourier, 'b', 'filled')        ;
+title('Fat Gaussian Gabor Fourier Amplitudes')      ;
+xlabel('Frequency')                                 ;
+ylabel('Amplitude')                                 ;
+
+subplot(2,2,4)
+stem(fourier_x, skinny_gauss_gaborFourier, 'b', 'filled')                         ;
+title('Skinny Gaussian Gabor Fourier Amplitudes')                       ;
+xlabel('Frequency')                                                     ;
+ylabel('Amplitude')                                                     ;
+sgtitle('Effect of Altering the Parameters of Sinusoid and Gaussian')   ;
+
+%% (B/C) Find the Frequency that Produces the Largest Amplitudes
+
+% To do this we will find the max value of the Fourier transformed Gabor
+% filter and utilize that band frequency to create a new sinusoid by
+% altering omega.
+
+maxAmplitude = max(centered_gaborFourier) ;
+high_resp_freq = fourier_x(centered_gaborFourier == maxAmplitude) ;
+high_resp_freq(1) = [] ;
+
+quarter_percent = maxAmplitude*.25 
+
+% This gives you a value of 1.0961 - within the fourier domain, we can see
+% that the closest frequency value we can get to this is at 15 and 5,
+% giving us values of 1.001. We also find a period of 6.4 cycles per sample
+% for frequency where k = 10.
+
+maxAmplitudePeriod = 1/(high_resp_freq/64) 
+
+% These are the "k" values for our new omegas created below
+lowFreq = 5     ;
+highFreq = 15   ;
+
+% Create new omegas
+lowFreq_omega = 2*pi*(lowFreq/64)               ;
+midFreq_omega = 2*pi*(high_resp_freq/64)        ;  
+highFreq_omega = 2*pi*(highFreq/64)             ;
+
+% Pop 'em into the cosine with x
+lowFreq_sinusoid = cos(lowFreq_omega * x)       ;
+midFreq_sinusoid = cos(midFreq_omega * x)       ;
+highFreq_sinusoid = cos(highFreq_omega * x)     ;
+
+% Take our amplitudes
+low_fourier_amps = abs(fft(conv(gaborFilter, lowFreq_sinusoid , 'same'), 64))   ;
+mid_fourier_amps = abs(fft(conv(gaborFilter, midFreq_sinusoid , 'same'), 64))   ;
+high_fourier_amps = abs(fft(conv(gaborFilter, highFreq_sinusoid , 'same'), 64)) ;
+
+% Center these around the DC
+centered_low = fftshift(low_fourier_amps)   ;
+centered_mid = fftshift(mid_fourier_amps)   ;
+centered_high = fftshift(high_fourier_amps) ;
+
+% Plot
+figure
+subplot(1,3,1)
+stem(fourier_x, centered_low, 'b', 'filled')    ; % Low frequency
+title('25% Amplitude Response #1')              ;
+xlabel('Frequency')                             ;
+ylabel('Amplitude')                             ;
+
+subplot(1,3,2)
+stem(fourier_x, centered_mid, 'b', 'filled')    ; % Mid frequency
+title('Largest Amplitude Response')             ;
+xlabel('Frequency')                             ;
+ylabel('Amplitude')                             ;
+
+subplot(1,3,3)
+stem(fourier_x, centered_high, 'b', 'filled')   ; % High frequency
+title('25% Amplitude Response #2')              ;
+xlabel('Frequency')                             ;
+ylabel('Amplitude')                             ;
+
+% Ratios of the low/mid/high Frequencies Passed Through the Gabor Filter
+
+low_max_amp = max(centered_low)     ;
+mid_max_amp = max(centered_mid)     ;
+high_max_amp = max(centered_high)   ;
+
+lowFreqRatio = low_max_amp/mid_max_amp
+lowFreqRatio = high_max_amp/mid_max_amp
+
+lowMidHigh_Answer = {'We can see that these are approximately close, but not perfect, because'
+                    'we are utilizing a discrete function, not a continuous one.'}
+
+
+
+
+##### SOURCE END #####
+--></body></html>

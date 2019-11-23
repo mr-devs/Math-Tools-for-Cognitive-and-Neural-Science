@@ -1,0 +1,399 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Question_4</title><meta name="generator" content="MATLAB 9.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2019-10-29"><meta name="DC.source" content="Question_4.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">HW # 3 - Question 4 - Math Tools - Matthew DeVerna</a></li><li><a href="#2">Question 4: Deconvolution of the Haemodynamic Response.</a></li><li><a href="#3">Plot Input and Impulse Vectors Over Time</a></li><li><a href="#4">Rewriting the Equation with createConvMat(x,M)</a></li><li><a href="#5">createConvMat() Output Matrix vs. conv(): The Ultimate Showdown...</a></li><li><a href="#6">Least-Squares Regression: h_opt for X</a></li><li><a href="#7">Plotting in the Power Spectrum of HRF</a></li></ul></div><h2 id="1">HW # 3 - Question 4 - Math Tools - Matthew DeVerna</h2><pre class="codeinput">clear
+close <span class="string">all</span>
+</pre><h2 id="2">Question 4: Deconvolution of the Haemodynamic Response.</h2><pre class="codeinput"><span class="comment">% Neuronal activity causes local changes in deoxyhemoglobin concentration</span>
+<span class="comment">% in the blood which can be measured using magnetic resonance imaging</span>
+<span class="comment">% (MRI). One drawback of this is that the haemodynamic response is both</span>
+<span class="comment">% delayed and slower than the underlying neural responses. We can model the</span>
+<span class="comment">% delay and spread of the measurements relative to the neural signals using</span>
+<span class="comment">% a linear shift-invariant system:</span>
+    <span class="comment">% r(n) = sum(   x(n-k)*h(k) for all k's where:</span>
+    <span class="comment">% x(n) = an input signal delivered over time (for example, a sequence</span>
+    <span class="comment">% of light intensisties)</span>
+    <span class="comment">% k = time</span>
+    <span class="comment">% h(k) = the haemodynamic response to a single light flash at k = 0</span>
+        <span class="comment">% i.e. the impulse response of the MRI Measurement</span>
+    <span class="comment">% r(n) = the MRI response to the full input signal</span>
+
+load(<span class="string">'hrfDeconv.mat'</span>)
+
+<span class="comment">% In this file:</span>
+    <span class="comment">% r = response vector</span>
+    <span class="comment">% x = input vector (sequence of impulses [flashes of light])</span>
+    <span class="comment">% NOTE: signals are sampled at 1 Hz</span>
+
+<span class="comment">% Using the above data, we will try to estimate the HRF (h)</span>
+</pre><h2 id="3">Plot Input and Impulse Vectors Over Time</h2><pre class="codeinput">time = linspace(1, length(r), length(r)) ;
+
+figure ;
+stem(x, <span class="string">'filled'</span>,<span class="string">'pentagram'</span>, <span class="string">'LineStyle'</span>,<span class="string">'-.'</span>,<span class="string">'Color'</span>,<span class="string">'k'</span>)
+hold <span class="string">on</span>
+plot(time,r, <span class="string">'r'</span>, <span class="string">'LineWidth'</span>, 1.25)
+title(<span class="string">'Response Vector'</span>)
+xlabel(<span class="string">'Time'</span>)
+ylabel(<span class="string">'Intensity'</span>)
+legend(<span class="string">'Light Flashes'</span> , <span class="string">'Haemodynamic Response'</span>)
+</pre><img vspace="5" hspace="5" src="Question_4_01.png" alt=""> <h2 id="4">Rewriting the Equation with createConvMat(x,M)</h2><pre class="codeinput"><span class="comment">% Since convolution is linear, we can rewrite the above equation as a</span>
+<span class="comment">% matrix multiplication:</span>
+
+<span class="comment">% r = X * h</span>
+
+<span class="comment">% h = length M</span>
+<span class="comment">% X = an N + M - 1 X M matrix (N is the length of input x)</span>
+
+<span class="comment">% The overall idea here is to create a matrix which replicates</span>
+<span class="comment">% the convolution function/the equation above. Having said that, lets test</span>
+<span class="comment">% it out below and see if they compare.</span>
+
+h = randi(50,15,1) ;
+M = length(h)       ;
+
+X = createConvMat(x,M)   ;
+my_r = X*h               ;
+MATLAB_r = conv(x,h)     ;
+
+<span class="comment">% We round here to correct for matlab's rounding issues</span>
+matching = isequal(round(my_r,5),round(MATLAB_r,5))
+
+<span class="comment">% Create a nice visualization to assist our TAs in their mountainous</span>
+<span class="comment">% endeavour to check all MathTools homework</span>
+figure ;
+imagesc(X)
+colormap <span class="string">jet</span>
+colorbar
+title(<span class="string">'Map of Created Convolution Matrix'</span>)
+</pre><pre class="codeoutput">
+matching =
+
+  logical
+
+   1
+
+</pre><img vspace="5" hspace="5" src="Question_4_02.png" alt=""> <h2 id="5">createConvMat() Output Matrix vs. conv(): The Ultimate Showdown...</h2><p>This looks good so far, but lets try 1000 different random combinations and see how it shakes out.</p><pre class="codeinput">loops = 1000 ;
+correctOrNot = zeros(30,1); <span class="comment">% Create a bucket of zeros</span>
+
+<span class="keyword">for</span> ii = 1:loops
+    h = randi(50,15,1)                                  ; <span class="comment">% Random vector of length 15 to create matrix</span>
+    M = length(h)                                       ; <span class="comment">% Get important dimension</span>
+    X = createConvMat(x,M)                              ; <span class="comment">% Use my function to create matrix</span>
+    my_rand_r = round(X*h, 5)                           ; <span class="comment">% Use this matrix to convolve with h</span>
+    MATLAB_rand_r = round(conv(h,x), 5)                 ; <span class="comment">% Use MATLAB convolve function</span>
+    correctOrNot(ii) = isequal(my_rand_r,MATLAB_rand_r) ; <span class="comment">% Replace a zero with a one for every matching iteration</span>
+<span class="keyword">end</span>
+
+correct_answers = sum(correctOrNot)             ; <span class="comment">% Take the sum to find the total correct</span>
+incorrect_answers = loops-correct_answers       ; <span class="comment">% subtract the sum from the loops to get total incorrect</span>
+
+answers = [correct_answers, incorrect_answers]                                  ; <span class="comment">% Put these totals in a matrix</span>
+xnames = categorical({<span class="string">'Matched Matlab Conv() Function'</span>,<span class="string">'Didn"t Match'</span>})         ; <span class="comment">% Create x-axis labels</span>
+xnames = reordercats(xnames,{<span class="string">'Matched Matlab Conv() Function'</span>,<span class="string">'Didn"t Match'</span>})  ; <span class="comment">% Do this b/c it locks the order in for the plot (idky)</span>
+
+<span class="comment">% Plot</span>
+figure ;
+bar(xnames,answers, .5) ;
+ylim([0 (loops + (round(.05*loops)))])
+title(string(loops) + <span class="string">' Tests Comparing "createConvMat()" Output Matrix to Matlab''s conv()'</span>)
+ylabel(<span class="string">'Number of Tests'</span>)
+box <span class="string">off</span>
+<span class="comment">% Add the totals onto the plot</span>
+<span class="keyword">for</span> ii=1:numel(answers)
+    text(ii, 25, string(answers(ii)),<span class="keyword">...</span>
+               <span class="string">'HorizontalAlignment'</span>,<span class="string">'center'</span>,<span class="keyword">...</span>
+               <span class="string">'VerticalAlignment'</span>,<span class="string">'bottom'</span>,<span class="keyword">...</span>
+               <span class="string">'FontWeight'</span>, <span class="string">'bold'</span>)
+<span class="keyword">end</span>
+</pre><img vspace="5" hspace="5" src="Question_4_03.png" alt=""> <h2 id="6">Least-Squares Regression: h_opt for X</h2><pre class="codeinput"><span class="comment">% Now lets take the last convoution matrix we created and find it's least</span>
+<span class="comment">% squares optimal h values. I use the linear regression equation created in</span>
+<span class="comment">% the past homework and input r.</span>
+
+<span class="comment">% The equation is:</span>
+<span class="comment">%   h_opt = min(h)||r- X*h||^2</span>
+
+h_opt = linear_Reg(X, r) ;
+
+short_time = linspace(1,length(h_opt),length(h_opt)) ;
+
+<span class="comment">% We can plot these values as a function of time</span>
+figure ;
+plot(h_opt,<span class="string">'b*-'</span>, <span class="string">'LineWidth'</span>, 1.25)
+xticks(short_time)
+xlabel(<span class="string">'Time (Hz)'</span>)
+ylabel(<span class="string">'Haemodynamic Response'</span>)
+xlim([0 16])
+title(<span class="string">'h opt Haemodynamic Response'</span>)
+box <span class="string">off</span>
+
+<span class="comment">% Describe the what's going on with the haemodynamic response and time</span>
+
+HDR_answer = {<span class="string">'Looking at this plotted function we can see that the haemodynamic'</span>
+                <span class="string">'response spans 15 Hz. The largest response is at 5 Hz.'</span>
+                <span class="string">'Afterwards, we see a sharp drop off of response, which eventually falls'</span>
+                <span class="string">'below zero (approx. 8Hz). This tells us that we would need to take into account'</span>
+                <span class="string">'a delay of 5Hz during our readings.'</span>}
+</pre><pre class="codeoutput">
+HDR_answer =
+
+  5&times;1 cell array
+
+    {'Looking at this plotted function we can see that the haemodynamic'              }
+    {'response spans 15 Hz. The largest response is at 5 Hz.'                         }
+    {'Afterwards, we see a sharp drop off of response, which eventually falls'        }
+    {'below zero (approx. 8Hz). This tells us that we would need to take into account'}
+    {'a delay of 5Hz during our readings.'                                            }
+
+</pre><img vspace="5" hspace="5" src="Question_4_04.png" alt=""> <h2 id="7">Plotting in the Power Spectrum of HRF</h2><pre class="codeinput">HRF = abs(fft(h_opt)).^2    ;
+DC_centered = fftshift(HRF) ;
+x_vals = linspace(-7,7,15)  ;
+
+figure ;
+stem(x_vals, DC_centered, <span class="string">'b'</span>, <span class="string">'filled'</span>, <span class="string">'Marker'</span>, <span class="string">'.'</span>, <span class="string">'MarkerSize'</span>, 18)
+title(<span class="string">'Plotting the Power Spectrum of h opt'</span>)
+xlabel(<span class="string">'Frequency'</span>)
+ylabel(<span class="string">'Power (|fft(h opt)|^2)'</span>)
+
+WhatKindOfFilterYouAsk = { <span class="string">'This filter seems to allow only those frequencies through which are close'</span>
+                            <span class="string">'to zero. As a result, we call this a low pass filter.'</span>}
+</pre><pre class="codeoutput">
+WhatKindOfFilterYouAsk =
+
+  2&times;1 cell array
+
+    {'This filter seems to allow only those frequencies through which are close'}
+    {'to zero. As a result, we call this a low pass filter.'                    }
+
+</pre><img vspace="5" hspace="5" src="Question_4_05.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% HW # 3 - Question 4 - Math Tools - Matthew DeVerna
+
+clear
+close all
+
+%% Question 4: Deconvolution of the Haemodynamic Response.
+
+% Neuronal activity causes local changes in deoxyhemoglobin concentration
+% in the blood which can be measured using magnetic resonance imaging
+% (MRI). One drawback of this is that the haemodynamic response is both
+% delayed and slower than the underlying neural responses. We can model the
+% delay and spread of the measurements relative to the neural signals using
+% a linear shift-invariant system:
+    % r(n) = sum(   x(n-k)*h(k) for all k's where:
+    % x(n) = an input signal delivered over time (for example, a sequence
+    % of light intensisties)
+    % k = time
+    % h(k) = the haemodynamic response to a single light flash at k = 0
+        % i.e. the impulse response of the MRI Measurement
+    % r(n) = the MRI response to the full input signal
+    
+load('hrfDeconv.mat')
+
+% In this file:
+    % r = response vector
+    % x = input vector (sequence of impulses [flashes of light])
+    % NOTE: signals are sampled at 1 Hz
+
+% Using the above data, we will try to estimate the HRF (h)
+
+%% Plot Input and Impulse Vectors Over Time
+
+time = linspace(1, length(r), length(r)) ;
+
+figure ;
+stem(x, 'filled','pentagram', 'LineStyle','-.','Color','k')
+hold on
+plot(time,r, 'r', 'LineWidth', 1.25)
+title('Response Vector')
+xlabel('Time')
+ylabel('Intensity') 
+legend('Light Flashes' , 'Haemodynamic Response')   
+    
+%% Rewriting the Equation with createConvMat(x,M)
+
+% Since convolution is linear, we can rewrite the above equation as a
+% matrix multiplication:
+
+% r = X * h
+
+% h = length M 
+% X = an N + M - 1 X M matrix (N is the length of input x)
+    
+% The overall idea here is to create a matrix which replicates 
+% the convolution function/the equation above. Having said that, lets test
+% it out below and see if they compare.
+
+h = randi(50,15,1) ;
+M = length(h)       ;
+
+X = createConvMat(x,M)   ;
+my_r = X*h               ;
+MATLAB_r = conv(x,h)     ;
+
+% We round here to correct for matlab's rounding issues
+matching = isequal(round(my_r,5),round(MATLAB_r,5))  
+
+% Create a nice visualization to assist our TAs in their mountainous
+% endeavour to check all MathTools homework
+figure ;
+imagesc(X)
+colormap jet
+colorbar
+title('Map of Created Convolution Matrix')
+
+
+%% createConvMat() Output Matrix vs. conv(): The Ultimate Showdown...
+% This looks good so far, but lets try 1000 different random combinations and
+% see how it shakes out. 
+
+loops = 1000 ;
+correctOrNot = zeros(30,1); % Create a bucket of zeros
+
+for ii = 1:loops
+    h = randi(50,15,1)                                  ; % Random vector of length 15 to create matrix
+    M = length(h)                                       ; % Get important dimension
+    X = createConvMat(x,M)                              ; % Use my function to create matrix
+    my_rand_r = round(X*h, 5)                           ; % Use this matrix to convolve with h
+    MATLAB_rand_r = round(conv(h,x), 5)                 ; % Use MATLAB convolve function
+    correctOrNot(ii) = isequal(my_rand_r,MATLAB_rand_r) ; % Replace a zero with a one for every matching iteration
+end
+
+correct_answers = sum(correctOrNot)             ; % Take the sum to find the total correct
+incorrect_answers = loops-correct_answers       ; % subtract the sum from the loops to get total incorrect
+
+answers = [correct_answers, incorrect_answers]                                  ; % Put these totals in a matrix
+xnames = categorical({'Matched Matlab Conv() Function','Didn"t Match'})         ; % Create x-axis labels
+xnames = reordercats(xnames,{'Matched Matlab Conv() Function','Didn"t Match'})  ; % Do this b/c it locks the order in for the plot (idky)
+
+% Plot
+figure ;
+bar(xnames,answers, .5) ;
+ylim([0 (loops + (round(.05*loops)))])
+title(string(loops) + ' Tests Comparing "createConvMat()" Output Matrix to Matlab''s conv()')
+ylabel('Number of Tests')
+box off
+% Add the totals onto the plot
+for ii=1:numel(answers)
+    text(ii, 25, string(answers(ii)),...
+               'HorizontalAlignment','center',...
+               'VerticalAlignment','bottom',...
+               'FontWeight', 'bold')
+end
+
+%% Least-Squares Regression: h_opt for X
+
+% Now lets take the last convoution matrix we created and find it's least
+% squares optimal h values. I use the linear regression equation created in
+% the past homework and input r.
+
+% The equation is:
+%   h_opt = min(h)||r- X*h||^2
+
+h_opt = linear_Reg(X, r) ;
+
+short_time = linspace(1,length(h_opt),length(h_opt)) ;
+
+% We can plot these values as a function of time
+figure ;
+plot(h_opt,'b*-', 'LineWidth', 1.25)
+xticks(short_time)
+xlabel('Time (Hz)')
+ylabel('Haemodynamic Response')
+xlim([0 16])
+title('h opt Haemodynamic Response')
+box off
+
+% Describe the what's going on with the haemodynamic response and time
+
+HDR_answer = {'Looking at this plotted function we can see that the haemodynamic'
+                'response spans 15 Hz. The largest response is at 5 Hz.'
+                'Afterwards, we see a sharp drop off of response, which eventually falls'
+                'below zero (approx. 8Hz). This tells us that we would need to take into account'
+                'a delay of 5Hz during our readings.'}
+
+
+%% Plotting in the Power Spectrum of HRF
+
+HRF = abs(fft(h_opt)).^2    ;
+DC_centered = fftshift(HRF) ;
+x_vals = linspace(-7,7,15)  ;
+
+figure ;
+stem(x_vals, DC_centered, 'b', 'filled', 'Marker', '.', 'MarkerSize', 18)
+title('Plotting the Power Spectrum of h opt')
+xlabel('Frequency')
+ylabel('Power (|fft(h opt)|^2)')
+
+WhatKindOfFilterYouAsk = { 'This filter seems to allow only those frequencies through which are close'
+                            'to zero. As a result, we call this a low pass filter.'}
+
+
+
+
+
+##### SOURCE END #####
+--></body></html>

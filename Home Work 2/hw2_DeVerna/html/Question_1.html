@@ -1,0 +1,633 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Question_1</title><meta name="generator" content="MATLAB 9.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2019-10-09"><meta name="DC.source" content="Question_1.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Homework2 - Question 1 - Matthew DeVerna</a></li><li><a href="#2">1. Trichromacy - Populate Workspace</a></li><li><a href="#3">(A) Test Light, Combination, Plot</a></li><li><a href="#4">(B) Characterize the human as a linear system</a></li><li><a href="#5">(C) Cones</a></li><li><a href="#6">(D) Utilize altHumanColorMatcher() to test for color blindness</a></li></ul></div><h2 id="1">Homework2 - Question 1 - Matthew DeVerna</h2><pre class="codeinput"><span class="comment">% Purpose: This script was written to tackle question # 1 of Math Tools</span>
+<span class="comment">% homework # 2.</span>
+
+<span class="comment">% Author: Matthew DeVerna</span>
+
+<span class="comment">% Date: 10/9/19</span>
+</pre><h2 id="2">1. Trichromacy - Populate Workspace</h2><pre class="codeinput"><span class="comment">% Make sure that the current directory is accurate by using --&gt; cd 'path/of/file'</span>
+
+<span class="comment">% Load: colMatch.mat: 31 x 3 matrix.</span>
+
+clear <span class="string">all</span>
+close <span class="string">all</span>
+
+load(<span class="string">'colMatch.mat'</span>)
+</pre><h2 id="3">(A) Test Light, Combination, Plot</h2><pre class="codeinput"><span class="comment">% Create a test light with an arbitrary wavelength spectrum by generating a random column</span>
+<span class="comment">% vector with 31 positive components (use rand).</span>
+
+light = rand(31,1) ;
+
+<span class="comment">% Set the primaries to object 'primaries'.</span>
+primaries = P ;
+
+<span class="comment">% Use humanColorMatcher to &#8220;run an experiment&#8221;, asking the &#8220;human&#8221; to set the intensities of</span>
+<span class="comment">% the three knob settings.</span>
+knob = humanColorMatcher(light, primaries) ;
+
+<span class="comment">% Compute the 31-dimensional wavelength spectrum of this combination with the primaries...</span>
+wavelength = primaries * knob ;
+
+<span class="comment">% ... plot it together with the original light spectrum, and explain why the two spectra</span>
+<span class="comment">% are so different, even though they appear the same to the human.</span>
+
+plot(wavelength)
+hold <span class="string">on</span>
+plot(light)
+title(<span class="string">'Test Light &amp; Primaries Combination'</span>)
+xlabel(<span class="string">'Wavelength (nm)'</span>)
+ylabel(<span class="string">'Tristimulus Value'</span>)
+grid <span class="string">on</span>
+box <span class="string">off</span>
+legend(<span class="string">'Weighted Primaries'</span>, <span class="string">'Test Light'</span>)
+
+<span class="comment">% Despite being extremely different vectors, these vectors would appear</span>
+<span class="comment">% exactly the same to a human observer. The reason for this is because</span>
+<span class="comment">% the human visual system is linear, mapping all dimensions down to only</span>
+<span class="comment">% three.</span>
+</pre><img vspace="5" hspace="5" src="Question_1_01.png" alt=""> <h2 id="4">(B) Characterize the human as a linear system</h2><pre class="codeinput"><span class="comment">% What we want to do here is create a matrix which mimics the</span>
+<span class="comment">% humanColorMatching function. In order to do this, we can plug in an</span>
+<span class="comment">% identity matrix to the equation, with the primaries, and set it equal to</span>
+<span class="comment">% 'M'</span>
+
+identity = eye(31)                          ;
+M = humanColorMatcher(identity, primaries)  ;
+
+<span class="comment">% Now lets create some random vectors and test that we get the same answer</span>
+<span class="comment">% for our new matrix compared to the humanColorMatching function.</span>
+
+<span class="comment">% Create test lights...</span>
+test_light1 = rand(31,1)    ;
+test_light2 = rand(31,1)    ;
+test_light3 = rand(31,1)    ;
+
+<span class="comment">% Calculate Knob settings with new matrix...</span>
+M_result1 = M * test_light1 ;
+M_result2 = M * test_light2 ;
+M_result3 = M * test_light3 ;
+
+<span class="comment">% Calculate knob settings with humanColorMatching function...</span>
+func_result1 = humanColorMatcher(test_light1, primaries) ;
+func_result2 = humanColorMatcher(test_light2, primaries) ;
+func_result3 = humanColorMatcher(test_light3, primaries) ;
+
+<span class="comment">% Now check that they are equal by subtracting one from the other.</span>
+check1 = M_result1 - func_result1 ;
+check2 = M_result2 - func_result2 ;
+check3 = M_result3 - func_result3 ;
+
+<span class="comment">% After taking the difference between the function results and the newly</span>
+<span class="comment">% created linear system results, we see that they are the same because all</span>
+<span class="comment">% values are zero.</span>
+
+firstCheck = check1 &lt; 10e-6
+secondCheck = check2 &lt; 10e-6
+thirdCheck = check3 &lt; 10e-6
+</pre><pre class="codeoutput">
+firstCheck =
+
+  3&times;1 logical array
+
+   1
+   1
+   1
+
+
+secondCheck =
+
+  3&times;1 logical array
+
+   1
+   1
+   1
+
+
+thirdCheck =
+
+  3&times;1 logical array
+
+   1
+   1
+   1
+
+</pre><h2 id="5">(C) Cones</h2><pre class="codeinput"><span class="comment">% Plot Cones for a visual</span>
+figure
+
+<span class="comment">% I chose to break them out below simply to give them specific colors and</span>
+<span class="comment">% label them.</span>
+Cones_ = Cones' ;
+plot(Cones_(:,1), <span class="string">'r'</span>, <span class="string">'LineWidth'</span>, 1.5) <span class="comment">% RED -long</span>
+hold <span class="string">on</span>
+plot(Cones_(:,2), <span class="string">'g'</span>, <span class="string">'LineWidth'</span>, 1.5) <span class="comment">% GEEN -medium</span>
+plot(Cones_(:,3), <span class="string">'b'</span>, <span class="string">'LineWidth'</span>, 1.5) <span class="comment">% BLUE -short</span>
+xlabel(<span class="string">'Spectral Frequency'</span>)
+ylabel(<span class="string">'Response'</span>)
+title(<span class="string">'Spectral Sensitivities of Cones'</span>)
+legend(<span class="string">'Red/Long'</span>,<span class="string">'Blue/Medium'</span>, <span class="string">'Green/Short'</span>)
+grid <span class="string">on</span>
+box <span class="string">off</span>
+
+<span class="comment">% Verify that the cones provide a physiological explanation for the</span>
+<span class="comment">% matching experiment, in that the cone absorbtions are equal for any pair</span>
+<span class="comment">% of lights that are perceptually matched.</span>
+
+<span class="comment">% Create new test lights</span>
+light2 = rand(31,1) ;
+light3 = rand(31,1) ;
+
+<span class="comment">% Use the experimental linear system created in the previous question to generate knob</span>
+<span class="comment">% settings...</span>
+knob2 = M * light2 ;
+knob3 = M * light3 ;
+
+<span class="comment">% Use these to weight the primaries and create a new 31 dimensional</span>
+<span class="comment">% wavelength</span>
+new_wavelength2 = primaries * knob2  ;
+new_wavelength3 = primaries * knob3  ;
+
+<span class="comment">% Put this through the experimental linear system</span>
+new_wave_knob2 = M * new_wavelength2 ;
+new_wave_knob3 = M * new_wavelength3 ;
+
+<span class="comment">% Find the difference for the following check</span>
+checkEquality2 = knob2-new_wave_knob2 ;
+checkEquality3 = knob3-new_wave_knob3 ;
+
+<span class="comment">% Check that the difference equals zero</span>
+checkEquality2 &lt; 10e-6
+checkEquality3 &lt; 10e-6
+</pre><pre class="codeoutput">
+ans =
+
+  3&times;1 logical array
+
+   1
+   1
+   1
+
+
+ans =
+
+  3&times;1 logical array
+
+   1
+   1
+   1
+
+</pre><img vspace="5" hspace="5" src="Question_1_02.png" alt=""> <h2 id="6">(D) Utilize altHumanColorMatcher() to test for color blindness</h2><pre class="codeinput"><span class="comment">% Create a test light</span>
+rand_light1 = rand(31,1) ;
+rand_light2 = rand(31,1) ;
+rand_light3 = rand(31,1) ;
+
+<span class="comment">% Run the light through the experiment for both functions</span>
+
+alt_result1 = altHumanColorMatcher(rand_light1, primaries)
+normal_result1 = humanColorMatcher(rand_light1, primaries)
+
+alt_result2 = altHumanColorMatcher(rand_light2, primaries)
+normal_result2 = humanColorMatcher(rand_light2, primaries)
+
+alt_result3 = altHumanColorMatcher(rand_light3, primaries)
+normal_result3 = humanColorMatcher(rand_light3, primaries)
+
+<span class="comment">% Comparing these results does not reveal any concrete method for</span>
+<span class="comment">% determining whether or not an individual is color blind because they are</span>
+<span class="comment">% just going to change the knobs until they look the same - and we know</span>
+<span class="comment">% that knob settings can be set differently for people, yet look exactly</span>
+<span class="comment">% the same, because they map everything down to these three dimensions.</span>
+
+<span class="comment">% Now we compute the cone absorbptions</span>
+
+<span class="comment">% First we take all results, and create new vectors using the primaries and</span>
+<span class="comment">% the knob setting results that we just got...</span>
+normal_wave1 = primaries * normal_result1   ;
+alt_wave1 = primaries * alt_result1         ;
+alt_wave2 = primaries * alt_result2         ;
+alt_wave3 = primaries * alt_result3         ;
+
+<span class="comment">% Then we find the cone absorbtion for each newly created wave, and the</span>
+<span class="comment">% original created wave that the knob settings came from. "Normal" vision</span>
+<span class="comment">% would see an equal amount of Cone absorbtion in both light waves.</span>
+
+<span class="comment">% First for the original light...</span>
+response1a = Cones * rand_light1    ;
+
+<span class="comment">% Then for the altHumanColorMatcher function...</span>
+response1b = Cones * alt_wave1      ;
+
+<span class="comment">% Then find the difference between the knob settings that come out.</span>
+check1 = response1a - response1b    ;
+
+<span class="comment">% Repeat for the next two waves...</span>
+response2a = Cones * rand_light2    ;
+response2b = Cones * alt_wave2      ;
+check2 = response2a - response2b    ;
+
+response3a = Cones * rand_light3    ;
+response3b = Cones * alt_wave3      ;
+check3 = response3a - response3b    ;
+
+<span class="comment">% Lastly, we do this for the light that went through the normal</span>
+<span class="comment">% humanColorMatcher function</span>
+normal_response = Cones * normal_wave1                      ;
+normal_response_org_light = Cones * rand_light1             ;
+normal_check = normal_response - normal_response_org_light  ;
+
+<span class="comment">% Lets compare them all...</span>
+first_alt_check = abs(check1) &lt; 10e-6
+second_alt_check = abs(check2) &lt; 10e-6
+third_alt_check = abs(check3) &lt; 10e-6
+norm_check = abs(normal_check) &lt; 10e-6
+
+<span class="comment">% As you can see in the results, (for the color blind person) the first and</span>
+<span class="comment">% third dimension cone absorbtion rates consistently match between the</span>
+<span class="comment">% original light and the knob-settings-primaries mixture. However, the</span>
+<span class="comment">% second dimension consistently DOES NOT match. In the last example comparing</span>
+<span class="comment">% the knob-settings-primaries mixture (based on knob settings from the "normal"</span>
+<span class="comment">% human responder) we can see that there is no difference for any of the</span>
+<span class="comment">% dimensions.</span>
+
+<span class="comment">% Thus, we can say that a diagnosis for colorblindness is one in which a</span>
+<span class="comment">% human respondent's chosen knob settings will only depend on TWO (or one) of the</span>
+<span class="comment">% three color dimensions that they are offered.</span>
+</pre><pre class="codeoutput">
+alt_result1 =
+
+    0.8875
+   -4.8289
+    6.2023
+
+
+normal_result1 =
+
+    1.2971
+    0.0246
+    0.6053
+
+
+alt_result2 =
+
+   -0.0065
+   -3.8842
+    5.4499
+
+
+normal_result2 =
+
+    0.3612
+    0.4728
+    0.4254
+
+
+alt_result3 =
+
+    1.0201
+   -1.2936
+    2.0512
+
+
+normal_result3 =
+
+    1.0909
+   -0.4550
+    1.0841
+
+
+first_alt_check =
+
+  3&times;1 logical array
+
+   1
+   0
+   1
+
+
+second_alt_check =
+
+  3&times;1 logical array
+
+   1
+   0
+   1
+
+
+third_alt_check =
+
+  3&times;1 logical array
+
+   1
+   0
+   1
+
+
+norm_check =
+
+  3&times;1 logical array
+
+   1
+   1
+   1
+
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Homework2 - Question 1 - Matthew DeVerna
+
+% Purpose: This script was written to tackle question # 1 of Math Tools
+% homework # 2.
+
+% Author: Matthew DeVerna
+
+% Date: 10/9/19
+
+%% 1. Trichromacy - Populate Workspace
+
+% Make sure that the current directory is accurate by using REPLACE_WITH_DASH_DASH> cd 'path/of/file'
+
+% Load: colMatch.mat: 31 x 3 matrix. 
+
+clear all
+close all
+
+load('colMatch.mat')
+
+%% (A) Test Light, Combination, Plot
+
+% Create a test light with an arbitrary wavelength spectrum by generating a random column
+% vector with 31 positive components (use rand). 
+
+light = rand(31,1) ;
+
+% Set the primaries to object 'primaries'.
+primaries = P ;
+
+% Use humanColorMatcher to “run an experiment”, asking the “human” to set the intensities of 
+% the three knob settings. 
+knob = humanColorMatcher(light, primaries) ;
+
+% Compute the 31-dimensional wavelength spectrum of this combination with the primaries...
+wavelength = primaries * knob ;
+
+% ... plot it together with the original light spectrum, and explain why the two spectra 
+% are so different, even though they appear the same to the human.
+
+plot(wavelength)
+hold on
+plot(light)
+title('Test Light & Primaries Combination')
+xlabel('Wavelength (nm)')
+ylabel('Tristimulus Value')
+grid on
+box off
+legend('Weighted Primaries', 'Test Light')
+
+% Despite being extremely different vectors, these vectors would appear
+% exactly the same to a human observer. The reason for this is because
+% the human visual system is linear, mapping all dimensions down to only
+% three. 
+
+%% (B) Characterize the human as a linear system
+
+% What we want to do here is create a matrix which mimics the
+% humanColorMatching function. In order to do this, we can plug in an
+% identity matrix to the equation, with the primaries, and set it equal to
+% 'M'
+
+identity = eye(31)                          ;
+M = humanColorMatcher(identity, primaries)  ;
+
+% Now lets create some random vectors and test that we get the same answer
+% for our new matrix compared to the humanColorMatching function.
+
+% Create test lights...
+test_light1 = rand(31,1)    ;
+test_light2 = rand(31,1)    ;
+test_light3 = rand(31,1)    ;
+
+% Calculate Knob settings with new matrix...
+M_result1 = M * test_light1 ;
+M_result2 = M * test_light2 ;
+M_result3 = M * test_light3 ;
+
+% Calculate knob settings with humanColorMatching function...
+func_result1 = humanColorMatcher(test_light1, primaries) ;
+func_result2 = humanColorMatcher(test_light2, primaries) ;
+func_result3 = humanColorMatcher(test_light3, primaries) ;
+
+% Now check that they are equal by subtracting one from the other.
+check1 = M_result1 - func_result1 ;
+check2 = M_result2 - func_result2 ;
+check3 = M_result3 - func_result3 ;
+
+% After taking the difference between the function results and the newly 
+% created linear system results, we see that they are the same because all
+% values are zero.
+
+firstCheck = check1 < 10e-6
+secondCheck = check2 < 10e-6
+thirdCheck = check3 < 10e-6
+
+
+%% (C) Cones
+
+% Plot Cones for a visual
+figure
+
+% I chose to break them out below simply to give them specific colors and
+% label them.
+Cones_ = Cones' ; 
+plot(Cones_(:,1), 'r', 'LineWidth', 1.5) % RED -long
+hold on
+plot(Cones_(:,2), 'g', 'LineWidth', 1.5) % GEEN -medium
+plot(Cones_(:,3), 'b', 'LineWidth', 1.5) % BLUE -short
+xlabel('Spectral Frequency')
+ylabel('Response')
+title('Spectral Sensitivities of Cones')
+legend('Red/Long','Blue/Medium', 'Green/Short')
+grid on
+box off
+
+% Verify that the cones provide a physiological explanation for the
+% matching experiment, in that the cone absorbtions are equal for any pair
+% of lights that are perceptually matched.
+
+% Create new test lights
+light2 = rand(31,1) ;
+light3 = rand(31,1) ;
+
+% Use the experimental linear system created in the previous question to generate knob
+% settings...
+knob2 = M * light2 ;
+knob3 = M * light3 ;
+
+% Use these to weight the primaries and create a new 31 dimensional
+% wavelength
+new_wavelength2 = primaries * knob2  ;
+new_wavelength3 = primaries * knob3  ;
+
+% Put this through the experimental linear system
+new_wave_knob2 = M * new_wavelength2 ;
+new_wave_knob3 = M * new_wavelength3 ;
+
+% Find the difference for the following check
+checkEquality2 = knob2-new_wave_knob2 ;
+checkEquality3 = knob3-new_wave_knob3 ;
+
+% Check that the difference equals zero
+checkEquality2 < 10e-6 
+checkEquality3 < 10e-6
+
+%% (D) Utilize altHumanColorMatcher() to test for color blindness
+
+% Create a test light
+rand_light1 = rand(31,1) ;
+rand_light2 = rand(31,1) ;
+rand_light3 = rand(31,1) ;
+
+% Run the light through the experiment for both functions
+
+alt_result1 = altHumanColorMatcher(rand_light1, primaries) 
+normal_result1 = humanColorMatcher(rand_light1, primaries)
+
+alt_result2 = altHumanColorMatcher(rand_light2, primaries)
+normal_result2 = humanColorMatcher(rand_light2, primaries)
+
+alt_result3 = altHumanColorMatcher(rand_light3, primaries)
+normal_result3 = humanColorMatcher(rand_light3, primaries)
+
+% Comparing these results does not reveal any concrete method for
+% determining whether or not an individual is color blind because they are
+% just going to change the knobs until they look the same - and we know
+% that knob settings can be set differently for people, yet look exactly
+% the same, because they map everything down to these three dimensions.
+
+% Now we compute the cone absorbptions
+
+% First we take all results, and create new vectors using the primaries and
+% the knob setting results that we just got...
+normal_wave1 = primaries * normal_result1   ;
+alt_wave1 = primaries * alt_result1         ;
+alt_wave2 = primaries * alt_result2         ;
+alt_wave3 = primaries * alt_result3         ;
+
+% Then we find the cone absorbtion for each newly created wave, and the
+% original created wave that the knob settings came from. "Normal" vision
+% would see an equal amount of Cone absorbtion in both light waves.
+
+% First for the original light...
+response1a = Cones * rand_light1    ;
+
+% Then for the altHumanColorMatcher function...
+response1b = Cones * alt_wave1      ;
+
+% Then find the difference between the knob settings that come out.
+check1 = response1a - response1b    ;
+
+% Repeat for the next two waves...
+response2a = Cones * rand_light2    ;
+response2b = Cones * alt_wave2      ;
+check2 = response2a - response2b    ;
+
+response3a = Cones * rand_light3    ;
+response3b = Cones * alt_wave3      ;
+check3 = response3a - response3b    ;
+
+% Lastly, we do this for the light that went through the normal
+% humanColorMatcher function
+normal_response = Cones * normal_wave1                      ;
+normal_response_org_light = Cones * rand_light1             ;
+normal_check = normal_response - normal_response_org_light  ;
+
+% Lets compare them all...
+first_alt_check = abs(check1) < 10e-6
+second_alt_check = abs(check2) < 10e-6
+third_alt_check = abs(check3) < 10e-6
+norm_check = abs(normal_check) < 10e-6
+
+% As you can see in the results, (for the color blind person) the first and
+% third dimension cone absorbtion rates consistently match between the 
+% original light and the knob-settings-primaries mixture. However, the
+% second dimension consistently DOES NOT match. In the last example comparing 
+% the knob-settings-primaries mixture (based on knob settings from the "normal"
+% human responder) we can see that there is no difference for any of the
+% dimensions.
+
+% Thus, we can say that a diagnosis for colorblindness is one in which a
+% human respondent's chosen knob settings will only depend on TWO (or one) of the
+% three color dimensions that they are offered. 
+
+
+
+
+
+
+
+
+##### SOURCE END #####
+--></body></html>

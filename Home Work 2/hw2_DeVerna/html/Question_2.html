@@ -1,0 +1,502 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Question_2</title><meta name="generator" content="MATLAB 9.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2019-10-09"><meta name="DC.source" content="Question_2.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Homework2 - Question 2 - Matthew DeVerna</a></li><li><a href="#2">2. Polynomial Regression</a></li><li><a href="#3">Finding Squared Error and Plotting that</a></li><li><a href="#4">Best Fit Answer</a></li></ul></div><h2 id="1">Homework2 - Question 2 - Matthew DeVerna</h2><pre class="codeinput"><span class="comment">% Purpose: This script was written to tackle question # 2 of Math Tools</span>
+<span class="comment">% homework # 2.</span>
+
+<span class="comment">% Author: Matthew DeVerna</span>
+
+<span class="comment">% Date: 10/9/19</span>
+</pre><h2 id="2">2. Polynomial Regression</h2><pre class="codeinput"><span class="comment">% Find a least-squares fit of the data with polynomials of order 0 (a constant),</span>
+<span class="comment">% 1 (a line, parameterized by intercept and and slope), 2, 3, 4, and 5. [Compute</span>
+<span class="comment">% this using svd and basic linear algebra manipulations that you&#8217;ve learned in class!]</span>
+
+<span class="comment">% Load the file regress1.mat into your MATLAB environment.</span>
+
+load(<span class="string">'regress1.mat'</span>)
+
+scatter(x, y)
+
+<span class="comment">% Create a matrix for the polynomials</span>
+data = [ones(length(x),1), x, x.^2, x.^3, x.^4, x.^5 ] ;
+
+<span class="comment">% Take the SVD because we'll need it later</span>
+[U,S,V] = svd(data(:,2));
+
+<span class="comment">% In theory, we would like to reduce error as much as possible</span>
+<span class="comment">% err=|Y-X*b| = |U'Y-SV'b| = |Y_star - S*b_star| = |Y_star-b_starstar|</span>
+
+y_star = U'*y ;
+
+<span class="comment">% beta_start_star = S# * b_star so we find S_pound</span>
+S_pound = diag_P_INVER(S) ;
+
+<span class="comment">% Then plug it into the equation as written above (we transform both B-star</span>
+<span class="comment">% and Y_star by S# - once we do so, we know that beta_star_opt = S#*b_star</span>
+beta_star_opt = S_pound * y_star ;
+
+<span class="comment">% Finally, we rotate back to the orignial coordinate system</span>
+beta = V*beta_star_opt ;
+
+<span class="comment">% All equations below are equivalent</span>
+
+beta_opt_1 = V*beta_star_opt
+beta_opt_1a = V * S_pound * y_star
+beta_opt_1b = V * S_pound * U' * y
+
+<span class="comment">% You can also do the below for only one regressor</span>
+the_short_cut_method = y'*x/(x'*x)
+
+sprintf(<span class="string">'As you can see, all three forms of the equation return the same value for beta_opt.\n'</span>)
+
+<span class="comment">% Lets create a function for plotting later</span>
+beta_opt_Func1 = x*beta_opt_1 ;
+
+<span class="comment">% And repeat, using hte linear_reg() function for all other polynomials</span>
+
+line = data(:,1:2) ;
+beta_opt2 = linear_Reg(line,y)
+
+order2 = data(:,1:3) ;
+beta_opt3 = linear_Reg(order2 ,y)
+
+order3 = data(:,1:4) ;
+beta_opt4 = linear_Reg(order3,y)
+
+order4 = data(:,1:5) ;
+beta_opt5 = linear_Reg(order4,y)
+
+order5 = data(:,1:6) ;
+beta_opt6 = linear_Reg(order5,y)
+
+<span class="comment">% Create functions for all of these as well...</span>
+
+beta_opt_Func2 = line*beta_opt2     ;
+beta_opt_Func3 = order2*beta_opt3   ;
+beta_opt_Func4 = order3*beta_opt4   ;
+beta_opt_Func5 = order4*beta_opt5   ;
+beta_opt_Func6 = order5*beta_opt6   ;
+
+<span class="comment">% Plot the data and fit...</span>
+
+<span class="comment">% Just the regressors</span>
+subplot(2,3,1)
+scatter(x,y)
+hold <span class="string">on</span>
+plot(x, beta_opt_Func1, <span class="string">'b'</span>)
+title(<span class="string">'Constant'</span>)
+
+<span class="comment">% Regressors plus constant, creating a line</span>
+subplot(2,3,2)
+scatter(x,y)
+hold <span class="string">on</span>
+plot(x, beta_opt_Func2, <span class="string">'r'</span>)
+title(<span class="string">'Line'</span>)
+
+<span class="comment">% Second Order</span>
+subplot(2,3,3)
+scatter(x,y)
+hold <span class="string">on</span>
+plot(x, beta_opt_Func3, <span class="string">'g'</span>)
+title(<span class="string">'Second Order'</span>)
+
+<span class="comment">% Third Order</span>
+subplot(2,3,4)
+scatter(x,y)
+hold <span class="string">on</span>
+plot(x, beta_opt_Func4, <span class="string">'c'</span>)
+title(<span class="string">'Third Order'</span>)
+
+<span class="comment">% Fourth Order</span>
+subplot(2,3,5)
+scatter(x,y)
+hold <span class="string">on</span>
+plot(x, beta_opt_Func5, <span class="string">'k'</span>)
+title(<span class="string">'Fourth Order'</span>)
+
+<span class="comment">% Fifth Order</span>
+subplot(2,3,6)
+scatter(x,y)
+hold <span class="string">on</span>
+plot(x, beta_opt_Func6, <span class="string">'k'</span>)
+title(<span class="string">'Fifth Order'</span>)
+
+<span class="comment">% Create a legend for each subplot</span>
+<span class="keyword">for</span> ii = 1:6
+    subplot(2,3,ii)
+    legend(<span class="string">'Data'</span>, <span class="string">'Fit'</span>, <span class="string">'Location'</span>, <span class="string">'northwest'</span>)
+<span class="keyword">end</span>
+</pre><pre class="codeoutput">
+beta_opt_1 =
+
+   -0.0571
+
+
+beta_opt_1a =
+
+   -0.0571
+
+
+beta_opt_1b =
+
+   -0.0571
+
+
+the_short_cut_method =
+
+   -0.0571
+
+
+ans =
+
+    'As you can see, all three forms of the equation return the same value for beta_opt.
+     '
+
+
+beta_opt2 =
+
+   -0.4871
+    0.0675
+
+
+beta_opt3 =
+
+   -2.2941
+   -0.8513
+    1.2648
+
+
+beta_opt4 =
+
+   -1.7691
+   -1.8163
+    0.6910
+    0.4776
+
+
+beta_opt5 =
+
+   -1.4816
+   -1.1568
+   -0.0273
+    0.0665
+    0.2735
+
+
+beta_opt6 =
+
+   -1.5450
+   -1.0565
+    0.1832
+   -0.0814
+    0.1843
+    0.0490
+
+</pre><img vspace="5" hspace="5" src="Question_2_01.png" alt=""> <h2 id="3">Finding Squared Error and Plotting that</h2><pre class="codeinput"><span class="comment">% Below we are taking the total squared difference and setting it to a</span>
+<span class="comment">% specific variable for later plotting...</span>
+
+constant_SE = sum((y - beta_opt_Func1).^2)
+line_SE = sum((y - beta_opt_Func2).^2)
+order2_SE = sum((y - beta_opt_Func3).^2)
+order3_SE = sum((y - beta_opt_Func4).^2)
+order4_SE = sum((y - beta_opt_Func5).^2)
+order5_SE = sum((y - beta_opt_Func6).^2)
+
+<span class="comment">% Create a matrix of total squared error</span>
+all_sqrd_err = [constant_SE, line_SE, order2_SE, order3_SE, order4_SE, order5_SE] ;
+
+<span class="comment">% Create labels for the below bar plot</span>
+orders = {<span class="string">'Zero Order'</span> <span class="string">'First Order'</span> <span class="string">'Second Order'</span> <span class="string">'Third Order'</span> <span class="string">'Fourth Order'</span> <span class="string">'Fifth Order'</span>} ;
+<span class="comment">% Re-order them so they are decrease in error</span>
+orders = reordercats(categorical(orders'), {<span class="string">'Zero Order'</span> <span class="string">'First Order'</span> <span class="string">'Second Order'</span> <span class="string">'Third Order'</span> <span class="string">'Fourth Order'</span> <span class="string">'Fifth Order'</span>}) ;
+
+<span class="comment">% Open figure and plot</span>
+figure
+bar(orders, all_sqrd_err)
+title(<span class="string">'Squared Error as a Function of Polynomial Fit'</span>)
+ylabel(<span class="string">'Squared Error'</span>)
+xlabel(<span class="string">'Polynomial'</span>)
+</pre><pre class="codeoutput">
+constant_SE =
+
+  116.9467
+
+
+line_SE =
+
+  108.9660
+
+
+order2_SE =
+
+   20.5002
+
+
+order3_SE =
+
+    8.2932
+
+
+order4_SE =
+
+    4.7974
+
+
+order5_SE =
+
+    4.6501
+
+</pre><img vspace="5" hspace="5" src="Question_2_02.png" alt=""> <h2 id="4">Best Fit Answer</h2><pre class="codeinput">answer = sprintf(<span class="string">'Reviewing the plot of squared error we can see that the largest reduction in error comes as we move from the first order to the second order\npolynomial. Additionally, we see a relatively large reduction in error with the third order polynomial as well.\n However, we can see at the end of this fit line in the negative space (on the left), that the line begins to dip back down as the data continues upward.\n\n Noticing this, I would choose the second order fit. It captures the general shape/trend of the data without the need for another parameter which may not generalize.'</span>)
+</pre><pre class="codeoutput">
+answer =
+
+    'Reviewing the plot of squared error we can see that the largest reduction in error comes as we move from the first order to the second order
+     polynomial. Additionally, we see a relatively large reduction in error with the third order polynomial as well.
+      However, we can see at the end of this fit line in the negative space (on the left), that the line begins to dip back down as the data continues upward.
+     
+      Noticing this, I would choose the second order fit. It captures the general shape/trend of the data without the need for another parameter which may not generalize.'
+
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Homework2 - Question 2 - Matthew DeVerna
+
+% Purpose: This script was written to tackle question # 2 of Math Tools
+% homework # 2.
+
+% Author: Matthew DeVerna
+
+% Date: 10/9/19
+
+%% 2. Polynomial Regression
+
+% Find a least-squares fit of the data with polynomials of order 0 (a constant),
+% 1 (a line, parameterized by intercept and and slope), 2, 3, 4, and 5. [Compute
+% this using svd and basic linear algebra manipulations that you’ve learned in class!] 
+
+% Load the file regress1.mat into your MATLAB environment.
+
+load('regress1.mat')
+
+scatter(x, y)
+
+% Create a matrix for the polynomials
+data = [ones(length(x),1), x, x.^2, x.^3, x.^4, x.^5 ] ;
+
+% Take the SVD because we'll need it later
+[U,S,V] = svd(data(:,2));
+
+% In theory, we would like to reduce error as much as possible
+% err=|Y-X*b| = |U'Y-SV'b| = |Y_star - S*b_star| = |Y_star-b_starstar|
+
+y_star = U'*y ;
+
+% beta_start_star = S# * b_star so we find S_pound
+S_pound = diag_P_INVER(S) ;
+
+% Then plug it into the equation as written above (we transform both B-star
+% and Y_star by S# - once we do so, we know that beta_star_opt = S#*b_star
+beta_star_opt = S_pound * y_star ;
+
+% Finally, we rotate back to the orignial coordinate system
+beta = V*beta_star_opt ;
+
+% All equations below are equivalent
+
+beta_opt_1 = V*beta_star_opt
+beta_opt_1a = V * S_pound * y_star
+beta_opt_1b = V * S_pound * U' * y
+
+% You can also do the below for only one regressor
+the_short_cut_method = y'*x/(x'*x)
+
+sprintf('As you can see, all three forms of the equation return the same value for beta_opt.\n')
+
+% Lets create a function for plotting later
+beta_opt_Func1 = x*beta_opt_1 ;
+
+% And repeat, using hte linear_reg() function for all other polynomials
+
+line = data(:,1:2) ;
+beta_opt2 = linear_Reg(line,y)
+
+order2 = data(:,1:3) ;
+beta_opt3 = linear_Reg(order2 ,y)
+
+order3 = data(:,1:4) ;
+beta_opt4 = linear_Reg(order3,y)
+
+order4 = data(:,1:5) ;
+beta_opt5 = linear_Reg(order4,y)
+
+order5 = data(:,1:6) ;
+beta_opt6 = linear_Reg(order5,y) 
+
+% Create functions for all of these as well...
+
+beta_opt_Func2 = line*beta_opt2     ;
+beta_opt_Func3 = order2*beta_opt3   ;
+beta_opt_Func4 = order3*beta_opt4   ;
+beta_opt_Func5 = order4*beta_opt5   ;
+beta_opt_Func6 = order5*beta_opt6   ;
+
+% Plot the data and fit...
+
+% Just the regressors
+subplot(2,3,1)
+scatter(x,y)
+hold on
+plot(x, beta_opt_Func1, 'b')
+title('Constant')
+
+% Regressors plus constant, creating a line
+subplot(2,3,2)
+scatter(x,y)
+hold on
+plot(x, beta_opt_Func2, 'r')
+title('Line')
+
+% Second Order
+subplot(2,3,3)
+scatter(x,y)
+hold on
+plot(x, beta_opt_Func3, 'g')
+title('Second Order')
+
+% Third Order
+subplot(2,3,4)
+scatter(x,y)
+hold on
+plot(x, beta_opt_Func4, 'c')
+title('Third Order')
+
+% Fourth Order
+subplot(2,3,5)
+scatter(x,y)
+hold on
+plot(x, beta_opt_Func5, 'k')
+title('Fourth Order')
+
+% Fifth Order
+subplot(2,3,6)
+scatter(x,y)
+hold on
+plot(x, beta_opt_Func6, 'k')
+title('Fifth Order')
+
+% Create a legend for each subplot
+for ii = 1:6
+    subplot(2,3,ii)
+    legend('Data', 'Fit', 'Location', 'northwest')
+end
+
+%% Finding Squared Error and Plotting that
+
+% Below we are taking the total squared difference and setting it to a
+% specific variable for later plotting...
+
+constant_SE = sum((y - beta_opt_Func1).^2)
+line_SE = sum((y - beta_opt_Func2).^2)
+order2_SE = sum((y - beta_opt_Func3).^2)
+order3_SE = sum((y - beta_opt_Func4).^2)
+order4_SE = sum((y - beta_opt_Func5).^2)
+order5_SE = sum((y - beta_opt_Func6).^2)
+
+% Create a matrix of total squared error
+all_sqrd_err = [constant_SE, line_SE, order2_SE, order3_SE, order4_SE, order5_SE] ;
+
+% Create labels for the below bar plot
+orders = {'Zero Order' 'First Order' 'Second Order' 'Third Order' 'Fourth Order' 'Fifth Order'} ;
+% Re-order them so they are decrease in error
+orders = reordercats(categorical(orders'), {'Zero Order' 'First Order' 'Second Order' 'Third Order' 'Fourth Order' 'Fifth Order'}) ;
+
+% Open figure and plot
+figure
+bar(orders, all_sqrd_err)
+title('Squared Error as a Function of Polynomial Fit')
+ylabel('Squared Error')
+xlabel('Polynomial')
+%% Best Fit Answer
+
+answer = sprintf('Reviewing the plot of squared error we can see that the largest reduction in error comes as we move from the first order to the second order\npolynomial. Additionally, we see a relatively large reduction in error with the third order polynomial as well.\n However, we can see at the end of this fit line in the negative space (on the left), that the line begins to dip back down as the data continues upward.\n\n Noticing this, I would choose the second order fit. It captures the general shape/trend of the data without the need for another parameter which may not generalize.')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+##### SOURCE END #####
+--></body></html>

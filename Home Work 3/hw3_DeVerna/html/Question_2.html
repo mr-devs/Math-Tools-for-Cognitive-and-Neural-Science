@@ -1,0 +1,324 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Question_2</title><meta name="generator" content="MATLAB 9.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2019-10-29"><meta name="DC.source" content="Question_2.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">HW # 3 - Question 2 - Math Tools - Matthew DeVerna</a></li><li><a href="#2">Question 2: Convolution in MATLAB</a></li><li><a href="#3">A) Compute Responses to eight 8-dimensional impulse vectors ...</a></li><li><a href="#4">B) How does MATLAB's conv function handle boundaries?</a></li><li><a href="#5">C) Convolve with a vector that is length 48</a></li></ul></div><h2 id="1">HW # 3 - Question 2 - Math Tools - Matthew DeVerna</h2><pre class="codeinput">clear <span class="string">all</span>
+close <span class="string">all</span>
+</pre><h2 id="2">Question 2: Convolution in MATLAB</h2><pre class="codeinput"><span class="comment">% Suppose that you have a LSI system with impulse response:</span>
+
+r = [4, 2, 1, 0.5] ;
+
+<span class="comment">% Because it is a LSI system, the response to any input vector 'in' can be</span>
+<span class="comment">% computed as a convolution.</span>
+</pre><h2 id="3">A) Compute Responses to eight 8-dimensional impulse vectors ...</h2><p>...using MATLABs 'conv()' function: out = conv(in, r). How do the responses compare to the convolution formula given in class?</p><pre class="codeinput"><span class="comment">% Create eight 8-dim impulse vectors</span>
+impulse1 = [1,0,0,0,0,0,0,0]        ;
+impulse2 = circshift(impulse1,1)    ;
+impulse3 = circshift(impulse2,1)    ;
+impulse4 = circshift(impulse3,1)    ;
+impulse5 = circshift(impulse4,1)    ;
+impulse6 = circshift(impulse5,1)    ;
+impulse7 = circshift(impulse6,1)    ;
+impulse8 = circshift(impulse7,1)    ;
+
+<span class="comment">% Find the convolution response with r</span>
+response1 = conv(impulse1,r)    ;
+response2 = conv(impulse2,r)    ;
+response3 = conv(impulse3,r)    ;
+response4 = conv(impulse4,r)    ;
+response5 = conv(impulse5,r)    ;
+response6 = conv(impulse6,r)    ;
+response7 = conv(impulse7,r)    ;
+response8 = conv(impulse8,r)    ;
+
+<span class="comment">% Specifically, compute the matrix that represents the linear system's response.</span>
+response_matrix = [response1;response2;response3;response4;response5;response6;response7;response8]
+
+<span class="comment">% What is the size and organization of this matrix?</span>
+
+SizeAndOrganization = {<span class="string">'Each column of this matrix looks like a copy of r with added zeros'</span>
+                        <span class="string">'Since we are multiplying by an impulse vector (i.e. 1"s and zeros),'</span>
+                        <span class="string">'we get the vector back as we do a sliding dot product. Zeros fill'</span>
+                        <span class="string">'all of the locations because the conv() function''s default boundary'</span>
+                        <span class="string">'handling is to return all possible results by including zeros where'</span>
+                        <span class="string">'elements of the two vectors do not overlap.'</span>}
+</pre><pre class="codeoutput">
+response_matrix =
+
+  Columns 1 through 7
+
+    4.0000    2.0000    1.0000    0.5000         0         0         0
+         0    4.0000    2.0000    1.0000    0.5000         0         0
+         0         0    4.0000    2.0000    1.0000    0.5000         0
+         0         0         0    4.0000    2.0000    1.0000    0.5000
+         0         0         0         0    4.0000    2.0000    1.0000
+         0         0         0         0         0    4.0000    2.0000
+         0         0         0         0         0         0    4.0000
+         0         0         0         0         0         0         0
+
+  Columns 8 through 11
+
+         0         0         0         0
+         0         0         0         0
+         0         0         0         0
+         0         0         0         0
+    0.5000         0         0         0
+    1.0000    0.5000         0         0
+    2.0000    1.0000    0.5000         0
+    4.0000    2.0000    1.0000    0.5000
+
+
+SizeAndOrganization =
+
+  6&times;1 cell array
+
+    {'Each column of this matrix looks like a copy of r with added zeros' }
+    {'Since we are multiplying by an impulse vector (i.e. 1"s and zeros),'}
+    {'we get the vector back as we do a sliding dot product. Zeros fill'  }
+    {'all of the locations because the conv() function's default boundary'}
+    {'handling is to return all possible results by including zeros where'}
+    {'elements of the two vectors do not overlap.'                        }
+
+</pre><h2 id="4">B) How does MATLAB's conv function handle boundaries?</h2><pre class="codeinput"><span class="comment">% Matlab handles boundaries differently depending on the additional</span>
+<span class="comment">% argument that you provide it.</span>
+
+<span class="comment">% 'full' (Default setting) --&gt; Returns the entire result set, regardless of</span>
+    <span class="comment">% whether or not elements are fully covered. This means that it</span>
+    <span class="comment">% includes zeros where elements are not "covered" (i.e. in dot product</span>
+    <span class="comment">% instances when all elements in a vector do not have an overlapping</span>
+    <span class="comment">% element in the other vector.</span>
+
+<span class="comment">% 'same' --&gt; This arguement convolves only those central elements that are the</span>
+<span class="comment">% exact same size. No elements in one vector do not pair with an element in</span>
+<span class="comment">% the other vector.</span>
+
+<span class="comment">% 'valid' --&gt; This returns ONLY those elements in the convolution which are</span>
+<span class="comment">% not convolved with zero padding.</span>
+</pre><h2 id="5">C) Convolve with a vector that is length 48</h2><pre class="codeinput"><span class="comment">% Using conv, compute the response to an input vector of length 48 containing a singlecycle</span>
+<span class="comment">% cosine.</span>
+
+N = 48                                          ; <span class="comment">% # of elements</span>
+x = 1:N                                         ; <span class="comment">% length of x</span>
+cosine_vec = cos(2*pi/N*x)                      ; <span class="comment">% Create the cosine vec</span>
+conv_output = conv(cosine_vec,r)                ; <span class="comment">% Normal convolution output</span>
+conv_output_valid = conv(cosine_vec,r, <span class="string">'valid'</span>) ; <span class="comment">% Convolution with the "valid" argument</span>
+
+figure ;
+<span class="comment">% Create a plot of the original cosine</span>
+subplot(2,2,1)
+plot(cosine_vec, <span class="string">'r'</span>, <span class="string">'LineWidth'</span>, 1.25)        ;
+title(<span class="string">'Original Cosine'</span>)                        ;
+xlabel(<span class="string">'Time'</span>)                                  ;
+ylabel(<span class="string">'Mean Spikes'</span>)                           ;
+
+<span class="comment">% Then create one for the ugly convolution</span>
+subplot(2,2,2)
+plot(conv_output, <span class="string">'b'</span>, <span class="string">'LineWidth'</span>, 1.25)           ;
+title(<span class="string">'Incorrectly Convolved Single-Cycle Cosine'</span>)  ;
+xlabel(<span class="string">'Time'</span>)                                      ;
+ylabel(<span class="string">'Mean Spikes'</span>)                               ;
+
+<span class="comment">% Then add the more cleanly convoluted cosine</span>
+subplot(2,2,4)
+plot(conv_output_valid, <span class="string">'b'</span>, <span class="string">'LineWidth'</span>, 1.25)                 ;
+title(<span class="string">'Convolved with "Valid", Limiting Zero Padding Effects'</span>)  ;
+xlabel(<span class="string">'Time'</span>)                                                  ;
+ylabel(<span class="string">'Mean Spikes'</span>)                                           ;
+
+Conv_ZeroPaddingAns = {<span class="string">'We see that the first convolution of the 48 element cosine vector has'</span>
+                        <span class="string">'some funky things going on at the edges of the vector. These issues'</span>
+                        <span class="string">'are caused by MATLAB''s default boundary handling which employs zero'</span>
+                        <span class="string">'padding. In order to correct this, we pass the valid function.'</span>
+                        <span class="string">'Utilizingonly only the "valid" elements control for the effects of'</span>
+                        <span class="string">'zero padding.'</span>}
+</pre><pre class="codeoutput">
+Conv_ZeroPaddingAns =
+
+  6&times;1 cell array
+
+    {'We see that the first convolution of the 48 element cosine vector has'}
+    {'some funky things going on at the edges of the vector. These issues'  }
+    {'are caused by MATLAB's default boundary handling which employs zero'  }
+    {'padding. In order to correct this, we pass the valid function.'       }
+    {'Utilizingonly only the "valid" elements control for the effects of'   }
+    {'zero padding.'                                                        }
+
+</pre><img vspace="5" hspace="5" src="Question_2_01.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% HW # 3 - Question 2 - Math Tools - Matthew DeVerna
+
+clear all
+close all
+
+%% Question 2: Convolution in MATLAB
+
+% Suppose that you have a LSI system with impulse response:
+
+r = [4, 2, 1, 0.5] ;
+
+% Because it is a LSI system, the response to any input vector 'in' can be
+% computed as a convolution.
+
+%% A) Compute Responses to eight 8-dimensional impulse vectors ...
+% ...using MATLABs 'conv()' function: out = conv(in, r). How do the
+% responses compare to the convolution formula given in class?
+
+% Create eight 8-dim impulse vectors
+impulse1 = [1,0,0,0,0,0,0,0]        ;
+impulse2 = circshift(impulse1,1)    ;
+impulse3 = circshift(impulse2,1)    ;
+impulse4 = circshift(impulse3,1)    ;
+impulse5 = circshift(impulse4,1)    ;
+impulse6 = circshift(impulse5,1)    ;
+impulse7 = circshift(impulse6,1)    ;
+impulse8 = circshift(impulse7,1)    ;
+
+% Find the convolution response with r
+response1 = conv(impulse1,r)    ;
+response2 = conv(impulse2,r)    ;
+response3 = conv(impulse3,r)    ;
+response4 = conv(impulse4,r)    ;
+response5 = conv(impulse5,r)    ;
+response6 = conv(impulse6,r)    ;
+response7 = conv(impulse7,r)    ;
+response8 = conv(impulse8,r)    ;
+
+% Specifically, compute the matrix that represents the linear system's response. 
+response_matrix = [response1;response2;response3;response4;response5;response6;response7;response8]
+
+% What is the size and organization of this matrix?
+
+SizeAndOrganization = {'Each column of this matrix looks like a copy of r with added zeros'
+                        'Since we are multiplying by an impulse vector (i.e. 1"s and zeros),'
+                        'we get the vector back as we do a sliding dot product. Zeros fill'
+                        'all of the locations because the conv() function''s default boundary'
+                        'handling is to return all possible results by including zeros where' 
+                        'elements of the two vectors do not overlap.'}
+
+
+%% B) How does MATLAB's conv function handle boundaries?
+
+% Matlab handles boundaries differently depending on the additional
+% argument that you provide it.
+
+% 'full' (Default setting) REPLACE_WITH_DASH_DASH> Returns the entire result set, regardless of
+    % whether or not elements are fully covered. This means that it
+    % includes zeros where elements are not "covered" (i.e. in dot product
+    % instances when all elements in a vector do not have an overlapping 
+    % element in the other vector.
+
+% 'same' REPLACE_WITH_DASH_DASH> This arguement convolves only those central elements that are the
+% exact same size. No elements in one vector do not pair with an element in
+% the other vector.
+
+% 'valid' REPLACE_WITH_DASH_DASH> This returns ONLY those elements in the convolution which are
+% not convolved with zero padding. 
+
+%% C) Convolve with a vector that is length 48 
+    
+% Using conv, compute the response to an input vector of length 48 containing a singlecycle
+% cosine. 
+
+N = 48                                          ; % # of elements
+x = 1:N                                         ; % length of x
+cosine_vec = cos(2*pi/N*x)                      ; % Create the cosine vec
+conv_output = conv(cosine_vec,r)                ; % Normal convolution output
+conv_output_valid = conv(cosine_vec,r, 'valid') ; % Convolution with the "valid" argument
+
+figure ;
+% Create a plot of the original cosine
+subplot(2,2,1)
+plot(cosine_vec, 'r', 'LineWidth', 1.25)        ;
+title('Original Cosine')                        ;
+xlabel('Time')                                  ;
+ylabel('Mean Spikes')                           ;
+
+% Then create one for the ugly convolution 
+subplot(2,2,2)
+plot(conv_output, 'b', 'LineWidth', 1.25)           ;
+title('Incorrectly Convolved Single-Cycle Cosine')  ;
+xlabel('Time')                                      ;
+ylabel('Mean Spikes')                               ;
+
+% Then add the more cleanly convoluted cosine 
+subplot(2,2,4)
+plot(conv_output_valid, 'b', 'LineWidth', 1.25)                 ;
+title('Convolved with "Valid", Limiting Zero Padding Effects')  ;
+xlabel('Time')                                                  ;
+ylabel('Mean Spikes')                                           ;
+
+Conv_ZeroPaddingAns = {'We see that the first convolution of the 48 element cosine vector has'
+                        'some funky things going on at the edges of the vector. These issues'
+                        'are caused by MATLAB''s default boundary handling which employs zero'
+                        'padding. In order to correct this, we pass the valid function.'
+                        'Utilizingonly only the "valid" elements control for the effects of'
+                        'zero padding.'}
+
+
+
+
+##### SOURCE END #####
+--></body></html>

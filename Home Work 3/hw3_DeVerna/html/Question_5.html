@@ -1,0 +1,423 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Question_5</title><meta name="generator" content="MATLAB 9.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2019-10-29"><meta name="DC.source" content="Question_5.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">HW # 3 - Question 5 - Math Tools - Matthew DeVerna</a></li><li><a href="#2">Question 5: Sampling and Aliasing.</a></li><li><a href="#3">Plot "sig" as a function of time, in seconds</a></li><li><a href="#4">(A) Creating and Plotting a Subsample</a></li><li><a href="#5">Subsampling at Different Rates</a></li><li><a href="#6">(B) Examine the EEG Results in the Frequency Domain</a></li><li><a href="#7">(C) Plot Fourier Magnitudes for Downsampled Versions of the Original EEG Signal</a></li></ul></div><h2 id="1">HW # 3 - Question 5 - Math Tools - Matthew DeVerna</h2><pre class="codeinput">clear
+close <span class="string">all</span>
+</pre><h2 id="2">Question 5: Sampling and Aliasing.</h2><pre class="codeinput"><span class="comment">% Load files</span>
+
+load(<span class="string">'myMeasurements.mat'</span>)
+
+<span class="comment">% This file contains:</span>
+<span class="comment">%   - sig = a vector (length = 120) containing voltage values</span>
+<span class="comment">% measure from an EEG electrode (sampled at 100 Hz)</span>
+</pre><h2 id="3">Plot "sig" as a function of time, in seconds</h2><pre class="codeinput">N=120                                                           ;
+fs = 100                                                        ; <span class="comment">%</span>
+buff = .02                                                      ; <span class="comment">% An axis buffer so that these plots look a bit cleaner</span>
+scaled_time = time/fs                                           ; <span class="comment">% The x-values for time</span>
+fft_domain = [-N/2: (N/2 -1)] * (fs/N)                          ;
+ax_Lims = [0 max(scaled_time)+buff min(sig)-buff max(sig)+buff] ; <span class="comment">% Create the axis limits</span>
+
+figure ; <span class="comment">% Plot</span>
+plot(scaled_time, sig, <span class="string">'ko-'</span>, <span class="string">'LineWidth'</span>, 1.25)
+title(<span class="string">'EEG Electrode Voltage Over Time'</span>)
+xlabel({<span class="string">'Time'</span> <span class="string">'(Seconds)'</span>})
+ylabel(<span class="string">'Voltage'</span>)
+box <span class="string">off</span>
+axis(ax_Lims)
+</pre><img vspace="5" hspace="5" src="Question_5_01.png" alt=""> <h2 id="4">(A) Creating and Plotting a Subsample</h2><pre class="codeinput">SubSamplingSummary = {<span class="string">'We can see in the plot below that taking a subsample of a signal is a'</span>
+                        <span class="string">'problematic approach to summarize a signal. This type of approach may'</span>
+                        <span class="string">'be linear, because you take an accurate sample at each (equally spaced)'</span>
+                        <span class="string">'step, however, this approach will not be shift invariant. We see it is'</span>
+                        <span class="string">'not shift invariant because if you sample at every 2nd vs. 3rd vs kth'</span>
+                        <span class="string">'element, there is always a potential that you will get a very misleading'</span>
+                        <span class="string">'signal.'</span>}
+
+<span class="comment">% Plotting a Subsample of Sig at Every Fourth Element</span>
+
+step = 4                                                ; <span class="comment">% Every fourth element</span>
+step_one = zeros(1,step)                                ; <span class="comment">% Create zeros to begin logical array</span>
+step_one(4) = 1                                         ; <span class="comment">% Fill the fourth element with a one as a selector</span>
+steps_in_sig = 120/step                                 ; <span class="comment">% We will need this many elements</span>
+sub_sample_index = repmat(step_one,[1 ,steps_in_sig])   ; <span class="comment">% Create the full array</span>
+sub_sample_index = logical(sub_sample_index)            ; <span class="comment">% Convert it to a logical array</span>
+sig_subsample = sig(sub_sample_index)                   ; <span class="comment">% Take the subsample</span>
+time_subsample = scaled_time(sub_sample_index)          ; <span class="comment">% Take the subsample</span>
+
+figure ; <span class="comment">% Plot</span>
+plot(scaled_time, sig, <span class="string">'ko-'</span>, <span class="string">'LineWidth'</span>, 1.25)
+hold <span class="string">on</span>
+plot(time_subsample,sig_subsample, <span class="string">'r*-'</span>, <span class="string">'LineWidth'</span>, 1.25)
+hold <span class="string">on</span>
+title(<span class="string">'EEG Electrode Voltage Over Time'</span>)
+xlabel({<span class="string">'Time'</span> <span class="string">'(Seconds)'</span>})
+ylabel(<span class="string">'Voltage'</span>)
+box <span class="string">off</span>
+axis(ax_Lims)
+legend(<span class="string">'Original Signal ("Sig")'</span>,<span class="string">'Subsampled Signal'</span>, <span class="string">'Location'</span>, <span class="string">'northeastoutside'</span>)
+</pre><pre class="codeoutput">
+SubSamplingSummary =
+
+  7&times;1 cell array
+
+    {'We can see in the plot below that taking a subsample of a signal is a'   }
+    {'problematic approach to summarize a signal. This type of approach may'   }
+    {'be linear, because you take an accurate sample at each (equally spaced)' }
+    {'step, however, this approach will not be shift invariant. We see it is'  }
+    {'not shift invariant because if you sample at every 2nd vs. 3rd vs kth'   }
+    {'element, there is always a potential that you will get a very misleading'}
+    {'signal.'                                                                 }
+
+</pre><img vspace="5" hspace="5" src="Question_5_02.png" alt=""> <img vspace="5" hspace="5" src="Question_5_03.png" alt=""> <h2 id="5">Subsampling at Different Rates</h2><pre class="codeinput"><span class="comment">% Now we create a subplot to show the difference between sampling at different</span>
+<span class="comment">% times...</span>
+
+figure ;
+subplot(3,1,1)
+plot(scaled_time, sig, <span class="string">'ko-'</span>, <span class="string">'LineWidth'</span>, 1.25)
+title(<span class="string">'EEG Electrode Voltage Over Time: Full Signal'</span>)
+ylabel(<span class="string">'Voltage'</span>)
+box <span class="string">off</span>
+axis(ax_Lims)
+
+<span class="keyword">for</span> ii = [2, 3]
+step = ii                                               ; <span class="comment">% Every fourth element</span>
+step_one = zeros(1,step)                                ; <span class="comment">% Create zeros to begin logical array</span>
+step_one(ii) = 1                                        ; <span class="comment">% Fill the fourth element with a one as a selector</span>
+steps_in_sig = 120/step                                 ; <span class="comment">% We will need this many elements</span>
+sub_sample_index = repmat(step_one,[1 ,steps_in_sig])   ; <span class="comment">% Create the full array</span>
+sub_sample_index = logical(sub_sample_index)            ; <span class="comment">% Convert it to a logical array</span>
+sig_subsample = sig(sub_sample_index)                   ; <span class="comment">% Take the subsample</span>
+time_subsample = scaled_time(sub_sample_index)                 ; <span class="comment">% Take the subsample</span>
+
+<span class="comment">% Plot</span>
+subplot(3,1,ii)
+plot(time_subsample,sig_subsample, <span class="string">'bx-'</span>, <span class="string">'LineWidth'</span>, 1.25)
+title(<span class="string">'EEG Electrode Voltage Over Time: Sampling Every '</span> + string(ii) + <span class="string">' Elements'</span>)
+ylabel(<span class="string">'Voltage'</span>)
+box <span class="string">off</span>
+axis(ax_Lims)
+<span class="keyword">end</span>
+
+xlabel({<span class="string">'Time'</span> <span class="string">'(Seconds)'</span>})
+
+Plot = {<span class="string">'The bottom two signals are subsamples of the top full signal. You can'</span>
+            <span class="string">'clearly see that each one of these subsamples paints a very different'</span>
+            <span class="string">'picture as to what the original signal consists of.'</span>}
+</pre><pre class="codeoutput">
+Plot =
+
+  3&times;1 cell array
+
+    {'The bottom two signals are subsamples of the top full signal. You can'}
+    {'clearly see that each one of these subsamples paints a very different'}
+    {'picture as to what the original signal consists of.'                  }
+
+</pre><img vspace="5" hspace="5" src="Question_5_04.png" alt=""> <h2 id="6">(B) Examine the EEG Results in the Frequency Domain</h2><pre class="codeinput">eeg_amps = abs(fft(sig))            ; <span class="comment">% Find the amplitudes of sig</span>
+eeg_centered = fftshift(eeg_amps)   ; <span class="comment">% Center them around the DC</span>
+
+<span class="comment">% Plot the frequency domain / amplitudes</span>
+figure ;
+stem(fft_domain, eeg_centered, <span class="string">'filled'</span>, <span class="string">'k-.'</span>)
+box <span class="string">off</span>
+title(<span class="string">'EEG Amplitudes in the Frequency Domain'</span>)
+xlabel({<span class="string">'Frequency'</span> <span class="string">'(Hz)'</span>})
+ylabel(<span class="string">'Amplitude'</span>)
+
+<span class="comment">% Find the band with the highest amplitude</span>
+max_amp = max(eeg_centered) ;
+max_band = fft_domain(eeg_centered == max_amp)
+
+LargestBand = {<span class="string">'As we can see the largest response is found in the "beta" band at 30Hz'</span>}
+</pre><pre class="codeoutput">
+max_band =
+
+   -30    30
+
+
+LargestBand =
+
+  1&times;1 cell array
+
+    {'As we can see the largest response is found in the "beta" band at 30Hz'}
+
+</pre><img vspace="5" hspace="5" src="Question_5_05.png" alt=""> <h2 id="7">(C) Plot Fourier Magnitudes for Downsampled Versions of the Original EEG Signal</h2><pre class="codeinput">FoldingAnswer = {<span class="string">'In the below plots, what we''re seeing is the effect of "folding". Any'</span>
+                <span class="string">'frequencies that are higher than the Nyquist frequency in a continuous'</span>
+                <span class="string">'signal will be aliased or "folded" into lower frequencies when when we'</span>
+                <span class="string">'sample it discretely. One way to handle this is to filter the signal to'</span>
+                <span class="string">'remove higher frequencies before the signal is sampled.'</span>}
+
+
+<span class="comment">% Below I plot the original signal as well as each downsampled version to</span>
+<span class="comment">% show visually the effects of folding within the frequency domain.</span>
+
+figure ;
+subplot(4,1,1)
+stem(fft_domain, eeg_centered, <span class="string">'filled'</span>, <span class="string">'r-.'</span>)
+box <span class="string">off</span>
+title(<span class="string">'EEG Amplitudes in the Frequency Domain: Full Sample'</span>)
+ylabel(<span class="string">'Amplitude'</span>)
+
+<span class="keyword">for</span> ii = [2, 3, 4]
+step = ii                                                   ; <span class="comment">% Every fourth element</span>
+step_one = zeros(1,step)                                    ; <span class="comment">% Create zeros to begin logical array</span>
+step_one(ii) = 1                                            ; <span class="comment">% Fill the fourth element with a one as a selector</span>
+steps_in_sig = 120/step                                     ; <span class="comment">% We will need this many elements</span>
+sub_sample_index = repmat(step_one,[1 ,steps_in_sig])       ; <span class="comment">% Create the full array</span>
+sub_sample_index = logical(sub_sample_index)                ; <span class="comment">% Convert it to a logical array</span>
+sig_down_sample = zeros(1, length(sig))                     ; <span class="comment">% Create array of zeros to fill with samples</span>
+sig_down_sample(sub_sample_index) =  sig(sub_sample_index)  ; <span class="comment">% Fill this array with the sampled values, creating the downsample</span>
+down_sampled_amps = abs(fft(sig_down_sample))               ; <span class="comment">% Take the fourier transformed amplitudes</span>
+down_sampled_amps_centered = fftshift(down_sampled_amps)    ; <span class="comment">% Center them around the DC/zero</span>
+
+<span class="comment">% Plot</span>
+subplot(4,1,ii)
+stem(fft_domain, down_sampled_amps_centered, <span class="string">'filled'</span>, <span class="string">'b-.'</span>)
+box <span class="string">off</span>
+title(<span class="string">'EEG Amplitudes in the Frequency Domain: Downsampled by Every '</span> + string(ii) + <span class="string">' Elements'</span>)
+ylabel(<span class="string">'Amplitude'</span>)
+<span class="keyword">end</span>
+xlabel({<span class="string">'Frequency'</span>})
+</pre><pre class="codeoutput">
+FoldingAnswer =
+
+  5&times;1 cell array
+
+    {'In the below plots, what we're seeing is the effect of "folding". Any'  }
+    {'frequencies that are higher than the Nyquist frequency in a continuous' }
+    {'signal will be aliased or "folded" into lower frequencies when when we' }
+    {'sample it discretely. One way to handle this is to filter the signal to'}
+    {'remove higher frequencies before the signal is sampled.'                }
+
+</pre><img vspace="5" hspace="5" src="Question_5_06.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% HW # 3 - Question 5 - Math Tools - Matthew DeVerna
+
+clear
+close all
+
+%% Question 5: Sampling and Aliasing.
+
+% Load files
+
+load('myMeasurements.mat')
+
+% This file contains:
+%   - sig = a vector (length = 120) containing voltage values 
+% measure from an EEG electrode (sampled at 100 Hz)
+
+%% Plot "sig" as a function of time, in seconds
+
+N=120                                                           ;
+fs = 100                                                        ; % 
+buff = .02                                                      ; % An axis buffer so that these plots look a bit cleaner
+scaled_time = time/fs                                           ; % The x-values for time
+fft_domain = [-N/2: (N/2 -1)] * (fs/N)                          ;
+ax_Lims = [0 max(scaled_time)+buff min(sig)-buff max(sig)+buff] ; % Create the axis limits
+
+figure ; % Plot
+plot(scaled_time, sig, 'ko-', 'LineWidth', 1.25)
+title('EEG Electrode Voltage Over Time')
+xlabel({'Time' '(Seconds)'})
+ylabel('Voltage')
+box off
+axis(ax_Lims)
+
+%% (A) Creating and Plotting a Subsample
+
+SubSamplingSummary = {'We can see in the plot below that taking a subsample of a signal is a'
+                        'problematic approach to summarize a signal. This type of approach may' 
+                        'be linear, because you take an accurate sample at each (equally spaced)'
+                        'step, however, this approach will not be shift invariant. We see it is'
+                        'not shift invariant because if you sample at every 2nd vs. 3rd vs kth'
+                        'element, there is always a potential that you will get a very misleading'
+                        'signal.'}
+
+% Plotting a Subsample of Sig at Every Fourth Element
+
+step = 4                                                ; % Every fourth element
+step_one = zeros(1,step)                                ; % Create zeros to begin logical array
+step_one(4) = 1                                         ; % Fill the fourth element with a one as a selector
+steps_in_sig = 120/step                                 ; % We will need this many elements
+sub_sample_index = repmat(step_one,[1 ,steps_in_sig])   ; % Create the full array
+sub_sample_index = logical(sub_sample_index)            ; % Convert it to a logical array
+sig_subsample = sig(sub_sample_index)                   ; % Take the subsample
+time_subsample = scaled_time(sub_sample_index)          ; % Take the subsample
+
+figure ; % Plot
+plot(scaled_time, sig, 'ko-', 'LineWidth', 1.25)
+hold on
+plot(time_subsample,sig_subsample, 'r*-', 'LineWidth', 1.25)
+hold on
+title('EEG Electrode Voltage Over Time')
+xlabel({'Time' '(Seconds)'})
+ylabel('Voltage')
+box off
+axis(ax_Lims)
+legend('Original Signal ("Sig")','Subsampled Signal', 'Location', 'northeastoutside')
+
+%% Subsampling at Different Rates
+
+% Now we create a subplot to show the difference between sampling at different
+% times...
+
+figure ; 
+subplot(3,1,1)
+plot(scaled_time, sig, 'ko-', 'LineWidth', 1.25)
+title('EEG Electrode Voltage Over Time: Full Signal')
+ylabel('Voltage')
+box off
+axis(ax_Lims)
+
+for ii = [2, 3]
+step = ii                                               ; % Every fourth element
+step_one = zeros(1,step)                                ; % Create zeros to begin logical array
+step_one(ii) = 1                                        ; % Fill the fourth element with a one as a selector
+steps_in_sig = 120/step                                 ; % We will need this many elements
+sub_sample_index = repmat(step_one,[1 ,steps_in_sig])   ; % Create the full array
+sub_sample_index = logical(sub_sample_index)            ; % Convert it to a logical array
+sig_subsample = sig(sub_sample_index)                   ; % Take the subsample
+time_subsample = scaled_time(sub_sample_index)                 ; % Take the subsample
+
+% Plot
+subplot(3,1,ii)
+plot(time_subsample,sig_subsample, 'bx-', 'LineWidth', 1.25)
+title('EEG Electrode Voltage Over Time: Sampling Every ' + string(ii) + ' Elements')
+ylabel('Voltage')
+box off
+axis(ax_Lims)
+end
+
+xlabel({'Time' '(Seconds)'})
+
+Plot = {'The bottom two signals are subsamples of the top full signal. You can'
+            'clearly see that each one of these subsamples paints a very different'
+            'picture as to what the original signal consists of.'}
+
+
+
+%% (B) Examine the EEG Results in the Frequency Domain
+
+eeg_amps = abs(fft(sig))            ; % Find the amplitudes of sig
+eeg_centered = fftshift(eeg_amps)   ; % Center them around the DC
+
+% Plot the frequency domain / amplitudes
+figure ;
+stem(fft_domain, eeg_centered, 'filled', 'k-.')
+box off
+title('EEG Amplitudes in the Frequency Domain')
+xlabel({'Frequency' '(Hz)'})
+ylabel('Amplitude')
+
+% Find the band with the highest amplitude
+max_amp = max(eeg_centered) ; 
+max_band = fft_domain(eeg_centered == max_amp)  
+
+LargestBand = {'As we can see the largest response is found in the "beta" band at 30Hz'}
+
+%% (C) Plot Fourier Magnitudes for Downsampled Versions of the Original EEG Signal
+
+FoldingAnswer = {'In the below plots, what we''re seeing is the effect of "folding". Any'
+                'frequencies that are higher than the Nyquist frequency in a continuous'
+                'signal will be aliased or "folded" into lower frequencies when when we'
+                'sample it discretely. One way to handle this is to filter the signal to'
+                'remove higher frequencies before the signal is sampled.'}
+
+
+% Below I plot the original signal as well as each downsampled version to
+% show visually the effects of folding within the frequency domain. 
+            
+figure ; 
+subplot(4,1,1)
+stem(fft_domain, eeg_centered, 'filled', 'r-.')
+box off
+title('EEG Amplitudes in the Frequency Domain: Full Sample')
+ylabel('Amplitude')
+
+for ii = [2, 3, 4]
+step = ii                                                   ; % Every fourth element
+step_one = zeros(1,step)                                    ; % Create zeros to begin logical array
+step_one(ii) = 1                                            ; % Fill the fourth element with a one as a selector
+steps_in_sig = 120/step                                     ; % We will need this many elements
+sub_sample_index = repmat(step_one,[1 ,steps_in_sig])       ; % Create the full array
+sub_sample_index = logical(sub_sample_index)                ; % Convert it to a logical array
+sig_down_sample = zeros(1, length(sig))                     ; % Create array of zeros to fill with samples
+sig_down_sample(sub_sample_index) =  sig(sub_sample_index)  ; % Fill this array with the sampled values, creating the downsample
+down_sampled_amps = abs(fft(sig_down_sample))               ; % Take the fourier transformed amplitudes
+down_sampled_amps_centered = fftshift(down_sampled_amps)    ; % Center them around the DC/zero
+
+% Plot
+subplot(4,1,ii)
+stem(fft_domain, down_sampled_amps_centered, 'filled', 'b-.')
+box off
+title('EEG Amplitudes in the Frequency Domain: Downsampled by Every ' + string(ii) + ' Elements')
+ylabel('Amplitude')
+end
+xlabel({'Frequency'})
+
+
+##### SOURCE END #####
+--></body></html>

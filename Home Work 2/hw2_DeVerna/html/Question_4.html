@@ -1,0 +1,236 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Question_4</title><meta name="generator" content="MATLAB 9.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2019-10-10"><meta name="DC.source" content="Question_4.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">Homework2 - Question 4 - Matthew DeVerna</a></li><li><a href="#2">Load File</a></li><li><a href="#3">(A) Plot the waveforms superimposed</a></li><li><a href="#4">(B) Plot the Eigen Values in Descending Order</a></li><li><a href="#5">(C) Project onto the top two princple components</a></li><li><a href="#6">(D) Project onto the top three principle components</a></li></ul></div><h2 id="1">Homework2 - Question 4 - Matthew DeVerna</h2><pre class="codeinput"><span class="comment">% Purpose: This script was written to tackle question # 2 of Math Tools</span>
+<span class="comment">% homework # 4.</span>
+
+<span class="comment">% Author: Matthew DeVerna</span>
+
+<span class="comment">% Date: 10/9/19</span>
+</pre><h2 id="2">Load File</h2><pre class="codeinput">load(<span class="string">'windowedSpikes.mat'</span>)
+
+<span class="comment">% data = 400x150 matrix of whos rows are electrode measurements ( voltages</span>
+<span class="comment">% recorded for each 150 msec window, at 1msec intervals).</span>
+</pre><h2 id="3">(A) Plot the waveforms superimposed</h2><pre class="codeinput">figure
+plot(data')
+xlabel(<span class="string">'Time'</span>)
+ylabel(<span class="string">'Voltage'</span>)
+legend(<span class="string">'Recordings'</span>)
+title(<span class="string">'Dr. Bell and Dr. Zell''s Electrode Measurement Data'</span>)
+
+<span class="comment">% I cannot think of a scientifically valid procedure to determine how many</span>
+<span class="comment">% neurons produced these spikes (only using the plot). We must used PCA/SVD to find the</span>
+<span class="comment">% eigenvectors/eigenvalues and determine which dimensions are responsible</span>
+<span class="comment">% for the most variance</span>
+</pre><img vspace="5" hspace="5" src="Question_4_01.png" alt=""> <h2 id="4">(B) Plot the Eigen Values in Descending Order</h2><pre class="codeinput"><span class="comment">% We can use the svd to find the eigen values (diag(S).^2)</span>
+<span class="comment">% and eigen vectors (V')</span>
+
+<span class="comment">% Compute the SVD</span>
+[U,S,V] = svd(data)     ;
+
+<span class="comment">% Since we know that our eigen values are the diagonal components of S,</span>
+<span class="comment">% squared. We can take these directly from S</span>
+eig_vals = (diag(S)).^2 ;
+
+<span class="comment">% Now we plot these values in a simple bar graph and it's quite clear</span>
+semilogy(eig_vals, <span class="string">'o'</span>) <span class="comment">% Make y-axis log</span>
+xlabel(<span class="string">'Components'</span>)
+ylabel(<span class="string">'Values'</span>)
+title(<span class="string">'Eigen Values for Electrode Data'</span>)
+legend(<span class="string">'Eigen Values'</span>)
+grid <span class="string">on</span>
+box <span class="string">off</span>
+</pre><img vspace="5" hspace="5" src="Question_4_02.png" alt=""> <h2 id="5">(C) Project onto the top two princple components</h2><pre class="codeinput"><span class="comment">% We know that V' represents our eigen vectors so we take these and utilize</span>
+<span class="comment">% them to project our data these dimensions</span>
+
+eigen_vectors = V'          ;
+
+<span class="comment">% Find our principle components</span>
+PC_1 = eigen_vectors(1,:)   ;
+PC_2 = eigen_vectors(2,:)   ;
+PC_3 = eigen_vectors(3,:)   ; <span class="comment">% Find the third for later use</span>
+
+<span class="comment">% Project our data onto the new coordinate system</span>
+X = data * PC_1'            ;
+Y = data * PC_2'            ;
+Z = data * PC_3'            ; <span class="comment">% Find third for later</span>
+x_zeros = zeros(400,1)      ; <span class="comment">% Create zeros for 3D vector plotting.</span>
+
+<span class="comment">% Plot in the 2D space</span>
+plot(X,Y, <span class="string">'x'</span>)
+title(<span class="string">'Data Projected on Two Largest Principle Components'</span>)
+xlabel(<span class="string">'Principle Component #1'</span>)
+ylabel(<span class="string">'Principle Component #2'</span>)
+legend(<span class="string">'Recordings'</span>)
+grid <span class="string">on</span>
+box <span class="string">off</span>
+</pre><img vspace="5" hspace="5" src="Question_4_03.png" alt=""> <h2 id="6">(D) Project onto the top three principle components</h2><pre class="codeinput">plot3(X,Y,Z, <span class="string">'x'</span>)
+rotate3d <span class="string">on</span>
+title(<span class="string">'Data Projected on Three Largest Principle Components'</span>)
+xlabel(<span class="string">'Principle Component #1'</span>)
+ylabel(<span class="string">'Principle Component #2'</span>)
+zlabel(<span class="string">'Principle Component #3'</span>)
+legend(<span class="string">'Recordings'</span>)
+grid <span class="string">on</span>
+box <span class="string">off</span>
+</pre><img vspace="5" hspace="5" src="Question_4_04.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% Homework2 - Question 4 - Matthew DeVerna
+
+% Purpose: This script was written to tackle question # 2 of Math Tools
+% homework # 4.
+
+% Author: Matthew DeVerna
+
+% Date: 10/9/19
+
+%%  Load File
+
+load('windowedSpikes.mat')
+
+% data = 400x150 matrix of whos rows are electrode measurements ( voltages
+% recorded for each 150 msec window, at 1msec intervals). 
+
+%% (A) Plot the waveforms superimposed
+
+figure
+plot(data')
+xlabel('Time')
+ylabel('Voltage')
+legend('Recordings')
+title('Dr. Bell and Dr. Zell''s Electrode Measurement Data')
+
+% I cannot think of a scientifically valid procedure to determine how many
+% neurons produced these spikes (only using the plot). We must used PCA/SVD to find the
+% eigenvectors/eigenvalues and determine which dimensions are responsible
+% for the most variance
+
+
+%% (B) Plot the Eigen Values in Descending Order
+
+% We can use the svd to find the eigen values (diag(S).^2) 
+% and eigen vectors (V')
+
+% Compute the SVD
+[U,S,V] = svd(data)     ;
+
+% Since we know that our eigen values are the diagonal components of S,
+% squared. We can take these directly from S
+eig_vals = (diag(S)).^2 ;
+
+% Now we plot these values in a simple bar graph and it's quite clear
+semilogy(eig_vals, 'o') % Make y-axis log
+xlabel('Components')
+ylabel('Values')
+title('Eigen Values for Electrode Data')
+legend('Eigen Values')
+grid on
+box off
+
+
+%% (C) Project onto the top two princple components
+
+% We know that V' represents our eigen vectors so we take these and utilize
+% them to project our data these dimensions
+
+eigen_vectors = V'          ;
+
+% Find our principle components
+PC_1 = eigen_vectors(1,:)   ;
+PC_2 = eigen_vectors(2,:)   ;
+PC_3 = eigen_vectors(3,:)   ; % Find the third for later use
+
+% Project our data onto the new coordinate system
+X = data * PC_1'            ;
+Y = data * PC_2'            ;
+Z = data * PC_3'            ; % Find third for later
+x_zeros = zeros(400,1)      ; % Create zeros for 3D vector plotting.
+
+% Plot in the 2D space
+plot(X,Y, 'x')
+title('Data Projected on Two Largest Principle Components')
+xlabel('Principle Component #1')
+ylabel('Principle Component #2')
+legend('Recordings')
+grid on 
+box off
+
+%% (D) Project onto the top three principle components
+
+plot3(X,Y,Z, 'x')
+rotate3d on 
+title('Data Projected on Three Largest Principle Components')
+xlabel('Principle Component #1')
+ylabel('Principle Component #2')
+zlabel('Principle Component #3')
+legend('Recordings')
+grid on 
+box off
+
+##### SOURCE END #####
+--></body></html>

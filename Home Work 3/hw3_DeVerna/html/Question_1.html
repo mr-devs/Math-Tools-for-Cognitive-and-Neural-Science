@@ -1,0 +1,2057 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>Question_1</title><meta name="generator" content="MATLAB 9.5"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2019-10-29"><meta name="DC.source" content="Question_1.m"><style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; } 
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#1">HW # 3 - Question 1 - Math Tools - Matthew DeVerna</a></li><li><a href="#2">Question 1: LSI Systems Characterization</a></li><li><a href="#3">A) "Kick the Tires"</a></li><li><a href="#4">pt. 1 Checking for Shift Invariance</a></li><li><a href="#5">Plot the Responses Visually</a></li><li><a href="#6">Find System 2 impulse responses at each position</a></li><li><a href="#7">Plot the responses visually</a></li><li><a href="#8">Find the impulse response at each position for System 3</a></li><li><a href="#9">Plot responses visually</a></li><li><a href="#10">pt. 2 Checking for Additivity</a></li><li><a href="#11">System 1 Additivity Check</a></li><li><a href="#12">System 1 Additivity Plot Example</a></li><li><a href="#13">System 2 Additivity Check</a></li><li><a href="#14">System 2 Additivity Plot Example</a></li><li><a href="#15">System 3 Linear Check</a></li><li><a href="#16">System 3 Additivity Plot Example</a></li><li><a href="#17">pt. 3  Boundary Handling</a></li><li><a href="#18">Create Impulse Responses for System 1 Boundary Handling</a></li><li><a href="#19">Plot System 1 Boundary Handling</a></li><li><a href="#20">Create Impulse Responses for System 2 Boundary Handling</a></li><li><a href="#21">Plot System 2 Boundary Handling</a></li><li><a href="#22">Create Impulse Responses for System 3 Boundary Handling</a></li><li><a href="#23">Plot System 3 Boundary Handling</a></li><li><a href="#24">B) Check whether the outputs are sinusoids of the same frequency</a></li><li><a href="#25">Checking that the Output Lies Within the Proper Frequency Subspace</a></li><li><a href="#26">C) Lets talk about Linear Shift Invariance</a></li><li><a href="#27">The Change in Amp. and Phase from Input to Output in FT Space</a></li><li><a href="#28">Testing how Scaling the Sinusoid Changes Amplitude in the Fourier Frequency Domain</a></li><li><a href="#29">Linear Shift Invariant Guarantee?</a></li></ul></div><h2 id="1">HW # 3 - Question 1 - Math Tools - Matthew DeVerna</h2><pre class="codeinput">clear <span class="string">all</span>
+close <span class="string">all</span>
+</pre><h2 id="2">Question 1: LSI Systems Characterization</h2><pre class="codeinput"><span class="comment">% We are trying to experimentally characterize three auditory neurons, in</span>
+<span class="comment">% terms of their responses to sounds.</span>
+
+<span class="comment">% For this problem, the responses are contained in the compiled matlab</span>
+<span class="comment">% functions, "unknownSystemX.p" (X = 1,2,3).</span>
+<span class="comment">% INPUT - a column vector with length N = 64. (Represents sound pressure over</span>
+<span class="comment">% time).</span>
+<span class="comment">% OUTPUT - a column vector of the same length. (Represents mean spike count</span>
+<span class="comment">% over time).</span>
+
+<span class="comment">% The task is examine each neuron and see if it behaves like it is:</span>
+    <span class="comment">% i) Linear</span>
+    <span class="comment">% ii) Shift invariant</span>
+    <span class="comment">% iii) Handling boundaries in a circular manner</span>
+</pre><h2 id="3">A) "Kick the Tires"</h2><h2 id="4">pt. 1 Checking for Shift Invariance</h2><p>Measure the response to an impulse in the first position of an input vector. Check that this impulse response is shift-invariant by comparing to the response an impulse at positions n = 2,4,8.</p><pre class="codeinput"><span class="comment">% Create general impulses shifted by some amount</span>
+zeros_impulse = zeros(64,1) ;
+impulse = zeros_impulse ;
+impulse(1) = 1 ;
+impulse_2 = circshift(impulse, 1) ;
+impulse_4 = circshift(impulse, 3) ;
+impulse_8 = circshift(impulse, 7) ;
+
+<span class="comment">% Create System 1 impulse responses at each position</span>
+imp_resp_1_1 = unknownSystem1(impulse)    ;
+imp_resp_1_2 = unknownSystem1(impulse_2)  ;
+imp_resp_1_4 = unknownSystem1(impulse_4)  ;
+imp_resp_1_8 = unknownSystem1(impulse_8)  ;
+
+<span class="comment">% Check that these shifts are equal by taking their difference</span>
+shift_check1_1 = [imp_resp_1_2 - circshift(imp_resp_1_1,1) &lt; 1e-8]'
+shift_check1_2 = [imp_resp_1_4 - circshift(imp_resp_1_1,3) &lt; 1e-8]'
+shift_check1_3 = [imp_resp_1_4 - circshift(imp_resp_1_2,2) &lt; 1e-8]'
+shift_check1_4 = [imp_resp_1_8 - circshift(imp_resp_1_1,7) &lt; 1e-8]'
+
+<span class="comment">% Print Answer</span>
+System_1_ShiftCheck1 = {<span class="string">'We can see that system 1 is shift invariant because we get the same'</span>
+    <span class="string">'response whether we provide an input at position 1, 2, 4 or 8 - the'</span>
+    <span class="string">'response is simply shifted by the position of the impulse position.'</span>}
+</pre><pre class="codeoutput">
+shift_check1_1 =
+
+  1&times;64 logical array
+
+  Columns 1 through 19
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 20 through 38
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 39 through 57
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 58 through 64
+
+   1   1   1   1   1   1   1
+
+
+shift_check1_2 =
+
+  1&times;64 logical array
+
+  Columns 1 through 19
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 20 through 38
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 39 through 57
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 58 through 64
+
+   1   1   1   1   1   1   1
+
+
+shift_check1_3 =
+
+  1&times;64 logical array
+
+  Columns 1 through 19
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 20 through 38
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 39 through 57
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 58 through 64
+
+   1   1   1   1   1   1   1
+
+
+shift_check1_4 =
+
+  1&times;64 logical array
+
+  Columns 1 through 19
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 20 through 38
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 39 through 57
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 58 through 64
+
+   1   1   1   1   1   1   1
+
+
+System_1_ShiftCheck1 =
+
+  3&times;1 cell array
+
+    {'We can see that system 1 is shift invariant because we get the same'}
+    {'response whether we provide an input at position 1, 2, 4 or 8 - the'}
+    {'response is simply shifted by the position of the impulse position.'}
+
+</pre><h2 id="5">Plot the Responses Visually</h2><pre class="codeinput">system1 = figure                    ;
+resp1 = subplot(4,1,1)              ;
+stem(imp_resp_1_1, <span class="string">'b'</span>, <span class="string">'filled'</span>)   ;
+title(<span class="string">'Position 1 Responses'</span>)       ;
+ylabel(<span class="string">'Mean Spike Count'</span>)          ;
+xlabel(<span class="string">'Time'</span>)                      ;
+resp2 = subplot(4,1,2)              ;
+stem(imp_resp_1_2, <span class="string">'r'</span>, <span class="string">'filled'</span>)   ;
+title(<span class="string">'Position 2 Responses'</span>)       ;
+ylabel(<span class="string">'Mean Spike Count'</span>)          ;
+xlabel(<span class="string">'Time'</span>)                      ;
+resp3 = subplot(4,1,3)              ;
+stem(imp_resp_1_4, <span class="string">'k'</span>, <span class="string">'filled'</span>)   ;
+title(<span class="string">'Position 4 Responses'</span>)       ;
+ylabel(<span class="string">'Mean Spike Count'</span>)          ;
+xlabel(<span class="string">'Time'</span>)                      ;
+resp4 = subplot(4,1,4)              ;
+stem(imp_resp_1_8, <span class="string">'g'</span>, <span class="string">'filled'</span>)   ;
+title(<span class="string">'Position 8 Responses'</span>)       ;
+ylabel(<span class="string">'Mean Spike Count'</span>)          ;
+xlabel(<span class="string">'Time'</span>)                      ;
+sgtitle(<span class="string">'System 1 Shift Invariance Check Responses'</span>) ;
+</pre><img vspace="5" hspace="5" src="Question_1_01.png" alt=""> <h2 id="6">Find System 2 impulse responses at each position</h2><pre class="codeinput">imp_resp_2_1 = unknownSystem2(impulse)    ;
+imp_resp_2_2 = unknownSystem2(impulse_2)  ;
+imp_resp_2_4 = unknownSystem2(impulse_4)  ;
+imp_resp_2_8 = unknownSystem2(impulse_8)  ;
+
+<span class="comment">% Check that these shifts are equal by taking their difference</span>
+shift_check2_1 = [imp_resp_2_2 - circshift(imp_resp_2_1,1) &lt; 1e-8]'
+shift_check2_2 = [imp_resp_2_4 - circshift(imp_resp_2_1,3) &lt; 1e-8]'
+shift_check2_3 = [imp_resp_2_4 - circshift(imp_resp_2_2,2) &lt; 1e-8]'
+shift_check2_3 = [imp_resp_2_8 - circshift(imp_resp_2_1,7) &lt; 1e-8]'
+
+<span class="comment">% Print Answer</span>
+System_2_ShiftCheck1 = {<span class="string">'We can see that system 2 is also shift invariant because we get the same'</span>
+    <span class="string">'response whether we provide an input at position 1, 2, 4 or 8 - the'</span>
+    <span class="string">'response is simply shifted by the position of the impulse position.'</span>}
+</pre><pre class="codeoutput">
+shift_check2_1 =
+
+  1&times;64 logical array
+
+  Columns 1 through 19
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 20 through 38
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 39 through 57
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 58 through 64
+
+   1   1   1   1   1   1   1
+
+
+shift_check2_2 =
+
+  1&times;64 logical array
+
+  Columns 1 through 19
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 20 through 38
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 39 through 57
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 58 through 64
+
+   1   1   1   1   1   1   1
+
+
+shift_check2_3 =
+
+  1&times;64 logical array
+
+  Columns 1 through 19
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 20 through 38
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 39 through 57
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 58 through 64
+
+   1   1   1   1   1   1   1
+
+
+shift_check2_3 =
+
+  1&times;64 logical array
+
+  Columns 1 through 19
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 20 through 38
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 39 through 57
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 58 through 64
+
+   1   1   1   1   1   1   1
+
+
+System_2_ShiftCheck1 =
+
+  3&times;1 cell array
+
+    {'We can see that system 2 is also shift invariant because we get the same'}
+    {'response whether we provide an input at position 1, 2, 4 or 8 - the'     }
+    {'response is simply shifted by the position of the impulse position.'     }
+
+</pre><h2 id="7">Plot the responses visually</h2><pre class="codeinput">system2 = figure                    ;
+resp1 = subplot(4,1,1)              ;
+stem(imp_resp_2_1, <span class="string">'b'</span>, <span class="string">'filled'</span>)   ;
+title(<span class="string">'Position 1 Responses'</span>)       ;
+ylabel(<span class="string">'Mean Spike Count'</span>)          ;
+xlabel(<span class="string">'Time'</span>)                      ;
+resp2 = subplot(4,1,2)              ;
+stem(imp_resp_2_2, <span class="string">'r'</span>, <span class="string">'filled'</span>)	;
+title(<span class="string">'Position 2 Responses'</span>)       ;
+ylabel(<span class="string">'Mean Spike Count'</span>)          ;
+xlabel(<span class="string">'Time'</span>)                      ;
+resp3 = subplot(4,1,3)              ;
+stem(imp_resp_2_4, <span class="string">'k'</span>, <span class="string">'filled'</span>)   ;
+title(<span class="string">'Position 4 Responses'</span>)       ;
+ylabel(<span class="string">'Mean Spike Count'</span>)          ;
+xlabel(<span class="string">'Time'</span>)                      ;
+resp3 = subplot(4,1,4)              ;
+stem(imp_resp_2_8, <span class="string">'g'</span>, <span class="string">'filled'</span>)   ;
+title(<span class="string">'Position 8 Responses'</span>)       ;
+ylabel(<span class="string">'Mean Spike Count'</span>)          ;
+xlabel(<span class="string">'Time'</span>)                      ;
+sgtitle(<span class="string">'System 2 Shift Invariance Check Responses'</span>) ;
+</pre><img vspace="5" hspace="5" src="Question_1_02.png" alt=""> <h2 id="8">Find the impulse response at each position for System 3</h2><pre class="codeinput">imp_resp_3_1 = unknownSystem3(impulse)    ;
+imp_resp_3_2 = unknownSystem3(impulse_2)  ;
+imp_resp_3_4 = unknownSystem3(impulse_4)  ;
+imp_resp_3_8 = unknownSystem3(impulse_8)  ;
+
+<span class="comment">% Check the system is shift invariant</span>
+shift_check3_1 = [imp_resp_3_2 - circshift(imp_resp_3_1,1) &lt; 1e-8]'
+shift_check3_2 = [imp_resp_3_4 - circshift(imp_resp_3_1,3) &lt; 1e-8]'
+shift_check3_3 = [imp_resp_3_4 - circshift(imp_resp_3_2,2) &lt; 1e-8]'
+shift_check3_4 = [imp_resp_3_8 - circshift(imp_resp_3_1,7) &lt; 1e-8]'
+
+<span class="comment">% Print Answer</span>
+System_3_ShiftCheck1 = {<span class="string">'We can see that system 3 is NOT shift invariant because the'</span>
+    <span class="string">'responses we get are different responses at certain points in the impulse response.'</span>
+    <span class="string">'This tells us that the response VARIES as we shift along this axis.'</span>}
+</pre><pre class="codeoutput">
+shift_check3_1 =
+
+  1&times;64 logical array
+
+  Columns 1 through 19
+
+   1   1   0   0   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 20 through 38
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 39 through 57
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 58 through 64
+
+   1   1   1   1   1   1   1
+
+
+shift_check3_2 =
+
+  1&times;64 logical array
+
+  Columns 1 through 19
+
+   1   1   1   1   0   0   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 20 through 38
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 39 through 57
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 58 through 64
+
+   1   1   1   1   1   1   1
+
+
+shift_check3_3 =
+
+  1&times;64 logical array
+
+  Columns 1 through 19
+
+   1   1   1   1   0   0   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 20 through 38
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 39 through 57
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 58 through 64
+
+   1   1   1   1   1   1   1
+
+
+shift_check3_4 =
+
+  1&times;64 logical array
+
+  Columns 1 through 19
+
+   1   1   1   1   1   1   1   1   0   0   1   1   1   1   1   1   1   1   1
+
+  Columns 20 through 38
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 39 through 57
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 58 through 64
+
+   1   1   1   1   1   1   1
+
+
+System_3_ShiftCheck1 =
+
+  3&times;1 cell array
+
+    {'We can see that system 3 is NOT shift invariant because the'                        }
+    {'responses we get are different responses at certain points in the impulse response.'}
+    {'This tells us that the response VARIES as we shift along this axis.'                }
+
+</pre><h2 id="9">Plot responses visually</h2><pre class="codeinput">system3 = figure                    ;
+resp1 = subplot(4,1,1)              ;
+stem(imp_resp_3_1, <span class="string">'b'</span>, <span class="string">'filled'</span>)	;
+title(<span class="string">'Position 1 Responses'</span>)       ;
+ylabel(<span class="string">'Mean Spike Count'</span>)          ;
+xlabel(<span class="string">'Time'</span>)                      ;
+resp2 = subplot(4,1,2)              ;
+stem(imp_resp_3_2, <span class="string">'r'</span>, <span class="string">'filled'</span>)	;
+title(<span class="string">'Position 2 Responses'</span>)       ;
+ylabel(<span class="string">'Mean Spike Count'</span>)          ;
+xlabel(<span class="string">'Time'</span>)                      ;
+resp3 = subplot(4,1,3)              ;
+stem(imp_resp_3_4, <span class="string">'k'</span>, <span class="string">'filled'</span>)	;
+title(<span class="string">'Position 3 Responses'</span>)       ;
+ylabel(<span class="string">'Mean Spike Count'</span>)          ;
+xlabel(<span class="string">'Time'</span>)                      ;
+resp3 = subplot(4,1,4)              ;
+stem(imp_resp_3_8, <span class="string">'g'</span>, <span class="string">'filled'</span>)	;
+title(<span class="string">'Position 3 Responses'</span>)       ;
+ylabel(<span class="string">'Mean Spike Count'</span>)          ;
+xlabel(<span class="string">'Time'</span>)                      ;
+sgtitle(<span class="string">'System 3 Shift Invariance Check Responses'</span>) ;
+</pre><img vspace="5" hspace="5" src="Question_1_03.png" alt=""> <h2 id="10">pt. 2 Checking for Additivity</h2><pre class="codeinput"><span class="comment">% Here we will check whether a system is linear by testing for additivity. We</span>
+<span class="comment">% will take multiple combinations of initial impulse vectors and see if</span>
+<span class="comment">% these combinations elicit the same response as the summation of their</span>
+<span class="comment">% individual outputs, combined.</span>
+
+<span class="comment">% First create new combined input vectors via summation</span>
+imp_1and2 = impulse + impulse_2     ;
+imp_1and4 = impulse + impulse_4     ;
+imp_2and4 = impulse_4 + impulse_2   ;
+imp_2and8 = impulse_8 + impulse_2   ;
+
+<span class="comment">% Then I find the system responses based on these combined</span>
+<span class="comment">% input vectors</span>
+
+<span class="comment">% System 1</span>
+S1_combined_imp_1_2 = unknownSystem1(imp_1and2)    ;
+S1_combined_imp_1_4 = unknownSystem1(imp_1and4)    ;
+S1_combined_imp_2_4 = unknownSystem1(imp_2and4)    ;
+S1_combined_imp_2_8 = unknownSystem1(imp_2and8)    ;
+<span class="comment">% System 2</span>
+S2_combined_imp_1_2 = unknownSystem2(imp_1and2)    ;
+S2_combined_imp_1_4 = unknownSystem2(imp_1and4)    ;
+S2_combined_imp_2_4 = unknownSystem2(imp_2and4)    ;
+S2_combined_imp_2_8 = unknownSystem2(imp_2and8)    ;
+<span class="comment">% System 3</span>
+S3_combined_imp_1_2 = unknownSystem3(imp_1and2)    ;
+S3_combined_imp_1_4 = unknownSystem3(imp_1and4)    ;
+S3_combined_imp_2_4 = unknownSystem3(imp_2and4)    ;
+S3_combined_imp_2_8 = unknownSystem3(imp_2and8)    ;
+
+<span class="comment">% Now we can combine the responses AFTER the inputs have been fed through</span>
+<span class="comment">% the system</span>
+
+<span class="comment">% System 1</span>
+S1_ind_combined_1and2 = imp_resp_1_1 + imp_resp_1_2     ;
+S1_ind_combined_1and4 = imp_resp_1_1 + imp_resp_1_4     ;
+S1_ind_combined_2and4 = imp_resp_1_2 + imp_resp_1_4     ;
+S1_ind_combined_2and8 = imp_resp_1_2 + imp_resp_1_8     ;
+<span class="comment">% System 2</span>
+S2_ind_combined_1and2 = imp_resp_2_1 + imp_resp_2_2     ;
+S2_ind_combined_1and4 = imp_resp_2_1 + imp_resp_2_4     ;
+S2_ind_combined_2and4 = imp_resp_2_2 + imp_resp_2_4     ;
+S2_ind_combined_2and8 = imp_resp_2_2 + imp_resp_2_8     ;
+<span class="comment">% System 3</span>
+S3_ind_combined_1and2 = imp_resp_3_1 + imp_resp_3_2     ;
+S3_ind_combined_1and4 = imp_resp_3_1 + imp_resp_3_4     ;
+S3_ind_combined_2and4 = imp_resp_3_2 + imp_resp_3_4     ;
+S3_ind_combined_2and8 = imp_resp_3_2 + imp_resp_3_8     ;
+<span class="comment">% Finally, we will take the responses to combined inputs and see if they</span>
+<span class="comment">% are equal to the combined responses of their individual outputs</span>
+</pre><h2 id="11">System 1 Additivity Check</h2><pre class="codeinput"><span class="comment">% We do this by taking the difference between the two</span>
+
+S1_Additivity_Check_1 = [(S1_ind_combined_1and2 - S1_combined_imp_1_2) &lt; 1e-8]'
+S1_Additivity_Check_2 = [(S1_ind_combined_1and4 - S1_combined_imp_1_4) &lt; 1e-8]'
+S1_Additivity_Check_3 = [(S1_ind_combined_2and4- S1_combined_imp_2_4) &lt; 1e-8]'
+S1_Additivity_Check_4 = [(S1_ind_combined_2and8- S1_combined_imp_2_8) &lt; 1e-8]'
+
+System_1_AdditivityCheck = {<span class="string">'We can see that system 1 is NOT LINEAR because the difference'</span>
+    <span class="string">'between the pre-combined and post-combined responses should be zero. Instead, we find here that they.'</span>
+    <span class="string">'are different at all points. This tells us that the response can''t be linear as it does not follow the'</span>
+    <span class="string">'law of additivity'</span>}
+</pre><pre class="codeoutput">
+S1_Additivity_Check_1 =
+
+  1&times;64 logical array
+
+  Columns 1 through 19
+
+   0   1   1   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 20 through 38
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 39 through 57
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 58 through 64
+
+   0   0   0   0   0   0   0
+
+
+S1_Additivity_Check_2 =
+
+  1&times;64 logical array
+
+  Columns 1 through 19
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 20 through 38
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 39 through 57
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 58 through 64
+
+   0   0   0   0   0   0   0
+
+
+S1_Additivity_Check_3 =
+
+  1&times;64 logical array
+
+  Columns 1 through 19
+
+   0   0   0   1   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 20 through 38
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 39 through 57
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 58 through 64
+
+   0   0   0   0   0   0   0
+
+
+S1_Additivity_Check_4 =
+
+  1&times;64 logical array
+
+  Columns 1 through 19
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 20 through 38
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 39 through 57
+
+   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0   0
+
+  Columns 58 through 64
+
+   0   0   0   0   0   0   0
+
+
+System_1_AdditivityCheck =
+
+  4&times;1 cell array
+
+    {'We can see that system 1 is NOT LINEAR because the difference'                                         }
+    {'between the pre-combined and post-combined responses should be zero. Instead, we find here that they.' }
+    {'are different at all points. This tells us that the response can't be linear as it does not follow the'}
+    {'law of additivity'                                                                                     }
+
+</pre><h2 id="12">System 1 Additivity Plot Example</h2><pre class="codeinput"><span class="comment">% Here I plot one comparison as an eample for good measure. You can see in</span>
+<span class="comment">% the Y axis that these values differ.</span>
+
+figure
+subplot(2,1,1)
+stem(S1_combined_imp_1_2, <span class="string">'r'</span>, <span class="string">'filled'</span>)        ;
+title(<span class="string">'Inputs Combined'</span>)                        ;
+ylabel(<span class="string">'Mean Spike Count'</span>)                      ;
+xlabel(<span class="string">'Time'</span>)                                  ;
+subplot(2,1,2)
+stem(S1_ind_combined_1and2, <span class="string">'b'</span>, <span class="string">'filled'</span>)      ;
+title(<span class="string">'Individual Responses Combined'</span>)          ;
+ylabel(<span class="string">'Mean Spike Count'</span>)                      ;
+xlabel(<span class="string">'Time'</span>)                                  ;
+sgtitle(<span class="string">'System 1 Linearity Check Responses'</span>)   ;
+</pre><img vspace="5" hspace="5" src="Question_1_04.png" alt=""> <h2 id="13">System 2 Additivity Check</h2><pre class="codeinput"><span class="comment">% Check the difference between the two for system 2</span>
+S2_additivity_Check_1 = [(S2_ind_combined_1and2 - S2_combined_imp_1_2) &lt; 1e-8]'
+S2_additivity_Check_2 = [(S2_ind_combined_1and4 - S2_combined_imp_1_4) &lt; 1e-8]'
+S2_additivity_Check_3 = [(S2_ind_combined_2and4- S2_combined_imp_2_4) &lt; 1e-8]'
+S2_additivity_Check_4 = [(S2_ind_combined_2and8- S2_combined_imp_2_8) &lt; 1e-8]'
+
+System_2_AdditivityCheck = {<span class="string">'We can see that system 2 passes our linearity check of additivity.'</span>
+    <span class="string">'Differences between the pre-combined and post-combined responses are all zero.'</span>}
+</pre><pre class="codeoutput">
+S2_additivity_Check_1 =
+
+  1&times;64 logical array
+
+  Columns 1 through 19
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 20 through 38
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 39 through 57
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 58 through 64
+
+   1   1   1   1   1   1   1
+
+
+S2_additivity_Check_2 =
+
+  1&times;64 logical array
+
+  Columns 1 through 19
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 20 through 38
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 39 through 57
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 58 through 64
+
+   1   1   1   1   1   1   1
+
+
+S2_additivity_Check_3 =
+
+  1&times;64 logical array
+
+  Columns 1 through 19
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 20 through 38
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 39 through 57
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 58 through 64
+
+   1   1   1   1   1   1   1
+
+
+S2_additivity_Check_4 =
+
+  1&times;64 logical array
+
+  Columns 1 through 19
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 20 through 38
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 39 through 57
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 58 through 64
+
+   1   1   1   1   1   1   1
+
+
+System_2_AdditivityCheck =
+
+  2&times;1 cell array
+
+    {'We can see that system 2 passes our linearity check of additivity.'            }
+    {'Differences between the pre-combined and post-combined responses are all zero.'}
+
+</pre><h2 id="14">System 2 Additivity Plot Example</h2><pre class="codeinput"><span class="comment">% I plot an example to see this visually</span>
+
+figure
+subplot(2,1,1)
+stem(S2_combined_imp_1_2, <span class="string">'r'</span>, <span class="string">'filled'</span>)        ;
+title(<span class="string">'Inputs Combined'</span>)                        ;
+ylabel(<span class="string">'Mean Spike Count'</span>)                      ;
+xlabel(<span class="string">'Time'</span>)                                  ;
+subplot(2,1,2)
+stem(S2_ind_combined_1and2, <span class="string">'b'</span>, <span class="string">'filled'</span>)      ;
+title(<span class="string">'Individual Responses Combined'</span>)          ;
+ylabel(<span class="string">'Mean Spike Count'</span>)                      ;
+xlabel(<span class="string">'Time'</span>)                                  ;
+sgtitle(<span class="string">'System 2 Linearity Check Responses'</span>)   ;
+</pre><img vspace="5" hspace="5" src="Question_1_05.png" alt=""> <h2 id="15">System 3 Linear Check</h2><pre class="codeinput">S3_Additivity_Check_1 = [(S3_ind_combined_1and2 - S3_combined_imp_1_2) &lt; 1e-8]'
+S3_Additivity_Check_2 = [(S3_ind_combined_1and4 - S3_combined_imp_1_4) &lt; 1e-8]'
+S3_Additivity_Check_3 = [(S3_ind_combined_2and4- S3_combined_imp_2_4) &lt; 1e-8]'
+S3_Additivity_Check_4 = [(S3_ind_combined_2and8- S3_combined_imp_2_8) &lt; 1e-8]'
+
+System_3_AdditivityCheck = {<span class="string">'We can see that system 3 also passes our linearity check of additivity'</span>
+    <span class="string">'between the pre-combined and post-combined responses are all zero.'</span>}
+</pre><pre class="codeoutput">
+S3_Additivity_Check_1 =
+
+  1&times;64 logical array
+
+  Columns 1 through 19
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 20 through 38
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 39 through 57
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 58 through 64
+
+   1   1   1   1   1   1   1
+
+
+S3_Additivity_Check_2 =
+
+  1&times;64 logical array
+
+  Columns 1 through 19
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 20 through 38
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 39 through 57
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 58 through 64
+
+   1   1   1   1   1   1   1
+
+
+S3_Additivity_Check_3 =
+
+  1&times;64 logical array
+
+  Columns 1 through 19
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 20 through 38
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 39 through 57
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 58 through 64
+
+   1   1   1   1   1   1   1
+
+
+S3_Additivity_Check_4 =
+
+  1&times;64 logical array
+
+  Columns 1 through 19
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 20 through 38
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 39 through 57
+
+   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1   1
+
+  Columns 58 through 64
+
+   1   1   1   1   1   1   1
+
+
+System_3_AdditivityCheck =
+
+  2&times;1 cell array
+
+    {'We can see that system 3 also passes our linearity check of additivity'}
+    {'between the pre-combined and post-combined responses are all zero.'    }
+
+</pre><h2 id="16">System 3 Additivity Plot Example</h2><pre class="codeinput"><span class="comment">% Lets take a gander at an example comparison</span>
+figure
+subplot(2,1,1)
+stem(S3_combined_imp_1_2, <span class="string">'r'</span>, <span class="string">'filled'</span>)        ;
+title(<span class="string">'Inputs Combined'</span>)                        ;
+ylabel(<span class="string">'Mean Spike Count'</span>)                      ;
+xlabel(<span class="string">'Time'</span>)                                  ;
+subplot(2,1,2)
+stem(S3_ind_combined_1and2, <span class="string">'b'</span>, <span class="string">'filled'</span>)      ;
+title(<span class="string">'Individual Responses Combined'</span>)          ;
+ylabel(<span class="string">'Mean Spike Count'</span>)                      ;
+xlabel(<span class="string">'Time'</span>)                                  ;
+sgtitle(<span class="string">'System 3 Linearity Check Responses'</span>)   ;
+</pre><img vspace="5" hspace="5" src="Question_1_06.png" alt=""> <h2 id="17">pt. 3  Boundary Handling</h2><p>Use different n values to determine how the system handles inputs near the boundaries.</p><pre class="codeinput"><span class="comment">% Create impulses towards the "end" of the input vector</span>
+impulse_62 = circshift(impulse, 61)  ;
+impulse_63 = circshift(impulse, 62)  ;
+impulse_64 = circshift(impulse, 63)  ;
+</pre><h2 id="18">Create Impulse Responses for System 1 Boundary Handling</h2><pre class="codeinput">imp_resp_1_62 = unknownSystem1(impulse_62) ;
+imp_resp_1_63 = unknownSystem1(impulse_63) ;
+imp_resp_1_64 = unknownSystem1(impulse_64) ;
+</pre><h2 id="19">Plot System 1 Boundary Handling</h2><pre class="codeinput">figure ;
+subplot(3,1,1)
+stem(imp_resp_1_62, <span class="string">'k'</span>, <span class="string">'filled'</span>)              ;
+hold <span class="string">on</span>
+stem(62,imp_resp_1_62(62), <span class="string">'r'</span>, <span class="string">'filled'</span>)       ;
+stem(63,imp_resp_1_62(63), <span class="string">'b'</span>, <span class="string">'filled'</span>)       ;
+stem(64,imp_resp_1_62(64), <span class="string">'g'</span>, <span class="string">'filled'</span>)       ;
+title(<span class="string">'Position 62 Impulse'</span>)                    ;
+ylabel(<span class="string">'Mean Spike Count'</span>)                      ;
+xlabel(<span class="string">'Time'</span>)                                  ;
+
+subplot(3,1,2)
+stem(imp_resp_1_63, <span class="string">'k'</span>, <span class="string">'filled'</span>)              ;
+hold <span class="string">on</span>
+stem(63,imp_resp_1_63(63), <span class="string">'r'</span>, <span class="string">'filled'</span>)       ;
+stem(64,imp_resp_1_63(64), <span class="string">'b'</span>, <span class="string">'filled'</span>)       ;
+stem(1,imp_resp_1_63(1), <span class="string">'g'</span>, <span class="string">'filled'</span>)         ;
+title(<span class="string">'Position 63 Impulse'</span>)                    ;
+ylabel(<span class="string">'Mean Spike Count'</span>)                      ;
+xlabel(<span class="string">'Time'</span>)                                  ;
+
+subplot(3,1,3)
+stem(imp_resp_1_64, <span class="string">'k'</span>, <span class="string">'filled'</span>)              ;
+hold <span class="string">on</span>
+stem(64,imp_resp_1_64(64), <span class="string">'r'</span>, <span class="string">'filled'</span>)       ;
+stem(1,imp_resp_1_64(1), <span class="string">'b'</span>, <span class="string">'filled'</span>)         ;
+stem(2,imp_resp_1_64(2), <span class="string">'g'</span>, <span class="string">'filled'</span>)         ;
+title(<span class="string">'Position 64 Impulse'</span>)                    ;
+ylabel(<span class="string">'Mean Spike Count'</span>)                      ;
+xlabel(<span class="string">'Time'</span>)                                  ;
+sgtitle(<span class="string">'System 1 Boundary Handling: Circular'</span>) ;
+
+System_1_BoundaryCheck = {<span class="string">'We can see that system 1 seems to handle boundaries by'</span>
+    <span class="string">'in a circular fashion. When an impulse is given at the end of the'</span>
+    <span class="string">'vector, we see that the "cut-off" response repeats again at the beginning.'</span>
+    <span class="string">'This acts as if these ends are connected, continuing the response at the beginning.'</span>}
+</pre><pre class="codeoutput">
+System_1_BoundaryCheck =
+
+  4&times;1 cell array
+
+    {'We can see that system 1 seems to handle boundaries by'                             }
+    {'in a circular fashion. When an impulse is given at the end of the'                  }
+    {'vector, we see that the "cut-off" response repeats again at the beginning.'         }
+    {'This acts as if these ends are connected, continuing the response at the beginning.'}
+
+</pre><img vspace="5" hspace="5" src="Question_1_07.png" alt=""> <h2 id="20">Create Impulse Responses for System 2 Boundary Handling</h2><pre class="codeinput">imp_resp_2_62 = unknownSystem2(impulse_62) ;
+imp_resp_2_63 = unknownSystem2(impulse_63) ;
+imp_resp_2_64 = unknownSystem2(impulse_64) ;
+</pre><h2 id="21">Plot System 2 Boundary Handling</h2><pre class="codeinput">figure ;
+subplot(3,1,1)
+stem(imp_resp_2_62, <span class="string">'k'</span>, <span class="string">'filled'</span>)                  ;
+hold <span class="string">on</span>
+stem(62:64,imp_resp_2_62(62:64), <span class="string">'b'</span>, <span class="string">'filled'</span>)     ;
+stem(1:14,imp_resp_2_62(1:14), <span class="string">'b'</span>, <span class="string">'filled'</span>)       ;
+title(<span class="string">'Position 62'</span>)                                ;
+ylabel(<span class="string">'Mean Spike Count'</span>)                          ;
+xlabel(<span class="string">'Time'</span>)                                      ;
+
+subplot(3,1,2)
+stem(imp_resp_2_63, <span class="string">'k'</span>, <span class="string">'filled'</span>)                  ;
+hold <span class="string">on</span>
+stem(63:64,imp_resp_2_63(63:64), <span class="string">'b'</span>, <span class="string">'filled'</span>)     ;
+stem(1:15,imp_resp_2_63(1:15), <span class="string">'b'</span>, <span class="string">'filled'</span>)       ;
+title(<span class="string">'Position 63'</span>)                                ;
+ylabel(<span class="string">'Mean Spike Count'</span>)                          ;
+xlabel(<span class="string">'Time'</span>)                                      ;
+
+subplot(3,1,3)
+stem(imp_resp_2_64, <span class="string">'k'</span>, <span class="string">'filled'</span>)                  ;
+hold <span class="string">on</span>
+stem(64,imp_resp_2_64(64), <span class="string">'b'</span>, <span class="string">'filled'</span>)           ;
+stem(1:16,imp_resp_2_64(1:16), <span class="string">'b'</span>, <span class="string">'filled'</span>)       ;
+title(<span class="string">'Position 64'</span>)                                ;
+ylabel(<span class="string">'Mean Spike Count'</span>)                          ;
+xlabel(<span class="string">'Time'</span>)                                      ;
+sgtitle(<span class="string">'System 2 Boundary Handling: Circular'</span>)     ;
+
+System_2_BoundaryCheck = {<span class="string">'System 2 also seems to handle boundaries in a circular fashion.'</span>}
+</pre><pre class="codeoutput">
+System_2_BoundaryCheck =
+
+  1&times;1 cell array
+
+    {'System 2 also seems to handle boundaries in a circular fashion.'}
+
+</pre><img vspace="5" hspace="5" src="Question_1_08.png" alt=""> <h2 id="22">Create Impulse Responses for System 3 Boundary Handling</h2><pre class="codeinput">imp_resp_3_62 = unknownSystem3(impulse_62) ;
+imp_resp_3_63 = unknownSystem3(impulse_63) ;
+imp_resp_3_64 = unknownSystem3(impulse_64) ;
+</pre><h2 id="23">Plot System 3 Boundary Handling</h2><pre class="codeinput">figure ;
+subplot(3,1,1)
+stem(imp_resp_3_62, <span class="string">'k'</span>, <span class="string">'filled'</span>)          ;
+hold <span class="string">on</span>
+stem(62,imp_resp_3_62(62), <span class="string">'r'</span>, <span class="string">'filled'</span>)   ;
+stem(63,imp_resp_3_62(63), <span class="string">'b'</span>, <span class="string">'filled'</span>)   ;
+stem(64,imp_resp_3_62(64), <span class="string">'g'</span>, <span class="string">'filled'</span>)   ;
+stem(1,imp_resp_3_62(1), <span class="string">'o'</span>, <span class="string">'filled'</span>)     ;
+title(<span class="string">'Position 62'</span>)                        ;
+ylabel(<span class="string">'Mean Spike Count'</span>)                  ;
+xlabel(<span class="string">'Time'</span>)                              ;
+
+subplot(3,1,2)
+stem(imp_resp_3_63, <span class="string">'k'</span>, <span class="string">'filled'</span>)          ;
+hold <span class="string">on</span>
+stem(63,imp_resp_3_63(63), <span class="string">'r'</span>, <span class="string">'filled'</span>)   ;
+stem(64,imp_resp_3_63(64), <span class="string">'b'</span>, <span class="string">'filled'</span>)   ;
+stem(1,imp_resp_3_63(1), <span class="string">'g'</span>, <span class="string">'filled'</span>)     ;
+stem(2,imp_resp_3_63(2), <span class="string">'o'</span>, <span class="string">'filled'</span>)     ;
+title(<span class="string">'Position 63'</span>)                        ;
+ylabel(<span class="string">'Mean Spike Count'</span>)                  ;
+xlabel(<span class="string">'Time'</span>)                              ;
+
+subplot(3,1,3)
+stem(imp_resp_3_64, <span class="string">'k'</span>, <span class="string">'filled'</span>)          ;
+hold <span class="string">on</span>
+stem(64,imp_resp_3_64(64), <span class="string">'r'</span>, <span class="string">'filled'</span>)   ;
+stem(1,imp_resp_3_64(1), <span class="string">'b'</span>, <span class="string">'filled'</span>)     ;
+stem(2,imp_resp_3_64(2), <span class="string">'g'</span>, <span class="string">'filled'</span>)     ;
+stem(3,imp_resp_3_64(3), <span class="string">'o'</span>, <span class="string">'filled'</span>)     ;
+title(<span class="string">'Position 64'</span>)                        ;
+ylabel(<span class="string">'Mean Spike Count'</span>)                  ;
+xlabel(<span class="string">'Time'</span>)                              ;
+sgtitle(<span class="string">'System 3 Boundary Handling: Circular'</span>);
+
+System_3_BoundaryCheck = {<span class="string">'Finally, system 3 also seems to handle boundaries in a circular fashion.'</span>}
+</pre><pre class="codeoutput">
+System_3_BoundaryCheck =
+
+  1&times;1 cell array
+
+    {'Finally, system 3 also seems to handle boundaries in a circular fashion.'}
+
+</pre><img vspace="5" hspace="5" src="Question_1_09.png" alt=""> <h2 id="24">B) Check whether the outputs are sinusoids of the same frequency</h2><pre class="codeinput"><span class="comment">% Examine the response of the system to sinusoids with frequencies:</span>
+    <span class="comment">% - 2(pi)/N         % 4(pi)/N</span>
+    <span class="comment">% - 8(pi)/N         % 16(pi)/N</span>
+    <span class="comment">% - AND Random phases</span>
+
+<span class="comment">% ** This means that we need to verify the output vector lies completely in</span>
+<span class="comment">% the subspace containing all the sinusoids of that frequency</span>
+<span class="comment">% NOTE: Make the input stimuli positive, by adding one to each sinusoid,</span>
+<span class="comment">% and the responses should then be positive (mean spike counts).</span>
+
+N = 64          ; <span class="comment">% # of points</span>
+k = [1,2,4,8]   ; <span class="comment">% utilized to create the frequency</span>
+x = 1:N         ; <span class="comment">% domain to plot</span>
+
+<span class="comment">% First I create sinusoids for each frequency providing a random phase</span>
+<span class="comment">% shift</span>
+sig1 = cos(2*pi*k(1)/N * x + rand)'     ;
+sig2 = cos(2*pi*k(2)/N * x + rand)'     ;
+sig3 = cos(2*pi*k(3)/N * x + rand)'     ;
+sig4 = cos(2*pi*k(4)/N * x + rand)'     ;
+
+<span class="comment">% Then I find their response to the system. I only test System two</span>
+<span class="comment">% because it was the only system that was found to be an LSI system</span>
+sig1_resp = unknownSystem2(sig1) ;
+sig2_resp = unknownSystem2(sig2) ;
+sig3_resp = unknownSystem2(sig3) ;
+sig4_resp = unknownSystem2(sig4) ;
+
+<span class="comment">% First we check visually whether or not the outputs are the same frequency</span>
+<span class="comment">% as the inputs by plotting them...</span>
+
+figure ;
+<span class="comment">% Signal 1 vs. it's response</span>
+subplot(2,4,1)
+plot(sig1, <span class="string">'b'</span>)                                     ;
+title(<span class="string">'Original: 2(pi)/N'</span>)                          ;
+ylabel(<span class="string">'Mean Spike Count'</span>)                          ;
+xlabel(<span class="string">'Time'</span>)                                      ;
+subplot(2,4,5)
+plot(sig1_resp, <span class="string">'b--'</span>)                              ;
+title(<span class="string">'System Response: 2(pi)/N'</span>)                   ;
+ylabel(<span class="string">'Mean Spike Count'</span>)                          ;
+xlabel(<span class="string">'Time'</span>)                                      ;
+
+<span class="comment">% Signal 2 vs. it's response</span>
+subplot(2,4,2)
+plot(sig2, <span class="string">'r'</span>)                                     ;
+title(<span class="string">'Original: 4(pi)/N'</span>)                          ;
+ylabel(<span class="string">'Mean Spike Count'</span>)                          ;
+xlabel(<span class="string">'Time'</span>)                                      ;
+subplot(2,4,6)
+plot(sig2_resp, <span class="string">'r--'</span>)                              ;
+title(<span class="string">'System Response: 4(pi)/N'</span>)                   ;
+ylabel(<span class="string">'Mean Spike Count'</span>)                          ;
+xlabel(<span class="string">'Time'</span>)                                      ;
+
+<span class="comment">% Signal 3 vs. it's response</span>
+subplot(2,4,3)
+plot(sig3, <span class="string">'g'</span>)                                     ;
+title(<span class="string">'Original: 8(pi)/N'</span>)                          ;
+ylabel(<span class="string">'Mean Spike Count'</span>)                          ;
+xlabel(<span class="string">'Time'</span>)                                      ;
+subplot(2,4,7)
+plot(sig3_resp, <span class="string">'g--'</span>)                              ;
+title(<span class="string">'System Response: 8(pi)/N'</span>)                   ;
+ylabel(<span class="string">'Mean Spike Count'</span>)                          ;
+xlabel(<span class="string">'Time'</span>)                                      ;
+
+<span class="comment">% Signal 4 vs. it's response</span>
+subplot(2,4,4)
+plot(sig4, <span class="string">'k'</span>)                                     ;
+title(<span class="string">'Original: 16(pi)/N'</span>)                         ;
+ylabel(<span class="string">'Mean Spike Count'</span>)                          ;
+xlabel(<span class="string">'Time'</span>)                                      ;
+subplot(2,4,8)
+plot(sig4_resp, <span class="string">'k--'</span>)                              ;
+title(<span class="string">'System Response: 16(pi)/N'</span>)                  ;
+ylabel(<span class="string">'Mean Spike Count'</span>)                          ;
+xlabel(<span class="string">'Time'</span>)                                      ;
+sgtitle(<span class="string">'Original Sinusoids vs. System Output'</span>)     ;
+
+Visual_Sinusoid_FrequencyCheck = {<span class="string">'We can get a visual feel for the fact that the frequencies between'</span>
+    <span class="string">'the original sinusoids and their responses to system 2 return sinuisoids of the same frequency'</span>
+    <span class="string">'and which have been shifted and scaled - as LSI systems should.'</span>}
+</pre><pre class="codeoutput">
+Visual_Sinusoid_FrequencyCheck =
+
+  3&times;1 cell array
+
+    {'We can get a visual feel for the fact that the frequencies between'                            }
+    {'the original sinusoids and their responses to system 2 return sinuisoids of the same frequency'}
+    {'and which have been shifted and scaled - as LSI systems should.'                               }
+
+</pre><img vspace="5" hspace="5" src="Question_1_10.png" alt=""> <h2 id="25">Checking that the Output Lies Within the Proper Frequency Subspace</h2><p>In order to verify this quantitatively (by checking that the output falls within the same subspace) we can take the fourier transformation of outputs from System 2 and plot the amplitudes...</p><pre class="codeinput"><span class="comment">% Now take each of their amplitudes</span>
+sig1_resp_amp = abs(fft(sig1_resp)) ;
+sig2_resp_amp = abs(fft(sig2_resp)) ;
+sig3_resp_amp = abs(fft(sig3_resp)) ;
+sig4_resp_amp = abs(fft(sig4_resp)) ;
+
+<span class="comment">% We only plot the first half of the Fourier Transform because all elements</span>
+<span class="comment">% in the "second half" are complex conjugates of the first half, so</span>
+<span class="comment">% it doesn't add any new information.</span>
+
+xplots = linspace(1,31,31) ;
+
+figure ;
+subplot(2,2,1)
+stem(xplots, sig1_resp_amp(2:(N/2)), <span class="string">'b'</span>, <span class="string">'filled'</span>)
+hold <span class="string">on</span>
+stem(xplots(1), sig1_resp_amp(2), <span class="string">'r'</span>, <span class="string">'filled'</span>)
+title(<span class="string">'Signal 1: 2pi/N'</span>)
+xlabel(<span class="string">'Freq.'</span>)
+ylabel(<span class="string">'Amplitude'</span>)
+
+subplot(2,2,2)
+stem(xplots, sig2_resp_amp(2:(N/2)), <span class="string">'b'</span>, <span class="string">'filled'</span>)
+hold <span class="string">on</span>
+stem(xplots(2), sig2_resp_amp(3), <span class="string">'r'</span>, <span class="string">'filled'</span>)
+title(<span class="string">'Signal 2: 4pi/N'</span>)
+xlabel(<span class="string">'Freq.'</span>)
+ylabel(<span class="string">'Amplitude'</span>)
+
+subplot(2,2,3)
+stem(xplots, sig3_resp_amp(2:(N/2)), <span class="string">'b'</span>, <span class="string">'filled'</span>)
+hold <span class="string">on</span>
+stem(xplots(4), sig3_resp_amp(5), <span class="string">'r'</span>, <span class="string">'filled'</span>)
+title(<span class="string">'Signal 3: 8pi/N'</span>)
+xlabel(<span class="string">'Freq.'</span>)
+ylabel(<span class="string">'Amplitude'</span>)
+
+subplot(2,2,4)
+stem(xplots, sig4_resp_amp(2:(N/2)), <span class="string">'b'</span>, <span class="string">'filled'</span>)
+hold <span class="string">on</span>
+stem(xplots(8), sig4_resp_amp(9), <span class="string">'r'</span>, <span class="string">'filled'</span>)
+title(<span class="string">'Signal 4: 16pi/N'</span>)
+xlabel(<span class="string">'Freq.'</span>)
+ylabel(<span class="string">'Amplitude'</span>)
+sgtitle(<span class="string">'Amplitudes for Each Sinusoid'</span>)
+
+Quant_Sinusoid_FrequencyCheck = {<span class="string">'We can see in these plots that the only position which elicits an amplitude response'</span>
+    <span class="string">'is the position which matches the frequency. Since we know that each component of the Fourier Transformation'</span>
+    <span class="string">'represents the amount of amplitude response that a system returns given a certain frequency, we can see that these match.'</span>
+    <span class="string">'Responses for sinusoidal frequency: '</span>
+    <span class="string">'2(pi)/N --&gt; frequency of 1 (b/c we factor out the 2*pi)'</span>
+    <span class="string">'4(pi)/N --&gt; frequency of 2'</span>
+    <span class="string">'8(pi)/N --&gt; frequency of 4'</span>
+    <span class="string">'16(pi)/N --&gt; frequency of 8'</span>
+    <span class="string">'We can see that each sinusoid"s amplitude response takes place in the cooresponding position of'</span>
+    <span class="string">'the fourier transformed response. This confirms that the Output Lies Within the Proper Frequency Subspace'</span>}
+</pre><pre class="codeoutput">
+Quant_Sinusoid_FrequencyCheck =
+
+  10&times;1 cell array
+
+    {'We can see in these plots that the only position which elicits an amplitude response'                                     }
+    {'is the position which matches the frequency. Since we know that each component of the Fourier Transformation'             }
+    {'represents the amount of amplitude response that a system returns given a certain frequency, we can see that these match.'}
+    {'Responses for sinusoidal frequency: '                                                                                     }
+    {'2(pi)/N --&gt; frequency of 1 (b/c we factor out the 2*pi)'                                                                  }
+    {'4(pi)/N --&gt; frequency of 2'                                                                                               }
+    {'8(pi)/N --&gt; frequency of 4'                                                                                               }
+    {'16(pi)/N --&gt; frequency of 8'                                                                                              }
+    {'We can see that each sinusoid"s amplitude response takes place in the cooresponding position of'                          }
+    {'the fourier transformed response. This confirms that the Output Lies Within the Proper Frequency Subspace'                }
+
+</pre><img vspace="5" hspace="5" src="Question_1_11.png" alt=""> <h2 id="26">C) Lets talk about Linear Shift Invariance</h2><h2 id="27">The Change in Amp. and Phase from Input to Output in FT Space</h2><pre class="codeinput"><span class="comment">% For this portion, I'm going to utilize only sig1 from</span>
+<span class="comment">% earlier</span>
+
+<span class="comment">% First I find the fourier transformed amplitudes and phases of the input</span>
+signal1_input_amps = abs(fft(sig1)) ;
+signal1_input_phases = angle(fft(sig1)) ;
+
+<span class="comment">% Now take the phase - amplitude of sig1_resp already found above</span>
+sig1_resp_phase = angle(fft(sig1_resp)) ;
+
+<span class="comment">% Take the index, and then drop the duplicate</span>
+sig1_max_amp_index = find(sig1_resp_amp == max(sig1_resp_amp)) ;
+sig1_max_amp_index(2) = [] ;
+
+<span class="comment">% We find the ratio of change between the input and output at the most</span>
+<span class="comment">% responsive frequency</span>
+sig1_max_amp_differences_ratio = sig1_resp_amp(sig1_max_amp_index)/ signal1_input_amps(sig1_max_amp_index)
+sig1_phase_differences = sig1_resp_phase(sig1_max_amp_index) - signal1_input_phases(sig1_max_amp_index)  ;
+
+<span class="comment">% Now we create an impulse response, put it through unknownSystem2, and</span>
+<span class="comment">% then see that these differences match the changes in the above phase and</span>
+<span class="comment">% amplitudes</span>
+
+impulse = zeros(64,1)   ;
+impulse(1) = 1          ;
+impulse_response = unknownSystem2(impulse) ;
+
+<span class="comment">% Take the fft amplitude of the original impulse and it's response</span>
+impusle_input_amps = abs(fft(impulse)) ;
+impusle_response_amps = abs(fft(impulse_response)) ;
+
+<span class="comment">% Take the fft phases of the original impulse and it's response</span>
+impulse_input_phases = angle(fft(impulse)) ;
+impulse_output_phases = angle(fft(impulse_response)) ;
+
+impulse_amp_difference_ratio = impusle_response_amps(sig1_max_amp_index) / impusle_input_amps(sig1_max_amp_index) ;
+impulse_phase_differences = impulse_output_phases(sig1_max_amp_index) - impulse_input_phases(sig1_max_amp_index) ;
+
+<span class="comment">% Round a few spots back so we can get a clean comparison</span>
+impulse_amp_difference_ratio = round(impulse_amp_difference_ratio,4)          ;
+impulse_phase_differences = round(impulse_phase_differences,4)
+sig1_max_amp_difference_ratio = round(sig1_max_amp_differences_ratio,4)
+sig1_phase_differences = round(sig1_phase_differences,4)
+
+<span class="comment">% Test that these are equal</span>
+amp_diff_check = isequal(sig1_max_amp_difference_ratio,impulse_amp_difference_ratio)
+phase_diff_check = isequal(impulse_phase_differences,sig1_phase_differences)
+
+Answer = {<span class="string">'Here we can see that the change in phase and amplitude within the fourier'</span>
+            <span class="string">'frequency domain between the impulse vector and it''s response predicts'</span>
+            <span class="string">'the changes that we also saw above with the sinusoid sig1.'</span>}
+</pre><pre class="codeoutput">
+sig1_max_amp_differences_ratio =
+
+   10.9791
+
+
+impulse_phase_differences =
+
+   -0.7461
+
+
+sig1_max_amp_difference_ratio =
+
+   10.9791
+
+
+sig1_phase_differences =
+
+   -0.7461
+
+
+amp_diff_check =
+
+  logical
+
+   1
+
+
+phase_diff_check =
+
+  logical
+
+   1
+
+
+Answer =
+
+  3&times;1 cell array
+
+    {'Here we can see that the change in phase and amplitude within the fourier'}
+    {'frequency domain between the impulse vector and it's response predicts'   }
+    {'the changes that we also saw above with the sinusoid sig1.'               }
+
+</pre><h2 id="28">Testing how Scaling the Sinusoid Changes Amplitude in the Fourier Frequency Domain</h2><p>We'll only be checking this for unknownSystem2 because it is the only system which has passed the previous tests. Here we will scale and shift an input signal and see if we can see those changes in the fourier frequency domain. I did this before doing anything else and I couldn't bring myself to delete it.</p><pre class="codeinput">N = 64              ;
+scale_factor = 2    ;
+shift = 10          ;
+test_x = -N/2:N/2-1 ;
+
+test_signal = cos(2*pi*1/64 * test_x )'             ;
+test_shifted = cos(2*pi*1/64 * test_x + shift )'    ;
+test_scaled_and_shifted = test_shifted*scale_factor ;
+
+test_sig_response = unknownSystem2(test_signal)                             ;
+test_sig_shiftANDscale_response = unknownSystem2(test_scaled_and_shifted)   ;
+
+test_sig_norm_amps = abs(fftshift(fft(test_sig_response)))      ;
+test_sig_norm_phase = angle(fftshift(fft(test_sig_response)))   ;
+
+test_sig_shiftANDscaled_amps = abs(fftshift(fft(test_sig_shiftANDscale_response)))      ;
+test_sig_shiftANDscaled_phase = angle(fftshift(fft(test_sig_shiftANDscale_response)))    ;
+
+figure ;
+subplot(2,1,1)
+stem(test_x, test_sig_norm_amps, <span class="string">'b'</span>, <span class="string">'filled'</span>)
+title(<span class="string">'Original Test Signal: Amplitudes'</span>)
+xlabel(<span class="string">'Freq.'</span>)
+ylabel(<span class="string">'Amplitude'</span>)
+
+subplot(2,1,2)
+stem(test_x , test_sig_shiftANDscaled_amps, <span class="string">'b'</span>, <span class="string">'filled'</span>)
+title(<span class="string">'Scaled Test Signal (by 2): Amplitudes'</span>)
+xlabel(<span class="string">'Freq.'</span>)
+ylabel(<span class="string">'Amplitude'</span>)
+
+<span class="comment">% We can see visually that the maximum amplitude factor doubles with the</span>
+
+<span class="comment">% We can also check the amplitudes scaling factor</span>
+max_test_scaled_amp = max(test_sig_shiftANDscaled_amps) ;
+max_test_norm_amp = max(test_sig_norm_amps)             ;
+scale_test =  max_test_norm_amp * scale_factor == max_test_scaled_amp
+
+amp_difference = max(test_sig_norm_amps) - max(test_sig_shiftANDscaled_amps)
+</pre><pre class="codeoutput">
+scale_test =
+
+  logical
+
+   1
+
+
+amp_difference =
+
+ -351.3309
+
+</pre><img vspace="5" hspace="5" src="Question_1_12.png" alt=""> <h2 id="29">Linear Shift Invariant Guarantee?</h2><pre class="codeinput">LSI_Guarantee_Answer = {<span class="string">'No, this doesn"t GUARANTEE either linearity or shift invariance'</span>
+    <span class="string">'The simplest reason is that all "useful" linear/shift invariant systems are technically'</span>
+    <span class="string">'bounded. They will all break if you expose them to an extreme situation. For example, '</span>
+    <span class="string">'A seemingly linear system will certainly break if you put it "close to the sun". Additionally,'</span>
+    <span class="string">'We can never know that a system is shift invariant because we will never be able to test'</span>
+    <span class="string">'all "possible shifts". For example, if we use time as a domain to shift along, we will never'</span>
+    <span class="string">'be able to predict how something will respond in the future - at least without a time machine ;).'</span>
+    <span class="string">'For the other systems, I address which tests they fail earlier in this script as I test them.'</span>}
+</pre><pre class="codeoutput">
+LSI_Guarantee_Answer =
+
+  8&times;1 cell array
+
+    {'No, this doesn"t GUARANTEE either linearity or shift invariance'                                  }
+    {'The simplest reason is that all "useful" linear/shift invariant systems are technically'          }
+    {'bounded. They will all break if you expose them to an extreme situation. For example, '           }
+    {'A seemingly linear system will certainly break if you put it "close to the sun". Additionally,'   }
+    {'We can never know that a system is shift invariant because we will never be able to test'         }
+    {'all "possible shifts". For example, if we use time as a domain to shift along, we will never'     }
+    {'be able to predict how something will respond in the future - at least without a time machine ;).'}
+    {'For the other systems, I address which tests they fail earlier in this script as I test them.'    }
+
+</pre><p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2018b</a><br></p></div><!--
+##### SOURCE BEGIN #####
+%% HW # 3 - Question 1 - Math Tools - Matthew DeVerna
+
+clear all
+close all
+
+%% Question 1: LSI Systems Characterization
+
+% We are trying to experimentally characterize three auditory neurons, in
+% terms of their responses to sounds. 
+
+% For this problem, the responses are contained in the compiled matlab
+% functions, "unknownSystemX.p" (X = 1,2,3). 
+% INPUT - a column vector with length N = 64. (Represents sound pressure over
+% time).
+% OUTPUT - a column vector of the same length. (Represents mean spike count
+% over time). 
+
+% The task is examine each neuron and see if it behaves like it is:
+    % i) Linear
+    % ii) Shift invariant 
+    % iii) Handling boundaries in a circular manner
+    
+%% A) "Kick the Tires"
+
+%% pt. 1 Checking for Shift Invariance
+% Measure the response to an impulse in the first position of an input
+% vector. Check that this impulse response is shift-invariant by comparing
+% to the response an impulse at positions n = 2,4,8.
+
+% Create general impulses shifted by some amount
+zeros_impulse = zeros(64,1) ;
+impulse = zeros_impulse ;
+impulse(1) = 1 ;
+impulse_2 = circshift(impulse, 1) ;
+impulse_4 = circshift(impulse, 3) ;
+impulse_8 = circshift(impulse, 7) ;
+
+% Create System 1 impulse responses at each position
+imp_resp_1_1 = unknownSystem1(impulse)    ;
+imp_resp_1_2 = unknownSystem1(impulse_2)  ;
+imp_resp_1_4 = unknownSystem1(impulse_4)  ;
+imp_resp_1_8 = unknownSystem1(impulse_8)  ;
+
+% Check that these shifts are equal by taking their difference
+shift_check1_1 = [imp_resp_1_2 - circshift(imp_resp_1_1,1) < 1e-8]'
+shift_check1_2 = [imp_resp_1_4 - circshift(imp_resp_1_1,3) < 1e-8]'
+shift_check1_3 = [imp_resp_1_4 - circshift(imp_resp_1_2,2) < 1e-8]'
+shift_check1_4 = [imp_resp_1_8 - circshift(imp_resp_1_1,7) < 1e-8]'
+
+% Print Answer
+System_1_ShiftCheck1 = {'We can see that system 1 is shift invariant because we get the same'
+    'response whether we provide an input at position 1, 2, 4 or 8 - the'
+    'response is simply shifted by the position of the impulse position.'} 
+
+%% Plot the Responses Visually
+system1 = figure                    ;
+resp1 = subplot(4,1,1)              ;
+stem(imp_resp_1_1, 'b', 'filled')   ;
+title('Position 1 Responses')       ;
+ylabel('Mean Spike Count')          ;
+xlabel('Time')                      ;
+resp2 = subplot(4,1,2)              ;
+stem(imp_resp_1_2, 'r', 'filled')   ;
+title('Position 2 Responses')       ;
+ylabel('Mean Spike Count')          ;
+xlabel('Time')                      ;
+resp3 = subplot(4,1,3)              ;
+stem(imp_resp_1_4, 'k', 'filled')   ;
+title('Position 4 Responses')       ;
+ylabel('Mean Spike Count')          ;
+xlabel('Time')                      ;
+resp4 = subplot(4,1,4)              ;
+stem(imp_resp_1_8, 'g', 'filled')   ;
+title('Position 8 Responses')       ;
+ylabel('Mean Spike Count')          ;
+xlabel('Time')                      ;
+sgtitle('System 1 Shift Invariance Check Responses') ;
+
+%% Find System 2 impulse responses at each position
+imp_resp_2_1 = unknownSystem2(impulse)    ;
+imp_resp_2_2 = unknownSystem2(impulse_2)  ;
+imp_resp_2_4 = unknownSystem2(impulse_4)  ;
+imp_resp_2_8 = unknownSystem2(impulse_8)  ;
+
+% Check that these shifts are equal by taking their difference
+shift_check2_1 = [imp_resp_2_2 - circshift(imp_resp_2_1,1) < 1e-8]'
+shift_check2_2 = [imp_resp_2_4 - circshift(imp_resp_2_1,3) < 1e-8]'
+shift_check2_3 = [imp_resp_2_4 - circshift(imp_resp_2_2,2) < 1e-8]'
+shift_check2_3 = [imp_resp_2_8 - circshift(imp_resp_2_1,7) < 1e-8]'
+
+% Print Answer
+System_2_ShiftCheck1 = {'We can see that system 2 is also shift invariant because we get the same'
+    'response whether we provide an input at position 1, 2, 4 or 8 - the'
+    'response is simply shifted by the position of the impulse position.'} 
+
+%% Plot the responses visually
+system2 = figure                    ;
+resp1 = subplot(4,1,1)              ;
+stem(imp_resp_2_1, 'b', 'filled')   ;
+title('Position 1 Responses')       ;
+ylabel('Mean Spike Count')          ;
+xlabel('Time')                      ;
+resp2 = subplot(4,1,2)              ;
+stem(imp_resp_2_2, 'r', 'filled')	;
+title('Position 2 Responses')       ;
+ylabel('Mean Spike Count')          ;
+xlabel('Time')                      ;
+resp3 = subplot(4,1,3)              ;
+stem(imp_resp_2_4, 'k', 'filled')   ;
+title('Position 4 Responses')       ;
+ylabel('Mean Spike Count')          ;
+xlabel('Time')                      ;
+resp3 = subplot(4,1,4)              ;
+stem(imp_resp_2_8, 'g', 'filled')   ;
+title('Position 8 Responses')       ;
+ylabel('Mean Spike Count')          ;
+xlabel('Time')                      ;
+sgtitle('System 2 Shift Invariance Check Responses') ;
+
+%% Find the impulse response at each position for System 3
+imp_resp_3_1 = unknownSystem3(impulse)    ;
+imp_resp_3_2 = unknownSystem3(impulse_2)  ;
+imp_resp_3_4 = unknownSystem3(impulse_4)  ;
+imp_resp_3_8 = unknownSystem3(impulse_8)  ;
+
+% Check the system is shift invariant 
+shift_check3_1 = [imp_resp_3_2 - circshift(imp_resp_3_1,1) < 1e-8]'
+shift_check3_2 = [imp_resp_3_4 - circshift(imp_resp_3_1,3) < 1e-8]'
+shift_check3_3 = [imp_resp_3_4 - circshift(imp_resp_3_2,2) < 1e-8]'
+shift_check3_4 = [imp_resp_3_8 - circshift(imp_resp_3_1,7) < 1e-8]'
+
+% Print Answer
+System_3_ShiftCheck1 = {'We can see that system 3 is NOT shift invariant because the'
+    'responses we get are different responses at certain points in the impulse response.'
+    'This tells us that the response VARIES as we shift along this axis.'} 
+
+%% Plot responses visually
+system3 = figure                    ;
+resp1 = subplot(4,1,1)              ;
+stem(imp_resp_3_1, 'b', 'filled')	;
+title('Position 1 Responses')       ;
+ylabel('Mean Spike Count')          ;
+xlabel('Time')                      ;       
+resp2 = subplot(4,1,2)              ;
+stem(imp_resp_3_2, 'r', 'filled')	;
+title('Position 2 Responses')       ;
+ylabel('Mean Spike Count')          ;
+xlabel('Time')                      ;
+resp3 = subplot(4,1,3)              ;
+stem(imp_resp_3_4, 'k', 'filled')	;
+title('Position 3 Responses')       ;
+ylabel('Mean Spike Count')          ;
+xlabel('Time')                      ;
+resp3 = subplot(4,1,4)              ;
+stem(imp_resp_3_8, 'g', 'filled')	;
+title('Position 3 Responses')       ;
+ylabel('Mean Spike Count')          ;
+xlabel('Time')                      ;
+sgtitle('System 3 Shift Invariance Check Responses') ;
+
+%% pt. 2 Checking for Additivity
+
+% Here we will check whether a system is linear by testing for additivity. We
+% will take multiple combinations of initial impulse vectors and see if
+% these combinations elicit the same response as the summation of their
+% individual outputs, combined.
+
+% First create new combined input vectors via summation
+imp_1and2 = impulse + impulse_2     ;
+imp_1and4 = impulse + impulse_4     ;
+imp_2and4 = impulse_4 + impulse_2   ;
+imp_2and8 = impulse_8 + impulse_2   ;
+
+% Then I find the system responses based on these combined 
+% input vectors
+
+% System 1
+S1_combined_imp_1_2 = unknownSystem1(imp_1and2)    ;
+S1_combined_imp_1_4 = unknownSystem1(imp_1and4)    ;
+S1_combined_imp_2_4 = unknownSystem1(imp_2and4)    ;
+S1_combined_imp_2_8 = unknownSystem1(imp_2and8)    ;
+% System 2
+S2_combined_imp_1_2 = unknownSystem2(imp_1and2)    ;
+S2_combined_imp_1_4 = unknownSystem2(imp_1and4)    ;
+S2_combined_imp_2_4 = unknownSystem2(imp_2and4)    ;
+S2_combined_imp_2_8 = unknownSystem2(imp_2and8)    ;
+% System 3
+S3_combined_imp_1_2 = unknownSystem3(imp_1and2)    ;
+S3_combined_imp_1_4 = unknownSystem3(imp_1and4)    ;
+S3_combined_imp_2_4 = unknownSystem3(imp_2and4)    ;
+S3_combined_imp_2_8 = unknownSystem3(imp_2and8)    ;
+
+% Now we can combine the responses AFTER the inputs have been fed through
+% the system
+
+% System 1
+S1_ind_combined_1and2 = imp_resp_1_1 + imp_resp_1_2     ;
+S1_ind_combined_1and4 = imp_resp_1_1 + imp_resp_1_4     ;
+S1_ind_combined_2and4 = imp_resp_1_2 + imp_resp_1_4     ;
+S1_ind_combined_2and8 = imp_resp_1_2 + imp_resp_1_8     ;
+% System 2
+S2_ind_combined_1and2 = imp_resp_2_1 + imp_resp_2_2     ;
+S2_ind_combined_1and4 = imp_resp_2_1 + imp_resp_2_4     ;
+S2_ind_combined_2and4 = imp_resp_2_2 + imp_resp_2_4     ;
+S2_ind_combined_2and8 = imp_resp_2_2 + imp_resp_2_8     ;
+% System 3
+S3_ind_combined_1and2 = imp_resp_3_1 + imp_resp_3_2     ;
+S3_ind_combined_1and4 = imp_resp_3_1 + imp_resp_3_4     ;
+S3_ind_combined_2and4 = imp_resp_3_2 + imp_resp_3_4     ;
+S3_ind_combined_2and8 = imp_resp_3_2 + imp_resp_3_8     ;
+% Finally, we will take the responses to combined inputs and see if they
+% are equal to the combined responses of their individual outputs
+
+%% System 1 Additivity Check
+
+% We do this by taking the difference between the two 
+
+S1_Additivity_Check_1 = [(S1_ind_combined_1and2 - S1_combined_imp_1_2) < 1e-8]'
+S1_Additivity_Check_2 = [(S1_ind_combined_1and4 - S1_combined_imp_1_4) < 1e-8]'
+S1_Additivity_Check_3 = [(S1_ind_combined_2and4- S1_combined_imp_2_4) < 1e-8]'
+S1_Additivity_Check_4 = [(S1_ind_combined_2and8- S1_combined_imp_2_8) < 1e-8]'
+
+System_1_AdditivityCheck = {'We can see that system 1 is NOT LINEAR because the difference'
+    'between the pre-combined and post-combined responses should be zero. Instead, we find here that they.'
+    'are different at all points. This tells us that the response can''t be linear as it does not follow the'
+    'law of additivity'} 
+
+
+%% System 1 Additivity Plot Example
+
+% Here I plot one comparison as an eample for good measure. You can see in
+% the Y axis that these values differ.
+
+figure
+subplot(2,1,1)
+stem(S1_combined_imp_1_2, 'r', 'filled')        ;
+title('Inputs Combined')                        ;
+ylabel('Mean Spike Count')                      ;
+xlabel('Time')                                  ;
+subplot(2,1,2)
+stem(S1_ind_combined_1and2, 'b', 'filled')      ;
+title('Individual Responses Combined')          ;
+ylabel('Mean Spike Count')                      ;
+xlabel('Time')                                  ;
+sgtitle('System 1 Linearity Check Responses')   ;
+
+%% System 2 Additivity Check
+
+% Check the difference between the two for system 2
+S2_additivity_Check_1 = [(S2_ind_combined_1and2 - S2_combined_imp_1_2) < 1e-8]'
+S2_additivity_Check_2 = [(S2_ind_combined_1and4 - S2_combined_imp_1_4) < 1e-8]'
+S2_additivity_Check_3 = [(S2_ind_combined_2and4- S2_combined_imp_2_4) < 1e-8]'
+S2_additivity_Check_4 = [(S2_ind_combined_2and8- S2_combined_imp_2_8) < 1e-8]'
+
+System_2_AdditivityCheck = {'We can see that system 2 passes our linearity check of additivity.'
+    'Differences between the pre-combined and post-combined responses are all zero.'} 
+
+
+%% System 2 Additivity Plot Example
+
+% I plot an example to see this visually
+
+figure
+subplot(2,1,1)
+stem(S2_combined_imp_1_2, 'r', 'filled')        ;
+title('Inputs Combined')                        ;
+ylabel('Mean Spike Count')                      ;
+xlabel('Time')                                  ;
+subplot(2,1,2)
+stem(S2_ind_combined_1and2, 'b', 'filled')      ;
+title('Individual Responses Combined')          ;
+ylabel('Mean Spike Count')                      ;
+xlabel('Time')                                  ;
+sgtitle('System 2 Linearity Check Responses')   ;
+
+%% System 3 Linear Check
+S3_Additivity_Check_1 = [(S3_ind_combined_1and2 - S3_combined_imp_1_2) < 1e-8]'
+S3_Additivity_Check_2 = [(S3_ind_combined_1and4 - S3_combined_imp_1_4) < 1e-8]'
+S3_Additivity_Check_3 = [(S3_ind_combined_2and4- S3_combined_imp_2_4) < 1e-8]'
+S3_Additivity_Check_4 = [(S3_ind_combined_2and8- S3_combined_imp_2_8) < 1e-8]'
+
+System_3_AdditivityCheck = {'We can see that system 3 also passes our linearity check of additivity'
+    'between the pre-combined and post-combined responses are all zero.'} 
+
+
+%% System 3 Additivity Plot Example
+
+% Lets take a gander at an example comparison
+figure
+subplot(2,1,1)
+stem(S3_combined_imp_1_2, 'r', 'filled')        ;
+title('Inputs Combined')                        ;
+ylabel('Mean Spike Count')                      ;
+xlabel('Time')                                  ;
+subplot(2,1,2)
+stem(S3_ind_combined_1and2, 'b', 'filled')      ;
+title('Individual Responses Combined')          ;
+ylabel('Mean Spike Count')                      ;
+xlabel('Time')                                  ;
+sgtitle('System 3 Linearity Check Responses')   ;
+
+%% pt. 3  Boundary Handling
+% Use different n values to determine how the system handles inputs near
+% the boundaries. 
+
+% Create impulses towards the "end" of the input vector
+impulse_62 = circshift(impulse, 61)  ;
+impulse_63 = circshift(impulse, 62)  ;
+impulse_64 = circshift(impulse, 63)  ;
+
+%% Create Impulse Responses for System 1 Boundary Handling
+imp_resp_1_62 = unknownSystem1(impulse_62) ;
+imp_resp_1_63 = unknownSystem1(impulse_63) ;
+imp_resp_1_64 = unknownSystem1(impulse_64) ;
+
+%% Plot System 1 Boundary Handling
+figure ;
+subplot(3,1,1)
+stem(imp_resp_1_62, 'k', 'filled')              ;
+hold on
+stem(62,imp_resp_1_62(62), 'r', 'filled')       ;
+stem(63,imp_resp_1_62(63), 'b', 'filled')       ;
+stem(64,imp_resp_1_62(64), 'g', 'filled')       ;
+title('Position 62 Impulse')                    ;
+ylabel('Mean Spike Count')                      ;
+xlabel('Time')                                  ;
+
+subplot(3,1,2)
+stem(imp_resp_1_63, 'k', 'filled')              ;
+hold on
+stem(63,imp_resp_1_63(63), 'r', 'filled')       ;
+stem(64,imp_resp_1_63(64), 'b', 'filled')       ;
+stem(1,imp_resp_1_63(1), 'g', 'filled')         ;
+title('Position 63 Impulse')                    ;
+ylabel('Mean Spike Count')                      ;
+xlabel('Time')                                  ;
+
+subplot(3,1,3)
+stem(imp_resp_1_64, 'k', 'filled')              ;
+hold on
+stem(64,imp_resp_1_64(64), 'r', 'filled')       ;
+stem(1,imp_resp_1_64(1), 'b', 'filled')         ;
+stem(2,imp_resp_1_64(2), 'g', 'filled')         ;
+title('Position 64 Impulse')                    ;
+ylabel('Mean Spike Count')                      ;
+xlabel('Time')                                  ;
+sgtitle('System 1 Boundary Handling: Circular') ;
+
+System_1_BoundaryCheck = {'We can see that system 1 seems to handle boundaries by'
+    'in a circular fashion. When an impulse is given at the end of the'
+    'vector, we see that the "cut-off" response repeats again at the beginning.'
+    'This acts as if these ends are connected, continuing the response at the beginning.'} 
+
+
+%% Create Impulse Responses for System 2 Boundary Handling
+imp_resp_2_62 = unknownSystem2(impulse_62) ;
+imp_resp_2_63 = unknownSystem2(impulse_63) ;
+imp_resp_2_64 = unknownSystem2(impulse_64) ;
+
+%% Plot System 2 Boundary Handling
+figure ;
+subplot(3,1,1)
+stem(imp_resp_2_62, 'k', 'filled')                  ;
+hold on
+stem(62:64,imp_resp_2_62(62:64), 'b', 'filled')     ;
+stem(1:14,imp_resp_2_62(1:14), 'b', 'filled')       ;
+title('Position 62')                                ;
+ylabel('Mean Spike Count')                          ;
+xlabel('Time')                                      ;
+
+subplot(3,1,2)
+stem(imp_resp_2_63, 'k', 'filled')                  ;
+hold on
+stem(63:64,imp_resp_2_63(63:64), 'b', 'filled')     ;
+stem(1:15,imp_resp_2_63(1:15), 'b', 'filled')       ;
+title('Position 63')                                ;
+ylabel('Mean Spike Count')                          ;
+xlabel('Time')                                      ;
+
+subplot(3,1,3)
+stem(imp_resp_2_64, 'k', 'filled')                  ;
+hold on
+stem(64,imp_resp_2_64(64), 'b', 'filled')           ;
+stem(1:16,imp_resp_2_64(1:16), 'b', 'filled')       ;
+title('Position 64')                                ;
+ylabel('Mean Spike Count')                          ;
+xlabel('Time')                                      ;
+sgtitle('System 2 Boundary Handling: Circular')     ;
+
+System_2_BoundaryCheck = {'System 2 also seems to handle boundaries in a circular fashion.'} 
+
+
+%% Create Impulse Responses for System 3 Boundary Handling
+imp_resp_3_62 = unknownSystem3(impulse_62) ;
+imp_resp_3_63 = unknownSystem3(impulse_63) ;
+imp_resp_3_64 = unknownSystem3(impulse_64) ;
+
+%% Plot System 3 Boundary Handling
+
+figure ;
+subplot(3,1,1)
+stem(imp_resp_3_62, 'k', 'filled')          ;
+hold on
+stem(62,imp_resp_3_62(62), 'r', 'filled')   ;
+stem(63,imp_resp_3_62(63), 'b', 'filled')   ;
+stem(64,imp_resp_3_62(64), 'g', 'filled')   ;
+stem(1,imp_resp_3_62(1), 'o', 'filled')     ;
+title('Position 62')                        ;
+ylabel('Mean Spike Count')                  ;
+xlabel('Time')                              ;
+
+subplot(3,1,2)
+stem(imp_resp_3_63, 'k', 'filled')          ;
+hold on
+stem(63,imp_resp_3_63(63), 'r', 'filled')   ;
+stem(64,imp_resp_3_63(64), 'b', 'filled')   ;
+stem(1,imp_resp_3_63(1), 'g', 'filled')     ;
+stem(2,imp_resp_3_63(2), 'o', 'filled')     ;
+title('Position 63')                        ;
+ylabel('Mean Spike Count')                  ;
+xlabel('Time')                              ;
+
+subplot(3,1,3)
+stem(imp_resp_3_64, 'k', 'filled')          ;
+hold on
+stem(64,imp_resp_3_64(64), 'r', 'filled')   ;
+stem(1,imp_resp_3_64(1), 'b', 'filled')     ;
+stem(2,imp_resp_3_64(2), 'g', 'filled')     ;
+stem(3,imp_resp_3_64(3), 'o', 'filled')     ;
+title('Position 64')                        ;
+ylabel('Mean Spike Count')                  ;
+xlabel('Time')                              ;
+sgtitle('System 3 Boundary Handling: Circular');
+
+System_3_BoundaryCheck = {'Finally, system 3 also seems to handle boundaries in a circular fashion.'} 
+
+
+%% B) Check whether the outputs are sinusoids of the same frequency
+
+% Examine the response of the system to sinusoids with frequencies:
+    % - 2(pi)/N         % 4(pi)/N
+    % - 8(pi)/N         % 16(pi)/N
+    % - AND Random phases
+
+% ** This means that we need to verify the output vector lies completely in
+% the subspace containing all the sinusoids of that frequency
+% NOTE: Make the input stimuli positive, by adding one to each sinusoid,
+% and the responses should then be positive (mean spike counts).
+
+N = 64          ; % # of points
+k = [1,2,4,8]   ; % utilized to create the frequency
+x = 1:N         ; % domain to plot
+
+% First I create sinusoids for each frequency providing a random phase
+% shift
+sig1 = cos(2*pi*k(1)/N * x + rand)'     ;
+sig2 = cos(2*pi*k(2)/N * x + rand)'     ;
+sig3 = cos(2*pi*k(3)/N * x + rand)'     ;
+sig4 = cos(2*pi*k(4)/N * x + rand)'     ;
+
+% Then I find their response to the system. I only test System two
+% because it was the only system that was found to be an LSI system
+sig1_resp = unknownSystem2(sig1) ;
+sig2_resp = unknownSystem2(sig2) ;
+sig3_resp = unknownSystem2(sig3) ;
+sig4_resp = unknownSystem2(sig4) ;
+
+% First we check visually whether or not the outputs are the same frequency
+% as the inputs by plotting them...
+
+figure ;
+% Signal 1 vs. it's response
+subplot(2,4,1)
+plot(sig1, 'b')                                     ;
+title('Original: 2(pi)/N')                          ;
+ylabel('Mean Spike Count')                          ;
+xlabel('Time')                                      ;
+subplot(2,4,5)
+plot(sig1_resp, 'bREPLACE_WITH_DASH_DASH')                              ;
+title('System Response: 2(pi)/N')                   ;
+ylabel('Mean Spike Count')                          ;
+xlabel('Time')                                      ;
+
+% Signal 2 vs. it's response
+subplot(2,4,2)
+plot(sig2, 'r')                                     ;
+title('Original: 4(pi)/N')                          ;
+ylabel('Mean Spike Count')                          ;
+xlabel('Time')                                      ;
+subplot(2,4,6)
+plot(sig2_resp, 'rREPLACE_WITH_DASH_DASH')                              ;
+title('System Response: 4(pi)/N')                   ;
+ylabel('Mean Spike Count')                          ;
+xlabel('Time')                                      ;
+
+% Signal 3 vs. it's response
+subplot(2,4,3)
+plot(sig3, 'g')                                     ;
+title('Original: 8(pi)/N')                          ;
+ylabel('Mean Spike Count')                          ;
+xlabel('Time')                                      ;
+subplot(2,4,7)
+plot(sig3_resp, 'gREPLACE_WITH_DASH_DASH')                              ;
+title('System Response: 8(pi)/N')                   ;
+ylabel('Mean Spike Count')                          ;
+xlabel('Time')                                      ;
+
+% Signal 4 vs. it's response
+subplot(2,4,4)
+plot(sig4, 'k')                                     ;
+title('Original: 16(pi)/N')                         ;
+ylabel('Mean Spike Count')                          ;
+xlabel('Time')                                      ;
+subplot(2,4,8)
+plot(sig4_resp, 'kREPLACE_WITH_DASH_DASH')                              ;
+title('System Response: 16(pi)/N')                  ;
+ylabel('Mean Spike Count')                          ;
+xlabel('Time')                                      ;
+sgtitle('Original Sinusoids vs. System Output')     ;
+
+Visual_Sinusoid_FrequencyCheck = {'We can get a visual feel for the fact that the frequencies between'
+    'the original sinusoids and their responses to system 2 return sinuisoids of the same frequency'
+    'and which have been shifted and scaled - as LSI systems should.'} 
+
+
+%% Checking that the Output Lies Within the Proper Frequency Subspace
+% In order to verify this quantitatively (by checking that the output falls
+% within the same subspace) we can take the fourier transformation of outputs 
+% from System 2 and plot the amplitudes...
+
+
+% Now take each of their amplitudes
+sig1_resp_amp = abs(fft(sig1_resp)) ;
+sig2_resp_amp = abs(fft(sig2_resp)) ;
+sig3_resp_amp = abs(fft(sig3_resp)) ;
+sig4_resp_amp = abs(fft(sig4_resp)) ;
+
+% We only plot the first half of the Fourier Transform because all elements
+% in the "second half" are complex conjugates of the first half, so
+% it doesn't add any new information.
+
+xplots = linspace(1,31,31) ;
+
+figure ;
+subplot(2,2,1)
+stem(xplots, sig1_resp_amp(2:(N/2)), 'b', 'filled')
+hold on
+stem(xplots(1), sig1_resp_amp(2), 'r', 'filled')
+title('Signal 1: 2pi/N')
+xlabel('Freq.')
+ylabel('Amplitude')
+
+subplot(2,2,2)
+stem(xplots, sig2_resp_amp(2:(N/2)), 'b', 'filled')
+hold on
+stem(xplots(2), sig2_resp_amp(3), 'r', 'filled')
+title('Signal 2: 4pi/N')
+xlabel('Freq.')
+ylabel('Amplitude')
+
+subplot(2,2,3)
+stem(xplots, sig3_resp_amp(2:(N/2)), 'b', 'filled')
+hold on
+stem(xplots(4), sig3_resp_amp(5), 'r', 'filled')
+title('Signal 3: 8pi/N')
+xlabel('Freq.')
+ylabel('Amplitude')
+
+subplot(2,2,4)
+stem(xplots, sig4_resp_amp(2:(N/2)), 'b', 'filled')
+hold on
+stem(xplots(8), sig4_resp_amp(9), 'r', 'filled')
+title('Signal 4: 16pi/N')
+xlabel('Freq.')
+ylabel('Amplitude')
+sgtitle('Amplitudes for Each Sinusoid')
+
+Quant_Sinusoid_FrequencyCheck = {'We can see in these plots that the only position which elicits an amplitude response'
+    'is the position which matches the frequency. Since we know that each component of the Fourier Transformation'
+    'represents the amount of amplitude response that a system returns given a certain frequency, we can see that these match.'
+    'Responses for sinusoidal frequency: '
+    '2(pi)/N REPLACE_WITH_DASH_DASH> frequency of 1 (b/c we factor out the 2*pi)'
+    '4(pi)/N REPLACE_WITH_DASH_DASH> frequency of 2'
+    '8(pi)/N REPLACE_WITH_DASH_DASH> frequency of 4'
+    '16(pi)/N REPLACE_WITH_DASH_DASH> frequency of 8'
+    'We can see that each sinusoid"s amplitude response takes place in the cooresponding position of'
+    'the fourier transformed response. This confirms that the Output Lies Within the Proper Frequency Subspace'} 
+
+%% C) Lets talk about Linear Shift Invariance
+
+%% The Change in Amp. and Phase from Input to Output in FT Space
+
+% For this portion, I'm going to utilize only sig1 from
+% earlier
+
+% First I find the fourier transformed amplitudes and phases of the input
+signal1_input_amps = abs(fft(sig1)) ;
+signal1_input_phases = angle(fft(sig1)) ;
+
+% Now take the phase - amplitude of sig1_resp already found above
+sig1_resp_phase = angle(fft(sig1_resp)) ;
+
+% Take the index, and then drop the duplicate
+sig1_max_amp_index = find(sig1_resp_amp == max(sig1_resp_amp)) ;
+sig1_max_amp_index(2) = [] ;
+
+% We find the ratio of change between the input and output at the most
+% responsive frequency
+sig1_max_amp_differences_ratio = sig1_resp_amp(sig1_max_amp_index)/ signal1_input_amps(sig1_max_amp_index) 
+sig1_phase_differences = sig1_resp_phase(sig1_max_amp_index) - signal1_input_phases(sig1_max_amp_index)  ;
+
+% Now we create an impulse response, put it through unknownSystem2, and
+% then see that these differences match the changes in the above phase and
+% amplitudes
+
+impulse = zeros(64,1)   ;
+impulse(1) = 1          ;
+impulse_response = unknownSystem2(impulse) ;
+
+% Take the fft amplitude of the original impulse and it's response
+impusle_input_amps = abs(fft(impulse)) ;
+impusle_response_amps = abs(fft(impulse_response)) ;
+
+% Take the fft phases of the original impulse and it's response
+impulse_input_phases = angle(fft(impulse)) ;
+impulse_output_phases = angle(fft(impulse_response)) ;
+
+impulse_amp_difference_ratio = impusle_response_amps(sig1_max_amp_index) / impusle_input_amps(sig1_max_amp_index) ;
+impulse_phase_differences = impulse_output_phases(sig1_max_amp_index) - impulse_input_phases(sig1_max_amp_index) ;
+
+% Round a few spots back so we can get a clean comparison
+impulse_amp_difference_ratio = round(impulse_amp_difference_ratio,4)          ;
+impulse_phase_differences = round(impulse_phase_differences,4)
+sig1_max_amp_difference_ratio = round(sig1_max_amp_differences_ratio,4)
+sig1_phase_differences = round(sig1_phase_differences,4)
+
+% Test that these are equal
+amp_diff_check = isequal(sig1_max_amp_difference_ratio,impulse_amp_difference_ratio)
+phase_diff_check = isequal(impulse_phase_differences,sig1_phase_differences)
+
+Answer = {'Here we can see that the change in phase and amplitude within the fourier'
+            'frequency domain between the impulse vector and it''s response predicts'
+            'the changes that we also saw above with the sinusoid sig1.'}
+
+%% Testing how Scaling the Sinusoid Changes Amplitude in the Fourier Frequency Domain
+% We'll only be checking this for unknownSystem2 because it is the only
+% system which has passed the previous tests. Here we will scale and shift
+% an input signal and see if we can see those changes in the fourier
+% frequency domain. I did this before doing anything else and I couldn't
+% bring myself to delete it.
+
+N = 64              ;
+scale_factor = 2    ;
+shift = 10          ;
+test_x = -N/2:N/2-1 ;
+
+test_signal = cos(2*pi*1/64 * test_x )'             ;
+test_shifted = cos(2*pi*1/64 * test_x + shift )'    ;
+test_scaled_and_shifted = test_shifted*scale_factor ;
+
+test_sig_response = unknownSystem2(test_signal)                             ;
+test_sig_shiftANDscale_response = unknownSystem2(test_scaled_and_shifted)   ;
+
+test_sig_norm_amps = abs(fftshift(fft(test_sig_response)))      ;
+test_sig_norm_phase = angle(fftshift(fft(test_sig_response)))   ;
+
+test_sig_shiftANDscaled_amps = abs(fftshift(fft(test_sig_shiftANDscale_response)))      ;
+test_sig_shiftANDscaled_phase = angle(fftshift(fft(test_sig_shiftANDscale_response)))    ;
+
+figure ;
+subplot(2,1,1)
+stem(test_x, test_sig_norm_amps, 'b', 'filled')
+title('Original Test Signal: Amplitudes')
+xlabel('Freq.')
+ylabel('Amplitude')
+
+subplot(2,1,2)
+stem(test_x , test_sig_shiftANDscaled_amps, 'b', 'filled')
+title('Scaled Test Signal (by 2): Amplitudes')
+xlabel('Freq.')
+ylabel('Amplitude')
+
+% We can see visually that the maximum amplitude factor doubles with the 
+
+% We can also check the amplitudes scaling factor
+max_test_scaled_amp = max(test_sig_shiftANDscaled_amps) ;
+max_test_norm_amp = max(test_sig_norm_amps)             ;
+scale_test =  max_test_norm_amp * scale_factor == max_test_scaled_amp  
+
+amp_difference = max(test_sig_norm_amps) - max(test_sig_shiftANDscaled_amps)
+
+%% Linear Shift Invariant Guarantee?
+LSI_Guarantee_Answer = {'No, this doesn"t GUARANTEE either linearity or shift invariance'
+    'The simplest reason is that all "useful" linear/shift invariant systems are technically'
+    'bounded. They will all break if you expose them to an extreme situation. For example, '
+    'A seemingly linear system will certainly break if you put it "close to the sun". Additionally,'
+    'We can never know that a system is shift invariant because we will never be able to test'
+    'all "possible shifts". For example, if we use time as a domain to shift along, we will never'
+    'be able to predict how something will respond in the future - at least without a time machine ;).'
+    'For the other systems, I address which tests they fail earlier in this script as I test them.'}
+
+
+
+##### SOURCE END #####
+--></body></html>
